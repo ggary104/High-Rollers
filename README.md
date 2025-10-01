@@ -12,11 +12,13 @@ High-Rollers/
 	|---docs/
 	|---game/
 	|---prototype/
+	|---presentations/
 	|---README.md
 ```
 
 - docs: All documentation   
-- game: Main Godot project  
+- game: Main Godot project
+- presentations:
 - prototype: Early prototype 
 
 ---
