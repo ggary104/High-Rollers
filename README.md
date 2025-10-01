@@ -18,7 +18,7 @@ High-Rollers/
 
 - docs: All documentation   
 - game: Main Godot project
-- presentations:
+- presentations: Presentation slides
 - prototype: Early prototype 
 
 ---
