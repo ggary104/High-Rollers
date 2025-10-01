@@ -8,10 +8,12 @@ The intention of the prototype is to showcase our initial idea and to help our d
 
 ## Structure
 
+```text
 prototype/
 	|---windows/
 	|---linux/
 	|---README.md
+```
 
 - windows/      windows prototype  
 - linux/        linux prototype 

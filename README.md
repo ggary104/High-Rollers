@@ -7,11 +7,14 @@ This repository contains the full game project, documentation, and planning mate
 
 ## Project Structure
 
+```text
 High-Rollers/
 	|---docs/
 	|---game/
 	|---prototype/
 	|---README.md
+
+```
 
 - docs/        planning & documentation  
 - game/        main Godot project  
