@@ -38,21 +38,16 @@ High-Rollers/
 	* Presentation lead (demos, project presentations)  
 	* Version Control lead (git/repo management)  
 
-- Joseph Parashar  
+- Joseph Holst  
 	* Game Design (mechanics, balance, user experience)  
 	* Quality assurance (testing)  
 
-- Harman Holst  
+- Harman Kaur Gill  
 	* Documentation lead (technical docs, user guides)  
 
-- Abhi Kaur Gill  
+- Abhi Parashar  
 	* Technical implementation lead (core programming, prototyping)
 
----
-
-## Licence
-
-------------------------------------**TODO**------------------------------------
 
 ---
 
@@ -117,3 +112,9 @@ Individual contribution assessments due: November 10th.
 | Discuss and decide Tasks     | Full Team         | Nov 20th     |              |
 
 Individual contribution assessments due: December 8th.
+
+---
+
+## Licence
+
+------------------------------------**TODO**------------------------------------
