@@ -1,6 +1,6 @@
 # High Rollers
 
-High Rollers is a multiplayer dice-based strategy game built with Gadot.  
+High Rollers is a multiplayer dice-based strategy game built with Godot for mobile.  
 This repository contains the full game project, documentation, and planning materials.
 
 ---
@@ -33,14 +33,14 @@ High-Rollers/
 
 - Seth Doyle
 	* Development lead (general programming)  
-	* Organizational Lead (management)  
+	* Organizational lead (management)  
 
 - Gary Gilbert 
 	* Presentation lead (demos, project presentations)  
-	* Version Control lead (git/repo management)  
+	* Version control lead (git/repo management)  
 
 - Joseph Holst  
-	* Game Design (mechanics, balance, user experience)  
+	* Game design (mechanics, balance, user experience)  
 	* Quality assurance (testing)  
 
 - Harman Kaur Gill  
@@ -78,8 +78,15 @@ Individual contribution assessments due: September 29th.
 
 | Tasks                        | Assigned To       | Due Date     | Status       |
 |------------------------------|-------------------|--------------|--------------|
-| Discuss and decide Tasks     | Full Team         | Oct 2nd      |              |
+| Discuss and decide tasks     | Full Team         | Oct 2nd      | Completed    |
 | README                       | Gary              | Oct 17th     | In Progress  |
+| Decide Git cycles/structure  | Gary              | Oct 7th      | In Progress  |
+| Research Godot multiplayer   | Seth              | Oct 17th     | In Progress  |
+| Learn Godot basics           | Seth, Abhi        | Oct 7th      | In Progress  |
+| Port prototype into Godot    | Abhi              | Oct 14th     | In Progress  |
+| Brainstorm game design       | Joseph            | Oct 14th     | In Progress  |
+| Produce 2D assets            | Joseph            | Oct 14th     | In Progress  |
+| Add visual assets to game    |                   | Oct 17th     |              |
 
 Individual contribution assessments due: October 20th.
 
