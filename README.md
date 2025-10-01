@@ -75,7 +75,7 @@ Individual contribution assessments due: September 29th.
 | Deliverables                 | Assigned To       | Due Date     | Status       |
 |------------------------------|-------------------|--------------|--------------|
 | Planning Presentation        | Gary              | Oct 3        | In Progress  |
-| Repository Setup             | Harman            | Oct 17th     | In Progress  |
+| Repository Setup             | Gary              | Oct 17th     | Completed    |
 | Standards & Procedures       | Harman            | Oct 17th     |              |
 | Project Update Document      | Harman            | Oct 17th     |              |
 | Long Formal Presentation     | Gary              | Oct 17th     |              |
