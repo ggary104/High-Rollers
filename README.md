@@ -17,7 +17,7 @@ High-Rollers/
 
 - docs: All documentation   
 - game: Main Godot project  
-- prototype: Rarly prototype 
+- prototype: Early prototype 
 
 ---
 
