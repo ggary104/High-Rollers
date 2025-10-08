@@ -80,9 +80,9 @@ Individual contribution assessments due: September 29th.
 |------------------------------|-------------------|--------------|--------------|
 | Discuss and decide tasks     | Full Team         | Oct 2nd      | Completed    |
 | README                       | Gary              | Oct 17th     | In Progress  |
-| Decide Git cycles/structure  | Gary              | Oct 7th      | In Progress  |
+| Decide Git cycles/structure  | Gary              | Oct 7th      | Completed    |
 | Research Godot multiplayer   | Seth              | Oct 17th     | In Progress  |
-| Learn Godot basics           | Seth, Abhi        | Oct 7th      | In Progress  |
+| Learn Godot basics           | Seth, Abhi        | Oct 7th      | Completed    |
 | Port prototype into Godot    | Abhi              | Oct 14th     | In Progress  |
 | Brainstorm game design       | Joseph            | Oct 14th     | In Progress  |
 | Produce 2D assets            | Joseph            | Oct 14th     | In Progress  |
