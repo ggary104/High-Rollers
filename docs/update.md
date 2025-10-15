@@ -15,12 +15,14 @@ We had a deliverable a in which we layed out our plan during a team presentation
 Our team's version control lead set up our git repository and invited our instructor. Our Technical Implementation Lead was successful in porting our existing C++ protoype to GDscript in Godot engine. We completed our standards document and updates document according to our progress. As for our requirements document, we will first review our Team Charter and Proposal and work on the minor fixes that are required and then pick up our requirements document after those changes have been made as provided in the feedback by Dave. Our design lead has made quite a bit of progress which we be discussed in more detail in our next meetings and next phase. 
 
 ## Changes in risk assessment
+We need to include in our Charter and Proposal- how we would handle the situation if someone drops out.
 
 
 ## Changes in product features
+We might keep making certain chnages to our game plan. We really liked Dave's idea about having small tournaments. We discussed about addis
 
 ## Current state of each deliverable 
-We decided our charter and proposal need minor changes after we got feedback on Phase 1 documentation from Dave 
+We decided our charter and proposal need minor changes after we got feedback on Phase 1 documentation from Dave. 
 
 ------------------DELETE THESE NOTES--------------------
 Much like the team presentations at the end of this phase, the document is meant to give a clear summary of the progress made in the current phase and the current state of all project deliverables.
