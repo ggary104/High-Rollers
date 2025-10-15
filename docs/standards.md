@@ -1,12 +1,12 @@
 # CSCI 265 Team Standards and Processes (Phase 2)
 
-## Team name: YOUR TEAM NAME HERE
+## Team name: The High Rollers
 
-## Project/product name: YOUR PRODUCT NAME HERE
+## Project/product name: High Rollers
 
 ## Key contact person and email
 
- - NameA, their@emailaddy *main contact*
+ - Seth, seth.william.doyle@gmail.com *main contact*
 
 ## Document structure
 
