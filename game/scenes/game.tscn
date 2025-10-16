@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ri14qd14hhu6"]
+[gd_scene load_steps=3 format=3 uid="uid://ri14qd14hhu6"]
 
 [ext_resource type="Script" uid="uid://bspbkr603mgsb" path="res://scenes/game.gd" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://dbcls2wx4yer1" path="res://scenes/die_slot.tscn" id="2_yqjtg"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_uwrxv")
@@ -42,6 +43,19 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 28
 text = "Roll"
+
+[node name="RolledDice" parent="UI-Elements" instance=ExtResource("2_yqjtg")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Board" type="Node2D" parent="."]
 

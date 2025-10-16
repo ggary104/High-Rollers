@@ -18,6 +18,7 @@ var dice_textures = []
 @onready var p1_score_label = $"UI-Elements/Player1Score"
 @onready var p2_score_label = $"UI-Elements/Player2Score"
 @onready var turn_indicator_label = $"UI-Elements/TurnIndicator"
+@onready var rolled_die = $"UI-Elements/RolledDice"
 
 
 func _ready():
@@ -122,6 +123,7 @@ func switch_turn():
 			button.disabled = false
 		update_ui()
 		update_input_position()
+		$"UI-Elements/RollButton".disabled = false
 
 func check_game_over():
 	var p1_full = true
@@ -181,7 +183,10 @@ func update_ui():
 	
 	p1_score_label.text = "P1 Score: " + str(p1_score) #Change the latest scores
 	p2_score_label.text = "P2 Score: " + str(p2_score)
-
+	if current_roll > 0:
+		rolled_die.set_die(dice_textures[current_roll - 1])
+	else:
+		rolled_die.set_die(null)
 	if game_over:
 		#Display the winner
 		if p1_score > p2_score:
@@ -227,7 +232,13 @@ func update_board_visuals():
 func _on_column_button_pressed(extra_arg_0: int) -> void:
 	if game_over:
 		return
-		
-	roll_dice()
 	place_dice(extra_arg_0)
 	pass # Replace with function body.
+
+func _on_roll_button_pressed() -> void:
+	if game_over or not player_one_turn:
+		return
+	roll_dice();
+	update_ui()
+	$"UI-Elements/RollButton".disabled = true
+	
