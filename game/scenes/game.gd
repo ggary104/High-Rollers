@@ -136,7 +136,17 @@ func check_game_over():
 			p2_full = false
 	
 	if p1_full or p2_full:
+		var p1_scores = calculate_column_score(p1_cols[0]) + calculate_column_score(p1_cols[1]) + calculate_column_score(p1_cols[2])
+		var p2_scores = calculate_column_score(p2_cols[0]) + calculate_column_score(p2_cols[1]) + calculate_column_score(p2_cols[2])
+		
+		if p1_scores > p2_scores:
+			GameManager.winner_text = "Player 1 Wins";
+		elif p1_scores < p2_scores:
+			GameManager.winner_text = "Player 2 Wins";
+		else:
+			GameManager.winner_text = "Its a draw!"
 		game_over = true
+		SceneManager.change_scene("res://scenes/game_over.tscn")
 
 func computer_choice():
 	var col_scores = [0,0,0] #Scores to figure out the best column
@@ -187,16 +197,9 @@ func update_ui():
 		rolled_die.set_die(dice_textures[current_roll - 1])
 	else:
 		rolled_die.set_die(null)
-	if game_over:
-		#Display the winner
-		if p1_score > p2_score:
-			turn_indicator_label.text = "Player 1 Wins!"
-		elif p2_score > p1_score:
-			turn_indicator_label.text = "Player 2 Wins!"
-		else:
-			turn_indicator_label.text = "It's a Draw!"
+
 	#Display the current player's turn
-	elif current_roll == 0:
+	if current_roll == 0:
 		
 		turn_indicator_label.text = "Player 1's Turn: Roll the dice!" if player_one_turn else "Player 2's Turn: Roll the dice!"
 	else:
