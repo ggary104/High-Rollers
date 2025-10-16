@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbcls2wx4yer1"]
+
+[ext_resource type="Script" uid="uid://44r0bw5apeyq" path="res://scenes/die_slot.gd" id="1_wamh2"]
+
+[node name="DieSlot" type="TextureRect"]
+custom_minimum_size = Vector2(100, 100)
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("1_wamh2")
