@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="High Rollers"
-config/features=PackedStringArray("4.3", "Mobile")
+run/main_scene="uid://dqjww7gs1x7fr"
+config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*res://scripts/GameManager.gd"
+SceneManager="*res://scripts/SceneManager.gd"
 
 [rendering]
 
