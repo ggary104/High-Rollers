@@ -23,12 +23,6 @@ High-Rollers/
 
 ---
 
-## Usage and Dependencies
-
-------------------------------------**TODO**------------------------------------
-
----
-
 ## Team
 
 - Seth Doyle
@@ -70,23 +64,22 @@ Individual contribution assessments due: September 29th.
 ## Phase 2                                                           CURRENT PHASE
 | Deliverables                 | Assigned To       | Due Date     | Status       |
 |------------------------------|-------------------|--------------|--------------|
-| Planning Presentation        | Gary              | Oct 3        | In Progress  |
+| Planning Presentation        | Gary              | Oct 3        | Completed    |
 | Repository Setup             | Gary              | Oct 17th     | Completed    |
-| Standards & Procedures       | Harman            | Oct 17th     |              |
-| Project Update Document      | Harman            | Oct 17th     |              |
-| Long Formal Presentation     | Gary              | Oct 17th     |              |
+| Standards & Procedures       | Harman            | Oct 17th     | Completed    |
+| Project Update Document      | Harman            | Oct 17th     | Completed    |
+| Long Formal Presentation     | Gary              | Oct 17th     | In Progress  |
 
 | Tasks                        | Assigned To       | Due Date     | Status       |
 |------------------------------|-------------------|--------------|--------------|
 | Discuss and decide tasks     | Full Team         | Oct 2nd      | Completed    |
-| README                       | Gary              | Oct 17th     | In Progress  |
+| README                       | Gary              | Oct 17th     | Completed    |
 | Decide Git cycles/structure  | Gary              | Oct 7th      | Completed    |
-| Research Godot multiplayer   | Seth              | Oct 17th     | In Progress  |
+| Research Godot multiplayer   | Seth              | Oct 17th     | Completed    |
 | Learn Godot basics           | Seth, Abhi        | Oct 7th      | Completed    |
-| Port prototype into Godot    | Abhi              | Oct 14th     | In Progress  |
-| Brainstorm game design       | Joseph            | Oct 14th     | In Progress  |
-| Produce 2D assets            | Joseph            | Oct 14th     | In Progress  |
-| Add visual assets to game    |                   | Oct 17th     |              |
+| Port prototype into Godot    | Abhi              | Oct 14th     | Completed    |
+| Brainstorm game design       | Joseph            | Oct 14th     | Completed    |
+| Produce 2D assets            | Joseph            | Oct 14th     | Completed    |
 
 Individual contribution assessments due: October 20th.
 
@@ -120,9 +113,3 @@ Individual contribution assessments due: November 10th.
 | Discuss and decide Tasks     | Full Team         | Nov 20th     |              |
 
 Individual contribution assessments due: December 8th.
-
----
-
-## Licence
-
-------------------------------------**TODO**------------------------------------
