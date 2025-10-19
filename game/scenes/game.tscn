@@ -9,55 +9,96 @@ script = ExtResource("1_uwrxv")
 [node name="UI-Elements" type="CanvasLayer" parent="."]
 
 [node name="Player1Score" type="Label" parent="UI-Elements"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 282.0
+offset_top = 664.0
+offset_right = 437.0
+offset_bottom = 696.0
+theme_override_font_sizes/font_size = 23
 text = "Player 1 Score"
 
 [node name="Player2Score" type="Label" parent="UI-Elements"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
+offset_left = -393.0
+offset_top = 498.0
+offset_right = -238.0
+offset_bottom = 530.0
 grow_horizontal = 0
+theme_override_font_sizes/font_size = 23
 text = "Player 2 Score"
 
 [node name="TurnIndicator" type="Label" parent="UI-Elements"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_left = 2.0
+offset_top = 581.0
+offset_right = 2.0
+offset_bottom = 613.0
 grow_horizontal = 2
+theme_override_font_sizes/font_size = 23
 text = "Who's Turn Is It"
 horizontal_alignment = 1
 
-[node name="RollButton" type="Button" parent="UI-Elements"]
+[node name="Player1RollButton" type="Button" parent="UI-Elements"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -18.5
-offset_top = -31.0
-offset_right = 18.5
+offset_left = 213.5
+offset_top = -214.0
+offset_right = 272.5
+offset_bottom = -167.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 28
 text = "Roll"
 
-[node name="RolledDice" parent="UI-Elements" instance=ExtResource("2_yqjtg")]
+[node name="Player2RollButton" type="Button" parent="UI-Elements"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -273.5
+offset_top = -1043.0
+offset_right = -214.5
+offset_bottom = -996.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 28
+text = "Roll"
+
+[node name="Player1Roll" parent="UI-Elements" instance=ExtResource("2_yqjtg")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
+offset_left = 192.0
+offset_top = 222.0
+offset_right = 292.0
+offset_bottom = 322.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player2Roll" parent="UI-Elements" instance=ExtResource("2_yqjtg")]
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -294.0
+offset_top = -330.0
+offset_right = -194.0
+offset_bottom = -230.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Board" type="Node2D" parent="."]
+position = Vector2(3, 45)
 
 [node name="Player1Board" type="PanelContainer" parent="Board"]
 anchors_preset = 8
@@ -65,10 +106,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 150.0
-offset_top = 200.0
-offset_right = 458.0
-offset_bottom = 510.0
+offset_left = 185.0
+offset_top = 662.0
+offset_right = 493.0
+offset_bottom = 992.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -78,16 +119,72 @@ theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 5
 columns = 3
 
+[node name="Player1ColumnInputs" type="HBoxContainer" parent="Board/Player1Board"]
+z_index = -1
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Column1Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                       "
+
 [node name="Player2Board" type="PanelContainer" parent="Board"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 700.0
-offset_top = 200.0
-offset_right = 1008.0
-offset_bottom = 510.0
+offset_left = 185.0
+offset_top = 111.0
+offset_right = 493.0
+offset_bottom = 441.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -97,27 +194,67 @@ theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 5
 columns = 3
 
-[node name="ColumnInputs" type="HBoxContainer" parent="."]
-offset_left = 150.0
-offset_top = 150.0
-offset_right = 419.0
-offset_bottom = 190.0
-theme_override_constants/separation = 26
-
-[node name="Column1Button" type="Button" parent="ColumnInputs"]
+[node name="Player2ColumnInputs" type="HBoxContainer" parent="Board/Player2Board"]
+z_index = -1
 layout_mode = 2
-text = "Place Dice"
+theme_override_constants/separation = 4
 
-[node name="Column2Button" type="Button" parent="ColumnInputs"]
+[node name="Column1Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
 layout_mode = 2
-text = "Place Dice"
+text = "
 
-[node name="Column3Button" type="Button" parent="ColumnInputs"]
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
 layout_mode = 2
-text = "Place Dice"
+text = "
 
-[connection signal="pressed" from="UI-Elements/RollButton" to="." method="_on_roll_button_pressed"]
-[connection signal="pressed" from="ColumnInputs/Column1Button" to="." method="_on_column_1_button_pressed"]
-[connection signal="pressed" from="ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
-[connection signal="pressed" from="ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
-[connection signal="pressed" from="ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+ 
+
+
+
+
+
+
+
+
+
+
+                       "
+
+[connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
