@@ -25,7 +25,7 @@ var dice_textures = []
 func _ready():
 	#Load all of the die images
 	for i in range(1, 7):
-		var texture = load("res://assests/dice_" + str(i) + ".png")
+		var texture = load("res://assests/dice_" + str(i) + ".svg")
 		dice_textures.append(texture)
 	
 	#In the grid have Empty DiceSlotScene to have the grid remain constant size
