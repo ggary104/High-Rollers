@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 GameManager="*res://scripts/GameManager.gd"
 SceneManager="*res://scripts/SceneManager.gd"
 
+[display]
+
+window/size/viewport_width=675
+window/size/viewport_height=1200
+
 [rendering]
 
 renderer/rendering_method="mobile"
