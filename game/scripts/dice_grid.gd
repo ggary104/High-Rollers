@@ -67,3 +67,9 @@ func get_tile(dice_number) -> DiceTile:
 
 func tile_selected(reference_to_tile) -> void:
 	on_tile_selected.emit(reference_to_tile)
+
+func clear() -> void:
+	for tile in tiles_in_order:
+		var tile_dice = tile.dice
+		if not tile_dice == null:
+			tile_dice.destroy()

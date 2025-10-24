@@ -5,20 +5,9 @@ extends Node2D
 const MAX_HEALTH = 100
 var p1_health = MAX_HEALTH
 var p2_health = MAX_HEALTH
-var DiceSlotScene = preload("res://scenes/die_slot.tscn")
-var player_turn = randi() % 2  + 1 #Is it player1's turn or player 2s
-var current_roll = 0 #Value of the current roll
-var p1_cols = [[0, 0, 0], [0, 0, 0], [0, 0, 0]] #What is the state of the player1's column
-var p2_cols = [[0, 0, 0], [0, 0, 0], [0, 0, 0] ]#What is the state of the player2's column
-var game_over = false 
-var dice_textures = []
 
 #Variables used in labels to display the scores and Which Players Turn Is It
 #On ready -> They need to load when the labels are loaded 
-@onready var player1_column_inputs = $"Board/Player1Board/Player1ColumnInputs"
-@onready var player2_column_inputs = $"Board/Player2Board/Player2ColumnInputs"
-@onready var p1_grid = $Board/Player1Board/Player1Grid
-@onready var p2_grid = $Board/Player2Board/Player2Grid
 var Dice:PackedScene = preload("res://scenes/dice.tscn")
 var player_turn: int = randi() % 2  + 1 #Is it player1's turn or player 2s
 var current_roll: int = 0 
@@ -71,24 +60,15 @@ func _ready() -> void:
 		player_two_turn()
 	update_health_bars()
 
-func player_one_turn():
-		for button in player1_column_inputs.get_children():
-			button.disabled = false
-		for button in player2_column_inputs.get_children():
-			button.disabled = true
-		$"UI-Elements/Player1RollButton".disabled = false
-		$"UI-Elements/Player1RollButton".visible = true
-		$"UI-Elements/Player2RollButton".visible = false
-		p1_cash_in_button.visible = true
-		p1_cash_in_button.disabled = false
-		p2_cash_in_button.visible = false
-		update_ui()
 
 func player_one_turn() -> void:
 	p2_dice_grid.disable_tiles()
 	$"UI-Elements/Player1RollButton".disabled = false
 	$"UI-Elements/Player1RollButton".visible = true
 	$"UI-Elements/Player2RollButton".visible = false
+	p1_cash_in_button.visible = true
+	p1_cash_in_button.disabled = false
+	p2_cash_in_button.visible = false
 	update_ui()
 
 
@@ -104,19 +84,6 @@ func player_two_turn() -> void:
 		p2_cash_in_button.disabled = false
 		p1_cash_in_button.visible = false
 		update_ui()
-
-
-func _on_roll_button_pressed() -> void:
-	if game_over:
-		return
-	
-	roll_dice()
-	update_ui()
-	
-	if player_turn == 1:
-		$"UI-Elements/Player1RollButton".disabled = true
-	else:
-		$"UI-Elements/Player2RollButton".disabled = true
 
 
 func roll_dice() -> void:
@@ -253,7 +220,7 @@ func check_game_over():
 		game_over = true
 		GameManager.winner_text = "Player 1 Wins!"
 		SceneManager.change_scene("res://scenes/game_over.tscn")
-    
+	
 	#KEEPING THIS COMMENTED FOR REFERENCE FOR THE 'CLASSIC' MODE IF NEEDED
 	#var p1_full = true
 	#for i in p1_cols:
@@ -341,36 +308,32 @@ func update_ui():
 	else:
 		turn_indicator_label.text = "Player 1 Rolled: " + str(current_roll) if player_turn == 1 else "Player 2 Rolled: " + str(current_roll)
 
-func update_board_visuals():
-	
-	for col_index  in range(p1_cols.size()):
-		#Change the texture of the column based on what its corresponding value is
-		for row_index in range(p1_cols[col_index].size()):
-			var die_value = p1_cols[col_index][row_index]
-			var slot_index = col_index + row_index * 3
-			var slot = p1_grid.get_child(slot_index)
-			if die_value > 0:
-				slot.set_die(dice_textures[die_value - 1])
-			else:
-				slot.set_die(null)		
-		
-	for col_index  in range(p2_cols.size()):
-		for row_index in range(p2_cols[col_index].size()):
-			var flipped_row = p2_cols[col_index].size() - 1 - row_index
-			var die_value = p2_cols[col_index][flipped_row]
+#func update_board_visuals():
+	#
+	#for col_index  in range(p1_cols.size()):
+		##Change the texture of the column based on what its corresponding value is
+		#for row_index in range(p1_cols[col_index].size()):
+			#var die_value = p1_cols[col_index][row_index]
+			#var slot_index = col_index + row_index * 3
+			#var slot = p1_grid.get_child(slot_index)
+			#if die_value > 0:
+				#slot.set_die(dice_textures[die_value - 1])
+			#else:
+				#slot.set_die(null)		
+		#
+	#for col_index  in range(p2_cols.size()):
+		#for row_index in range(p2_cols[col_index].size()):
+			#var flipped_row = p2_cols[col_index].size() - 1 - row_index
+			#var die_value = p2_cols[col_index][flipped_row]
+#
+			#var slot_index = col_index + row_index * 3
+			#var slot = p2_grid.get_child(slot_index)
+			#if die_value > 0:
+				#slot.set_die(dice_textures[die_value - 1])
+			#else:
+				#slot.set_die(null)		
 
-			var slot_index = col_index + row_index * 3
-			var slot = p2_grid.get_child(slot_index)
-			if die_value > 0:
-				slot.set_die(dice_textures[die_value - 1])
-			else:
-				slot.set_die(null)		
 
-func _on_column_button_pressed(extra_arg_0: int) -> void:
-	if game_over:
-		return
-	place_dice(extra_arg_0)
-	
 func _on_roll_button_pressed() -> void:
 	if game_over:
 		return
@@ -393,8 +356,9 @@ func perform_cash_in():
 	if game_over:
 		return
 	
-	var current_player_cols = p1_cols if player_turn == 1 else p2_cols
-	var score_to_cash_in = calculate_column_score(current_player_cols[0]) + calculate_column_score(current_player_cols[1]) + calculate_column_score(current_player_cols[2])
+	var current_player_rows = p1_rows if player_turn == 1 else p2_rows
+	var current_player_grid = p1_dice_grid if player_turn == 1 else p2_dice_grid
+	var score_to_cash_in = calculate_column_score(current_player_rows[0]) + calculate_column_score(current_player_rows[1]) + calculate_column_score(current_player_rows[2])
 	
 	if score_to_cash_in > 0:
 		if player_turn == 1:
@@ -409,9 +373,11 @@ func perform_cash_in():
 	
 	for i in range(3):
 		for j in range(3):
-			current_player_cols[i][j] = 0
+			current_player_rows[i][j] = 0
 	
-	update_board_visuals()
+	current_player_grid.clear()
+	
+	#update_board_visuals()
 	check_game_over()
 	
 	if !game_over:

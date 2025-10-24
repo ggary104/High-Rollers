@@ -99,48 +99,48 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Player1HealthLabel" type="Label" parent="UI-Elements"]
-offset_left = 20.0
-offset_top = 8.45
-offset_right = 86.0
-offset_bottom = 31.45
+offset_left = 1297.0
+offset_top = 679.0
+offset_right = 1363.0
+offset_bottom = 702.0
 text = "Player 1:"
 
 [node name="Player2HealthLabel" type="Label" parent="UI-Elements"]
-offset_left = 510.0
-offset_top = 8.0
-offset_right = 576.0
-offset_bottom = 31.0
+offset_left = 98.0
+offset_top = 655.0
+offset_right = 164.0
+offset_bottom = 678.0
 text = "Player 2:"
 
 [node name="Player1Health" type="ProgressBar" parent="UI-Elements"]
-offset_left = 20.0
-offset_top = 40.0
-offset_right = 170.0
-offset_bottom = 67.0
+offset_left = 1297.0
+offset_top = 710.55
+offset_right = 1447.0
+offset_bottom = 737.55
 
 [node name="Player2Health" type="ProgressBar" parent="UI-Elements"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -165.0
-offset_top = 40.0
-offset_right = -15.0
-offset_bottom = 67.0
+offset_left = -1516.0
+offset_top = 696.0
+offset_right = -1366.0
+offset_bottom = 723.0
 grow_horizontal = 0
 
 [node name="Player1CashInButton" type="Button" parent="UI-Elements"]
-offset_left = 56.0
-offset_top = 989.0
-offset_right = 163.0
-offset_bottom = 1036.0
+offset_left = 831.0
+offset_top = 130.0
+offset_right = 938.0
+offset_bottom = 177.0
 theme_override_font_sizes/font_size = 28
 text = "Cash In"
 
 [node name="Player2CashInButton" type="Button" parent="UI-Elements"]
-offset_left = 520.56
-offset_top = 156.0
-offset_right = 627.5602
-offset_bottom = 203.0
+offset_left = 601.0
+offset_top = 139.0
+offset_right = 708.0002
+offset_bottom = 186.0
 theme_override_font_sizes/font_size = 28
 text = "Cash In"
 
@@ -162,9 +162,3 @@ position = Vector2(779, 296)
 [connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player1CashInButton" to="." method="_on_player_1_cash_in_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player2CashInButton" to="." method="_on_player_2_cash_in_button_pressed"]
-[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
-[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
-[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
-[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
-[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
-[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
