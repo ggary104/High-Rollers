@@ -1,6 +1,8 @@
 extends Control
 
-func _ready():
+@onready var ResultLabel = $VBoxContainer/Result as Label
+
+func _ready() -> void:
 	$VBoxContainer/Result.text = GameManager.winner_text
 
 

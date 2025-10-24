@@ -2,7 +2,7 @@ class_name DiceGrid
 extends Node2D
 
 
-signal on_tile_selected(reference_to_tile)
+signal on_tile_selected(reference_to_tile: DiceTile)
 
 var Tile := preload("res://scenes/dice_tile.tscn")
 var row_size: int = 3
