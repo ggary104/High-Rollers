@@ -92,7 +92,7 @@ func roll_dice() -> void:
 	
 	if player_turn == 1:
 		player1_dice_grid.enable_tiles()
-	elif player_turn == 2 && is_player2_human:
+	elif player_turn == 2 and is_player2_human:
 		player2_dice_grid.enable_tiles()
 
 
