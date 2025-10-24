@@ -1,3 +1,4 @@
+class_name Dice
 extends Node2D
 
 @onready var sprite = $AnimatedSprite2D

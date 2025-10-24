@@ -4,7 +4,7 @@ extends Node2D
 signal selected(reference_to_self)
 
 var mouse_entered := false
-var index := Vector2.ZERO
+var index := Vector2i.ZERO
 var enabled := false
 var dice = null
 

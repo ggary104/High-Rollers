@@ -107,10 +107,8 @@ position = Vector2(1065, 111)
 [node name="DiceGrid2" parent="Board" instance=ExtResource("3_lnu2h")]
 position = Vector2(184, 118)
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(779, 296)
-
-[node name="Marker2D2" type="Marker2D" parent="."]
+[node name="DiceSpawnPosition" type="Marker2D" parent="Board"]
+position = Vector2(776, 251)
 
 [connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
