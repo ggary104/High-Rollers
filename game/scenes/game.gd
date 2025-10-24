@@ -53,6 +53,8 @@ func _ready() -> void:
 	
 	$"UI-Elements/Player1RollButton".visible = false
 	$"UI-Elements/Player2RollButton".visible = false
+	$"UI-Elements/Player1CashInButton".visible = false
+	$"UI-Elements/Player2CashInButton".visible = false
 	
 	if player_turn == 1:
 		player_one_turn()
@@ -128,12 +130,21 @@ func computer_turn():
 	# disable player roll button
 	$"UI-Elements/Player1RollButton".disabled = true
 	$"UI-Elements/Player1RollButton".visible = false
-	roll_dice() #First generate random number
-	await get_tree().create_timer(.8).timeout  # delay before roll
-	update_ui()
-	await get_tree().create_timer(1.2).timeout  # delay before placing dice
-	var choice = computer_choice() #Then get the best choice
-	computer_move(choice)
+	
+	var p2_score:int = calculate_column_score(p2_rows[0]) + calculate_column_score(p2_rows[1]) + calculate_column_score(p2_rows[2])
+	var cash_in_chance: float = 0.3
+	
+	if p2_score > 0 and randf() < cash_in_chance:
+		turn_indicator_label.text = "Computer Cashed In!"
+		await get_tree().create_timer(1.2).timeout
+		perform_cash_in()
+	else:
+		roll_dice() #First generate random number
+		#await get_tree().create_timer(.8).timeout  # Removing this delay because it looks weired as it says 'PLAYER 2 ROLL' But the dice is already showing
+		update_ui()
+		await get_tree().create_timer(1.2).timeout  # delay before placing dice
+		var choice = computer_choice() #Then get the best choice
+		computer_move(choice)
 
 
 func computer_move(computer_pick) -> void:
@@ -246,9 +257,9 @@ func check_game_over():
 
 
 func computer_choice():
-	var row_scores = [0,0,0] #Scores to figure out the best column
-	var rows = [p2_rows[0], p2_rows[1], p2_rows[2]] #Get the value of the columns
-	var opponet_rows = [p1_rows[0], p1_rows[1], p1_rows[2]] #Opponent column to figure out the best move
+	#var row_scores = [0,0,0] #Scores to figure out the best column
+	#var rows = [p2_rows[0], p2_rows[1], p2_rows[2]] #Get the value of the columns
+	#var opponet_rows = [p1_rows[0], p1_rows[1], p1_rows[2]] #Opponent column to figure out the best move
 	 
 	var randice = get_random_tile()
 	return randice
@@ -369,6 +380,7 @@ func perform_cash_in():
 		return
 	p1_health = max(0,p1_health)
 	p2_health = max(0,p2_health)
+	health_damage_animation()
 	update_health_bars();
 	
 	for i in range(3):
@@ -393,6 +405,14 @@ func _on_player_1_cash_in_button_pressed() -> void:
 func _on_player_2_cash_in_button_pressed() -> void:
 	if player_turn == 2:
 		perform_cash_in()
+
+func health_damage_animation():
+	var health_bar = $"UI-Elements/Player1Health" if player_turn == 2 else $"UI-Elements/Player2Health"
+	
+	var tween = create_tween();
+	tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
+	tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
+
 
 # Debug Functions
 
