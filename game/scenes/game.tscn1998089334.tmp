@@ -62,10 +62,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -755.0
-offset_top = -735.0
-offset_right = -696.0
-offset_bottom = -688.0
+offset_left = -273.5
+offset_top = -1043.0
+offset_right = -214.5
+offset_bottom = -996.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 28
@@ -98,60 +98,163 @@ offset_bottom = -230.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Player1HealthLabel" type="Label" parent="UI-Elements"]
-offset_left = 20.0
-offset_top = 8.45
-offset_right = 86.0
-offset_bottom = 31.45
-text = "Player 1:"
-
-[node name="Player2HealthLabel" type="Label" parent="UI-Elements"]
-offset_left = 510.0
-offset_top = 8.0
-offset_right = 576.0
-offset_bottom = 31.0
-text = "Player 2:"
-
-[node name="Player1Health" type="ProgressBar" parent="UI-Elements"]
-offset_left = 20.0
-offset_top = 40.0
-offset_right = 170.0
-offset_bottom = 67.0
-
-[node name="Player2Health" type="ProgressBar" parent="UI-Elements"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -165.0
-offset_top = 40.0
-offset_right = -15.0
-offset_bottom = 67.0
-grow_horizontal = 0
-
-[node name="Player1CashInButton" type="Button" parent="UI-Elements"]
-offset_left = 56.0
-offset_top = 989.0
-offset_right = 163.0
-offset_bottom = 1036.0
-theme_override_font_sizes/font_size = 28
-text = "Cash In"
-
-[node name="Player2CashInButton" type="Button" parent="UI-Elements"]
-offset_left = 520.56
-offset_top = 156.0
-offset_right = 627.5602
-offset_bottom = 203.0
-theme_override_font_sizes/font_size = 28
-text = "Cash In"
-
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(3, 45)
 
+[node name="Player1Board" type="PanelContainer" parent="Board"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1064.0
+offset_top = 109.0
+offset_right = 1372.0
+offset_bottom = 439.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player1Grid" type="GridContainer" parent="Board/Player1Board"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 5
+columns = 3
+
+[node name="Player1ColumnInputs" type="HBoxContainer" parent="Board/Player1Board"]
+z_index = -1
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Column1Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                       "
+
+[node name="Player2Board" type="PanelContainer" parent="Board"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 185.0
+offset_top = 111.0
+offset_right = 493.0
+offset_bottom = 441.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player2Grid" type="GridContainer" parent="Board/Player2Board"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 5
+columns = 3
+
+[node name="Player2ColumnInputs" type="HBoxContainer" parent="Board/Player2Board"]
+z_index = -1
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Column1Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+ 
+
+
+
+
+
+
+
+
+
+
+                       "
+
 [node name="DiceGrid" parent="Board" instance=ExtResource("3_lnu2h")]
-position = Vector2(1065, 111)
+position = Vector2(1219, 293)
 
 [node name="DiceGrid2" parent="Board" instance=ExtResource("3_lnu2h")]
-position = Vector2(184, 118)
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(779, 296)
@@ -160,11 +263,3 @@ position = Vector2(779, 296)
 
 [connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player1CashInButton" to="." method="_on_player_1_cash_in_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player2CashInButton" to="." method="_on_player_2_cash_in_button_pressed"]
-[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
-[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
-[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
-[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
-[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
-[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
