@@ -2,6 +2,9 @@
 extends Node2D
 
 #Variables - To store the main game logic data
+const MAX_HEALTH = 100
+var p1_health = MAX_HEALTH
+var p2_health = MAX_HEALTH
 var DiceSlotScene = preload("res://scenes/die_slot.tscn")
 var player_turn = randi() % 2  + 1 #Is it player1's turn or player 2s
 var current_roll = 0 #Value of the current roll
@@ -21,6 +24,9 @@ var dice_textures = []
 @onready var turn_indicator_label = $"UI-Elements/TurnIndicator"
 @onready var player1_roll = $"UI-Elements/Player1Roll"
 @onready var player2_roll = $"UI-Elements/Player2Roll"
+@onready var p1_cash_in_button = $"UI-Elements/Player1CashInButton"
+@onready var p2_cash_in_button = $"UI-Elements/Player2CashInButton"
+
 
 func _ready():
 	#Load all of the die images
@@ -41,6 +47,7 @@ func _ready():
 		player_one_turn()
 	else:
 		player_two_turn()
+	update_health_bars()
 
 func player_one_turn():
 		for button in player1_column_inputs.get_children():
@@ -50,6 +57,9 @@ func player_one_turn():
 		$"UI-Elements/Player1RollButton".disabled = false
 		$"UI-Elements/Player1RollButton".visible = true
 		$"UI-Elements/Player2RollButton".visible = false
+		p1_cash_in_button.visible = true
+		p1_cash_in_button.disabled = false
+		p2_cash_in_button.visible = false
 		update_ui()
 
 func player_two_turn():
@@ -67,6 +77,9 @@ func player_two_turn():
 		$"UI-Elements/Player2RollButton".disabled = false
 		$"UI-Elements/Player2RollButton".visible = true
 		$"UI-Elements/Player1RollButton".visible = false
+		p2_cash_in_button.visible = true
+		p2_cash_in_button.disabled = false
+		p1_cash_in_button.visible = false
 		update_ui()
 
 func roll_dice():
@@ -123,7 +136,7 @@ func calculate_column_score(column):
 	return score
 
 func switch_turn():
-	check_game_over()
+	#check_game_over()
 	if(player_turn == 1):
 		player_turn = 2
 	else	:
@@ -137,27 +150,36 @@ func switch_turn():
 		player_two_turn()
 
 func check_game_over():
-	var p1_full = true
-	for i in p1_cols:
-		if 0 in i:
-			p1_full = false
-	var p2_full = true
-	for i in p2_cols:
-		if 0 in i:
-			p2_full = false
-	
-	if p1_full or p2_full:
-		var p1_scores = calculate_column_score(p1_cols[0]) + calculate_column_score(p1_cols[1]) + calculate_column_score(p1_cols[2])
-		var p2_scores = calculate_column_score(p2_cols[0]) + calculate_column_score(p2_cols[1]) + calculate_column_score(p2_cols[2])
-		
-		if p1_scores > p2_scores:
-			GameManager.winner_text = "Player 1 Wins";
-		elif p1_scores < p2_scores:
-			GameManager.winner_text = "Player 2 Wins";
-		else:
-			GameManager.winner_text = "Its a draw!"
+	if p1_health <= 0:
 		game_over = true
+		GameManager.winner_text = "Player 2 Wins!"
 		SceneManager.change_scene("res://scenes/game_over.tscn")
+	elif p2_health <= 0:
+		game_over = true
+		GameManager.winner_text = "Player 1 Wins!"
+		SceneManager.change_scene("res://scenes/game_over.tscn")
+	#KEEPING THIS COMMENTED FOR REFERENCE FOR THE 'CLASSIC' MODE IF NEEDED
+	#var p1_full = true
+	#for i in p1_cols:
+		#if 0 in i:
+			#p1_full = false
+	#var p2_full = true
+	#for i in p2_cols:
+		#if 0 in i:
+			#p2_full = false
+	#
+	#if p1_full or p2_full:
+		#var p1_scores = calculate_column_score(p1_cols[0]) + calculate_column_score(p1_cols[1]) + calculate_column_score(p1_cols[2])
+		#var p2_scores = calculate_column_score(p2_cols[0]) + calculate_column_score(p2_cols[1]) + calculate_column_score(p2_cols[2])
+		#
+		#if p1_scores > p2_scores:
+			#GameManager.winner_text = "Player 1 Wins";
+		#elif p1_scores < p2_scores:
+			#GameManager.winner_text = "Player 2 Wins";
+		#else:
+			#GameManager.winner_text = "Its a draw!"
+		#game_over = true
+		#SceneManager.change_scene("res://scenes/game_over.tscn")
 
 func computer_choice():
 	var col_scores = [0,0,0] #Scores to figure out the best column
@@ -269,3 +291,48 @@ func _on_roll_button_pressed() -> void:
 		$"UI-Elements/Player1RollButton".disabled = true
 	else:
 		$"UI-Elements/Player2RollButton".disabled = true
+
+
+#Health bar system code:
+func update_health_bars():
+	$"UI-Elements/Player1Health".value = p1_health
+	$"UI-Elements/Player2Health".value = p2_health
+
+func perform_cash_in():
+	if game_over:
+		return
+	
+	var current_player_cols = p1_cols if player_turn == 1 else p2_cols
+	var score_to_cash_in = calculate_column_score(current_player_cols[0]) + calculate_column_score(current_player_cols[1]) + calculate_column_score(current_player_cols[2])
+	
+	if score_to_cash_in > 0:
+		if player_turn == 1:
+			p2_health -= score_to_cash_in
+		else:
+			p1_health -= score_to_cash_in
+	else:
+		return
+	p1_health = max(0,p1_health)
+	p2_health = max(0,p2_health)
+	update_health_bars();
+	
+	for i in range(3):
+		for j in range(3):
+			current_player_cols[i][j] = 0
+	
+	update_board_visuals()
+	check_game_over()
+	
+	if !game_over:
+		switch_turn()
+	
+
+
+func _on_player_1_cash_in_button_pressed() -> void:
+	if player_turn == 1:
+		perform_cash_in()
+
+
+func _on_player_2_cash_in_button_pressed() -> void:
+	if player_turn == 2:
+		perform_cash_in()
