@@ -1,6 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbcls2wx4yer1"]
+[gd_scene load_steps=9 format=3 uid="uid://dbcls2wx4yer1"]
 
 [ext_resource type="Script" uid="uid://44r0bw5apeyq" path="res://scenes/die_slot.gd" id="1_wamh2"]
+[ext_resource type="Texture2D" uid="uid://b1ul630exllv8" path="res://assests/dice_2.svg" id="2_glybk"]
+[ext_resource type="Texture2D" uid="uid://3wdxu4xi2jht" path="res://assests/dice_5.svg" id="3_uhy2q"]
+[ext_resource type="Texture2D" uid="uid://cumgvtdhnjics" path="res://assests/dice_3.svg" id="4_c2mn0"]
+[ext_resource type="Texture2D" uid="uid://dquc46n013a3u" path="res://assests/dice_1.svg" id="5_xeonb"]
+[ext_resource type="Texture2D" uid="uid://c8ekv2rh5jewx" path="res://assests/dice_4.svg" id="6_c44k7"]
+[ext_resource type="Texture2D" uid="uid://dyshce1r17dye" path="res://assests/dice_6.svg" id="7_jh0fn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jjggo"]
+animations = [{
+"frames": [{
+"duration": 0.51,
+"texture": ExtResource("2_glybk")
+}, {
+"duration": 0.51,
+"texture": ExtResource("3_uhy2q")
+}, {
+"duration": 0.51,
+"texture": ExtResource("4_c2mn0")
+}, {
+"duration": 0.51,
+"texture": ExtResource("5_xeonb")
+}, {
+"duration": 0.51,
+"texture": ExtResource("6_c44k7")
+}, {
+"duration": 0.51,
+"texture": ExtResource("7_jh0fn")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}]
 
 [node name="DieSlot" type="TextureRect"]
 custom_minimum_size = Vector2(100, 100)
@@ -9,3 +41,13 @@ offset_bottom = 40.0
 expand_mode = 2
 stretch_mode = 5
 script = ExtResource("1_wamh2")
+
+[node name="RollAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(0.333, 0.333)
+sprite_frames = SubResource("SpriteFrames_jjggo")
+animation = &"roll"
+autoplay = "roll"
+frame = 5
+frame_progress = 1.0
+centered = false
