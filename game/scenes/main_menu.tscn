@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqjww7gs1x7fr"]
+[gd_scene load_steps=2 format=3 uid="uid://m70qkunbxsx7"]
 
-[ext_resource type="Script" uid="uid://bwc1kym4fdmui" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://m3t0b31d2viu" path="res://scenes/main_menu.gd" id="1_l6cm7"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -36,15 +36,17 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "High Rollers"
 
-[node name="PlayerOneButton" type="Button" parent="VBoxContainer"]
+[node name="baseGameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "Player 1"
+text = "Hot Dice"
 
-[node name="PlayerTwoButton" type="Button" parent="VBoxContainer"]
+[node name="classicButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "Player 2"
+text = "Classic"
 
-[connection signal="pressed" from="VBoxContainer/PlayerOneButton" to="." method="_on_player_one_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/PlayerTwoButton" to="." method="_on_player_two_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/baseGameButton" to="." method="_on_player_one_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/baseGameButton" to="." method="_on_base_game_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/classicButton" to="." method="_on_player_two_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/classicButton" to="." method="_on_classic_button_pressed"]

@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://ri14qd14hhu6"]
 
-[ext_resource type="Script" uid="uid://bspbkr603mgsb" path="res://scenes/game.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://j3876cwmcpvt" path="res://scenes/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://dbcls2wx4yer1" path="res://scenes/die_slot.tscn" id="2_yqjtg"]
 [ext_resource type="PackedScene" path="res://scenes/dice_grid.tscn" id="3_lnu2h"]
 
 [node name="Game" type="Node2D"]
-script = ExtResource("1_uwrxv")
+script = ExtResource("1_lnu2h")
 
 [node name="UI-Elements" type="CanvasLayer" parent="."]
 
