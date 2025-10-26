@@ -30,7 +30,7 @@ func arrange_tiles() -> void:
 	var row_number: int = 0
 	var column_number: int = 0
 	
-	for tile in tiles:
+	for tile: DiceTile in tiles:
 		var tile_size: float = tile.size
 		tile.position.x = column_number * tile_size 
 		tile.position.y = row_number * tile_size
@@ -43,12 +43,12 @@ func arrange_tiles() -> void:
 
 
 func enable_tiles() -> void:
-	for tile in tiles:
+	for tile: DiceTile in tiles:
 		tile.enable()
 
 
 func disable_tiles() -> void:
-	for tile in tiles:
+	for tile: DiceTile in tiles:
 		tile.disable()
 
 
@@ -77,8 +77,15 @@ func tile_selected(reference_to_tile: DiceTile) -> void:
 
 
 func clear() -> void:
-	for tile in tiles:
+	for tile: DiceTile in tiles:
 		var tile_dice: Dice = tile.dice
-		
 		if not tile_dice == null:
 			tile_dice.destroy()
+
+
+func is_full() -> bool:
+	for tile: DiceTile in tiles:
+		if tile.dice == null:
+			return false
+	
+	return true

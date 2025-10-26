@@ -3,7 +3,7 @@ extends Node2D
 
 #Variables - To store the main game logic data
 var DiceObject := preload("res://scenes/dice.tscn")
-var player_turn = randi() % 2  + 1 #Is it player1's turn or player 2s
+var player_turn: int = randi() % 2  + 1 #Is it player1's turn or player 2s
 
 var player1_rows: Array = [
 	[0, 0, 0], 
@@ -47,9 +47,11 @@ var player2_health: int = MAX_HEALTH
 func _ready() -> void:
 	player1_dice_grid.on_tile_selected.connect(place_dice)
 	player2_dice_grid.on_tile_selected.connect(place_dice)
-	
+
 	player1_roll_button.visible = false
 	player2_roll_button.visible = false
+	player1_cash_in_button.visible = false
+	player2_cash_in_button.visible = false
 	
 	if GameManager.playerNumber == 1:
 		is_player2_human = false
@@ -76,6 +78,7 @@ func player1_turn() -> void:
 
 
 func player2_turn() -> void:
+	update_ui()
 	if is_player2_human:
 		player2_roll_button.disabled = false
 		player2_roll_button.visible = true
@@ -84,7 +87,6 @@ func player2_turn() -> void:
 		player2_cash_in_button.visible = true
 		player2_cash_in_button.disabled = false
 		player1_cash_in_button.visible = false
-		update_ui()
 	else:
 		computer_turn()
 
@@ -93,8 +95,12 @@ func _on_roll_button_pressed() -> void:
 	if game_over:
 		return
 	
+	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
+	var is_current_grid_full: bool = current_grid.is_full()
+	if is_current_grid_full:
+		return
+	
 	roll_dice()
-	update_ui()
 	
 	if player_turn == 1:
 		player1_roll_button.disabled = true
@@ -114,6 +120,8 @@ func roll_dice() -> void:
 		player1_dice_grid.enable_tiles()
 	elif player_turn == 2 and is_player2_human:
 		player2_dice_grid.enable_tiles()
+	
+	update_ui()
 
 
 func place_dice(tile: DiceTile) -> void:
@@ -144,13 +152,36 @@ func computer_turn() -> void:
 	# disable player roll button
 	player1_roll_button.disabled = true
 	player1_roll_button.visible = false
-	await get_tree().create_timer(.8).timeout  # delay before roll
-	roll_dice()
+	
+	var player2_score: int = (
+			calculate_row_score(player2_rows[0]) 
+			+ calculate_row_score(player2_rows[1]) 
+			+ calculate_row_score(player2_rows[2])
+	)
+	
+	var is_current_grid_full: bool = player2_dice_grid.is_full()
+	if is_current_grid_full:
+		await computer_cash_in()
+	
+	var cash_in_chance: float = 0.3
+	
+	if player2_score > 0 and randf() < cash_in_chance:
+		await computer_cash_in()
+	else:
+		await get_tree().create_timer(.8).timeout  # delay before roll
+		roll_dice()
+		await get_tree().create_timer(1.2).timeout  # delay before placing dice
+		var choice: Vector2i = computer_choice() #Then get the best choice
+		var tile: DiceTile = player2_dice_grid.get_tile(choice)
+		place_dice(tile)
+	
 	update_ui()
-	await get_tree().create_timer(1.2).timeout  # delay before placing dice
-	var choice: Vector2i = computer_choice() #Then get the best choice
-	var tile: DiceTile = player2_dice_grid.get_tile(choice)
-	place_dice(tile)
+
+
+func computer_cash_in() -> void:
+	turn_indicator_label.text = "Computer Cashed In!"
+	await get_tree().create_timer(1.2).timeout
+	perform_cash_in()
 
 
 func remove_opponent_dice(row_index: int, roll_value: int):
@@ -218,6 +249,7 @@ func check_game_over() -> void:
 		GameManager.winner_text = "Player 1 Wins!"
 		SceneManager.change_scene("res://scenes/game_over.tscn")
 	
+	
 	# KEEPING THIS COMMENTED FOR REFERENCE FOR THE 'CLASSIC' MODE IF NEEDED
 	#var player1_full: bool = true
 	#for i in player1_rows:
@@ -251,9 +283,10 @@ func check_game_over() -> void:
 
 
 func computer_choice() -> Vector2i:
-	var row_scores = [0,0,0] #Scores to figure out the best column
-	var rows = [player2_rows[0], player2_rows[1], player2_rows[2]] #Get the value of the columns
-	var opponet_rows = [player1_rows[0], player1_rows[1], player1_rows[2]] #Opponent column to figure out the best move
+	#var row_scores = [0,0,0] #Scores to figure out the best column
+	#var rows = [player2_rows[0], player2_rows[1], player2_rows[2]] #Get the value of the columns
+	#Opponent column to figure out the best move
+	#var opponet_rows = [player1_rows[0], player1_rows[1], player1_rows[2]] 
 	 
 	var random_move: Vector2i = get_random_tile()
 	return random_move
@@ -300,6 +333,8 @@ func get_random_tile() -> Vector2i:
 
 # TODO: Put score calculation into its own function
 # TODO: Add UI management into its own node/script
+# I think there's a way to automatically call a function when certain values are changed, so
+# TODO: Call function automatically when certain values are changed
 func update_ui() -> void:
 	var player1_score: int = (
 			calculate_row_score(player1_rows[0]) 
@@ -356,6 +391,7 @@ func perform_cash_in() -> void:
 	
 	player1_health = max(0,player1_health)
 	player2_health = max(0,player2_health)
+	health_damage_animation()
 	update_health_bars();
 	
 	for i in range(3):
@@ -364,7 +400,6 @@ func perform_cash_in() -> void:
 	
 	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	current_grid.clear()
-	
 	check_game_over()
 	
 	if !game_over:
@@ -381,6 +416,15 @@ func _on_player_1_cash_in_button_pressed() -> void:
 func _on_player_2_cash_in_button_pressed() -> void:
 	if player_turn == 2:
 		perform_cash_in()
+
+
+func health_damage_animation():
+	var health_bar = player1_healthbar if player_turn == 2 else player2_healthbar
+	
+	var tween := create_tween();
+	tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
+	tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
+
 
 # Debug Functions
 

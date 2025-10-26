@@ -1,0 +1,269 @@
+[gd_scene load_steps=3 format=3 uid="uid://dolkwkcr0sh4i"]
+
+[ext_resource type="Script" uid="uid://dii7wvfxp8xkl" path="res://scenes/classic.gd" id="1_lnrsd"]
+[ext_resource type="PackedScene" uid="uid://dbcls2wx4yer1" path="res://scenes/die_slot.tscn" id="2_2xh8w"]
+
+[node name="classic" type="Node2D"]
+script = ExtResource("1_lnrsd")
+
+[node name="UI-Elements" type="CanvasLayer" parent="."]
+
+[node name="Player1Score" type="Label" parent="UI-Elements"]
+offset_left = 949.0
+offset_top = 140.0
+offset_right = 1104.0
+offset_bottom = 172.0
+theme_override_font_sizes/font_size = 23
+text = "Player 1 Score"
+metadata/_edit_use_anchors_ = true
+
+[node name="Player2Score" type="Label" parent="UI-Elements"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1073.0
+offset_top = 140.0
+offset_right = -918.0
+offset_bottom = 172.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 23
+text = "Player 2 Score"
+metadata/_edit_use_anchors_ = true
+
+[node name="TurnIndicator" type="Label" parent="UI-Elements"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = 21.0
+offset_right = 2.0
+offset_bottom = 53.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 23
+text = "Who's Turn Is It"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1RollButton" type="Button" parent="UI-Elements"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 148.5
+offset_top = -123.0
+offset_right = 207.5
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.4, 1.4)
+theme_override_font_sizes/font_size = 28
+text = "Roll"
+metadata/_edit_use_anchors_ = true
+
+[node name="Player2RollButton" type="Button" parent="UI-Elements"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -233.0
+offset_top = -123.0
+offset_right = -174.0
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.4, 1.4)
+theme_override_font_sizes/font_size = 28
+text = "Roll"
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1Roll" parent="UI-Elements" instance=ExtResource("2_2xh8w")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.99994
+offset_top = -79.99997
+offset_right = 14.000061
+offset_bottom = 20.00003
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.7, 1.7)
+metadata/_edit_use_anchors_ = true
+
+[node name="Player2Roll" parent="UI-Elements" instance=ExtResource("2_2xh8w")]
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.99994
+offset_top = -80.00009
+offset_right = 14.000061
+offset_bottom = 19.999908
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.7, 1.7)
+metadata/_edit_use_anchors_ = true
+
+[node name="Board" type="Node2D" parent="."]
+position = Vector2(461, -146)
+
+[node name="Player1Board" type="PanelContainer" parent="Board"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 488.0
+offset_top = 860.0
+offset_right = 796.0
+offset_bottom = 1168.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5707964
+scale = Vector2(1.7, 1.7)
+
+[node name="Player1Grid" type="GridContainer" parent="Board/Player1Board"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 5
+columns = 3
+
+[node name="Player1ColumnInputs" type="HBoxContainer" parent="Board/Player1Board"]
+z_index = -1
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Column1Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                       "
+
+[node name="Player2Board" type="PanelContainer" parent="Board"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -338.0
+offset_top = 860.0
+offset_right = -30.0
+offset_bottom = 1168.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5707964
+scale = Vector2(1.7, 1.7)
+
+[node name="Player2Grid" type="GridContainer" parent="Board/Player2Board"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 5
+columns = 3
+
+[node name="Player2ColumnInputs" type="HBoxContainer" parent="Board/Player2Board"]
+z_index = -1
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Column1Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+ 
+
+
+
+
+
+
+
+
+
+
+                       "
+
+[connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
