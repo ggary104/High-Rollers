@@ -7,6 +7,7 @@ signal on_tile_selected(reference_to_tile: DiceTile)
 var Tile := preload("res://scenes/dice_tile.tscn")
 var row_size: int = 3
 var tiles := []
+var is_enabled: bool = false
 
 
 func _ready() -> void:
@@ -43,13 +44,21 @@ func arrange_tiles() -> void:
 
 
 func enable_tiles() -> void:
+	if is_enabled:
+		return
+	
 	for tile: DiceTile in tiles:
 		tile.enable()
+		is_enabled = true
 
 
 func disable_tiles() -> void:
+	if not is_enabled:
+		return
+	
 	for tile: DiceTile in tiles:
 		tile.disable()
+		is_enabled = false
 
 
 func select_tile(tile_index: Vector2i) -> void:
