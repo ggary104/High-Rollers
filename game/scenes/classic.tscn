@@ -1,7 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://dolkwkcr0sh4i"]
+[gd_scene load_steps=10 format=3 uid="uid://dolkwkcr0sh4i"]
 
 [ext_resource type="Script" uid="uid://dii7wvfxp8xkl" path="res://scenes/classic.gd" id="1_lnrsd"]
 [ext_resource type="PackedScene" uid="uid://dbcls2wx4yer1" path="res://scenes/die_slot.tscn" id="2_2xh8w"]
+[ext_resource type="Texture2D" uid="uid://b1ul630exllv8" path="res://assets/dice_2.svg" id="3_fau2s"]
+[ext_resource type="Texture2D" uid="uid://3wdxu4xi2jht" path="res://assets/dice_5.svg" id="4_nkbur"]
+[ext_resource type="Texture2D" uid="uid://cumgvtdhnjics" path="res://assets/dice_3.svg" id="5_8djr4"]
+[ext_resource type="Texture2D" uid="uid://dquc46n013a3u" path="res://assets/dice_1.svg" id="6_dagab"]
+[ext_resource type="Texture2D" uid="uid://c8ekv2rh5jewx" path="res://assets/dice_4.svg" id="7_u0kjf"]
+[ext_resource type="Texture2D" uid="uid://dyshce1r17dye" path="res://assets/dice_6.svg" id="8_60m13"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u268o"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": ExtResource("8_60m13")
+}, {
+"duration": 0.5,
+"texture": ExtResource("3_fau2s")
+}, {
+"duration": 0.5,
+"texture": ExtResource("4_nkbur")
+}, {
+"duration": 0.5,
+"texture": ExtResource("5_8djr4")
+}, {
+"duration": 0.5,
+"texture": ExtResource("6_dagab")
+}, {
+"duration": 0.5,
+"texture": ExtResource("7_u0kjf")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 6.0
+}]
 
 [node name="classic" type="Node2D"]
 script = ExtResource("1_lnrsd")
@@ -107,6 +139,15 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.7, 1.7)
 metadata/_edit_use_anchors_ = true
+
+[node name="RollAnimation" type="AnimatedSprite2D" parent="UI-Elements"]
+visible = false
+position = Vector2(714, 370)
+scale = Vector2(0.567, 0.567)
+sprite_frames = SubResource("SpriteFrames_u268o")
+animation = &"roll"
+autoplay = "roll"
+centered = false
 
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(461, -146)
