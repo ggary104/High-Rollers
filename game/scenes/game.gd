@@ -3,7 +3,7 @@ extends Node2D
 
 #Variables - To store the main game logic data
 var DiceObject := preload("res://scenes/dice.tscn")
-var player_turn: int = randi() % 2  + 1 #Is it player1's turn or player 2s
+var player_turn = randi() % 2  + 1 #Is it player1's turn or player 2s
 
 var player1_rows: Array = [
 	[0, 0, 0], 
@@ -22,6 +22,10 @@ var game_over: bool = false
 var dice_textures: Array = []
 var current_dice: Dice = null
 
+const MAX_HEALTH: int = 100
+var player1_health: int = MAX_HEALTH
+var player2_health: int = MAX_HEALTH
+
 # Variables used in labels to display the scores and Which Players Turn Is It
 # On ready -> They need to load when the labels are loaded 
 @onready var player1_score_label = $"UI-Elements/Player1Score" as Label
@@ -32,6 +36,12 @@ var current_dice: Dice = null
 @onready var player1_dice_grid = $Board/DiceGrid as DiceGrid
 @onready var player2_dice_grid = $Board/DiceGrid2 as DiceGrid
 @onready var dice_spawn_position = $Board/DiceSpawnPosition as Marker2D
+
+#Variable for player 1 and player 2 cash in button used for attacking the health
+@onready var player1_cash_in_button = $"UI-Elements/Player1CashInButton" as Button
+@onready var player2_cash_in_button = $"UI-Elements/Player2CashInButton" as Button
+@onready var player1_healthbar = $"UI-Elements/Player1Health" as ProgressBar
+@onready var player2_healthbar = $"UI-Elements/Player2Health" as ProgressBar
 
 
 func _ready() -> void:
@@ -50,12 +60,18 @@ func _ready() -> void:
 		player1_turn()
 	else:
 		player2_turn()
+	update_health_bars()
 
 
 func player1_turn() -> void:
 	player1_roll_button.disabled = false
 	player1_roll_button.visible = true
 	player2_roll_button.visible = false
+	
+	player1_cash_in_button.visible = true
+	player1_cash_in_button.disabled = false
+	player2_cash_in_button.visible = false
+	
 	update_ui()
 
 
@@ -64,6 +80,10 @@ func player2_turn() -> void:
 		player2_roll_button.disabled = false
 		player2_roll_button.visible = true
 		player1_roll_button.visible = false
+		
+		player2_cash_in_button.visible = true
+		player2_cash_in_button.disabled = false
+		player1_cash_in_button.visible = false
 		update_ui()
 	else:
 		computer_turn()
@@ -134,7 +154,6 @@ func computer_turn() -> void:
 
 
 func remove_opponent_dice(row_index: int, roll_value: int):
-	
 	var opponent_rows: Array = player2_rows if player_turn == 1 else player1_rows
 	var current_board: DiceGrid = player2_dice_grid if player_turn == 1 else player1_dice_grid
 	var column: int = 0
@@ -190,40 +209,48 @@ func switch_turn() -> void:
 
 
 func check_game_over() -> void:
-	var player1_full: bool = true
-	for i in player1_rows:
-		if 0 in i:
-			player1_full = false
-	
-	var player2_full: bool = true
-	for i in player2_rows:
-		if 0 in i:
-			player2_full = false
-	
-	if player1_full or player2_full:
-		var player1_scores: int = (
-				calculate_row_score(player1_rows[0]) 
-				+ calculate_row_score(player1_rows[1]) 
-				+ calculate_row_score(player1_rows[2])
-		)
-		
-		var player2_scores: int = (
-				calculate_row_score(player2_rows[0]) 
-				+ calculate_row_score(player2_rows[1]) 
-				+ calculate_row_score(player2_rows[2])
-		)
-		
-		if player1_scores > player2_scores:
-			GameManager.winner_text = "Player 1 Wins";
-		elif player1_scores < player2_scores:
-			GameManager.winner_text = "Player 2 Wins";
-		else:
-			GameManager.winner_text = "It's a draw!"
+	if player1_health <= 0:
 		game_over = true
+		GameManager.winner_text = "Player 2 Wins!"
 		SceneManager.change_scene("res://scenes/game_over.tscn")
+	elif player2_health <= 0:
+		game_over = true
+		GameManager.winner_text = "Player 1 Wins!"
+		SceneManager.change_scene("res://scenes/game_over.tscn")
+	
+	# KEEPING THIS COMMENTED FOR REFERENCE FOR THE 'CLASSIC' MODE IF NEEDED
+	#var player1_full: bool = true
+	#for i in player1_rows:
+		#if 0 in i:
+			#player1_full = false
+	#
+	#var player2_full: bool = true
+	#for i in player2_rows:
+		#if 0 in i:
+			#player2_full = false
+	#
+	#if player1_full or player2_full:
+		#var player1_scores: int = (
+				#calculate_row_score(player1_rows[0]) 
+				#+ calculate_row_score(player1_rows[1]) 
+				#+ calculate_row_score(player1_rows[2])
+		#)
+		#
+		#var player2_scores: int = (
+				#calculate_row_score(player2_rows[0]) 
+				#+ calculate_row_score(player2_rows[1]) 
+				#+ calculate_row_score(player2_rows[2])
+		#)
+		#
+		#if player1_scores > player2_scores:
+			#GameManager.winner_text = "Player 1 Wins";
+		#elif player1_scores < player2_scores:
+			#GameManager.winner_text = "Player 2 Wins";
+		#else:
+			#GameManager.winner_text = "It's a draw!"
 
 
-func computer_choice():
+func computer_choice() -> Vector2i:
 	var row_scores = [0,0,0] #Scores to figure out the best column
 	var rows = [player2_rows[0], player2_rows[1], player2_rows[2]] #Get the value of the columns
 	var opponet_rows = [player1_rows[0], player1_rows[1], player1_rows[2]] #Opponent column to figure out the best move
@@ -273,7 +300,7 @@ func get_random_tile() -> Vector2i:
 
 # TODO: Put score calculation into its own function
 # TODO: Add UI management into its own node/script
-func update_ui():
+func update_ui() -> void:
 	var player1_score: int = (
 			calculate_row_score(player1_rows[0]) 
 			+ calculate_row_score(player1_rows[1]) 
@@ -290,11 +317,70 @@ func update_ui():
 	player2_score_label.text = "P2 Score: " + str(player2_score)
 	
 	if current_dice == null:
-		turn_indicator_label.text = "Player 1's Turn: Roll the dice!" if player_turn == 1 else "Player 2's Turn: Roll the dice!"
+		turn_indicator_label.text = (
+				"Player 1's Turn: Roll the dice!" if player_turn == 1 
+				else "Player 2's Turn: Roll the dice!"
+		)
 	else:
 		var current_roll: int = current_dice.get_score_value()
-		turn_indicator_label.text = "Player 1 Rolled: " + str(current_roll) if player_turn == 1 else "Player 2 Rolled: " + str(current_roll)
+		turn_indicator_label.text = (
+				"Player 1 Rolled: " + str(current_roll) if player_turn == 1 
+				else "Player 2 Rolled: " + str(current_roll)
+		)
 
+
+#Health bar system code:
+func update_health_bars() -> void:
+	player1_healthbar.value = player1_health
+	player2_healthbar.value = player2_health
+
+
+func perform_cash_in() -> void:
+	if game_over:
+		return
+	
+	var current_player_rows: Array = player1_rows if player_turn == 1 else player2_rows
+	var score_to_cash_in: int = (
+			calculate_row_score(current_player_rows[0]) 
+			+ calculate_row_score(current_player_rows[1]) 
+			+ calculate_row_score(current_player_rows[2])
+	)
+	
+	if score_to_cash_in > 0:
+		if player_turn == 1:
+			player2_health -= score_to_cash_in
+		else:
+			player1_health -= score_to_cash_in
+	else:
+		return
+	
+	player1_health = max(0,player1_health)
+	player2_health = max(0,player2_health)
+	update_health_bars();
+	
+	for i in range(3):
+		for j in range(3):
+			current_player_rows[i][j] = 0
+	
+	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
+	current_grid.clear()
+	
+	check_game_over()
+	
+	if !game_over:
+		switch_turn()
+	
+	update_ui()
+
+
+func _on_player_1_cash_in_button_pressed() -> void:
+	if player_turn == 1:
+		perform_cash_in()
+
+
+func _on_player_2_cash_in_button_pressed() -> void:
+	if player_turn == 2:
+		perform_cash_in()
 
 # Debug Functions
 

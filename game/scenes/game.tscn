@@ -98,6 +98,52 @@ offset_bottom = -230.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Player1HealthLabel" type="Label" parent="UI-Elements"]
+offset_left = 1386.0
+offset_top = 19.0
+offset_right = 1452.0
+offset_bottom = 42.0
+text = "Player 1:"
+
+[node name="Player2HealthLabel" type="Label" parent="UI-Elements"]
+offset_left = 35.0
+offset_top = 19.0
+offset_right = 101.0
+offset_bottom = 42.0
+text = "Player 2:"
+
+[node name="Player1Health" type="ProgressBar" parent="UI-Elements"]
+offset_left = 1386.0
+offset_top = 50.55
+offset_right = 1536.0
+offset_bottom = 77.55
+
+[node name="Player2Health" type="ProgressBar" parent="UI-Elements"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1523.0
+offset_top = 61.0
+offset_right = -1373.0
+offset_bottom = 88.0
+grow_horizontal = 0
+
+[node name="Player1CashInButton" type="Button" parent="UI-Elements"]
+offset_left = 893.0
+offset_top = 157.0
+offset_right = 1000.0
+offset_bottom = 204.0
+theme_override_font_sizes/font_size = 28
+text = "Cash In"
+
+[node name="Player2CashInButton" type="Button" parent="UI-Elements"]
+offset_left = 520.56
+offset_top = 156.0
+offset_right = 627.5602
+offset_bottom = 203.0
+theme_override_font_sizes/font_size = 28
+text = "Cash In"
+
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(3, 45)
 
@@ -112,3 +158,5 @@ position = Vector2(776, 251)
 
 [connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player1CashInButton" to="." method="_on_player_1_cash_in_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2CashInButton" to="." method="_on_player_2_cash_in_button_pressed"]

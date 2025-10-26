@@ -74,3 +74,11 @@ func get_tile_number_from_index(tile_index: Vector2i) -> int:
 
 func tile_selected(reference_to_tile: DiceTile) -> void:
 	on_tile_selected.emit(reference_to_tile)
+
+
+func clear() -> void:
+	for tile in tiles:
+		var tile_dice: Dice = tile.dice
+		
+		if not tile_dice == null:
+			tile_dice.destroy()
