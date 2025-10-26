@@ -79,6 +79,9 @@ func player1_turn() -> void:
 
 func player2_turn() -> void:
 	update_ui()
+	player1_roll_button.disabled = true
+	player1_roll_button.visible = false
+	
 	if is_player2_human:
 		player2_roll_button.disabled = false
 		player2_roll_button.visible = true
@@ -140,7 +143,10 @@ func place_dice(tile: DiceTile) -> void:
 	
 	remove_opponent_dice(tile_index.y, dice_value)
 	
-	player1_dice_grid.disable_tiles()
+	var current_dice_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
+	if current_dice_grid.is_enabled:
+		current_dice_grid.disable_tiles()
+	
 	tile.dice = current_dice
 	current_dice = null
 	switch_turn()
@@ -150,8 +156,6 @@ func computer_turn() -> void:
 	if game_over: 
 		return
 	# disable player roll button
-	player1_roll_button.disabled = true
-	player1_roll_button.visible = false
 	
 	var player2_score: int = (
 			calculate_row_score(player2_rows[0]) 
@@ -372,6 +376,9 @@ func update_health_bars() -> void:
 
 func perform_cash_in() -> void:
 	if game_over:
+		return
+	
+	if not current_dice == null:
 		return
 	
 	var current_player_rows: Array = player1_rows if player_turn == 1 else player2_rows
