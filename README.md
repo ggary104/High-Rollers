@@ -4,10 +4,29 @@
 
 # TODO
 
+|Task                             |Assigned To        |Status       |Priority   |
+|---------------------------------|-------------------|-------------|-----------|
+|Dice Effects                     |N/A                |Not Started  |High       |
+|Effect for 1 Die                 |N/A                |Not Started  |High       |
+|Effect for 2 Die                 |N/A                |Not Started  |High       |
+|Effect for 3 Die                 |N/A                |Not Started  |High       |
+|Effect for 4 Die                 |N/A                |Not Started  |High       |
+|Effect for 6 Die                 |N/A                |Not Started  |High       |          
+|Game Assets                      |Joseph             |In Progress  |High       |
+|Ability to Skip Turn/Hold Dice   |N/A                |Not Started  |Medium     |
+|Playtesting                      |Any                |In Progress  |Medium     |
+
+Message the discord/put your name in "Assigned To" if you want to start working on a task
+
 ---
 
 # BUGS
 
+|Bug Description (Brief)                 |Assigned To        |Status       |Priority   |
+|----------------------------------------|-------------------|-------------|-----------|
+|Example Bug                             |Joseph             |Fixed        |Low        |
+
+                         
 ---
 
 ## Phase 3                                                           CURRENT PHASE
