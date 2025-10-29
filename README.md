@@ -13,7 +13,7 @@
 |Effect for 4 Die                 |N/A                |Not Started  |High       |
 |Effect for 6 Die                 |N/A                |Not Started  |High       |          
 |Game Assets                      |Joseph             |In Progress  |High       |
-|Ability to Skip Turn/Hold Dice   |N/A                |Not Started  |Medium     |
+|Ability to Skip Turn             |N/A                |Not Started  |Medium     |
 |Playtesting                      |Any                |In Progress  |Medium     |
 
 Message the discord/put your name in "Assigned To" if you want to start working on a task
