@@ -7,8 +7,8 @@
 |Task                             |Assigned To        |Status       |Priority   |
 |---------------------------------|-------------------|-------------|-----------|
 |Dice Effects                     |Joseph             |In Progress  |High       |
-|Effect for 1 Die                 |Joseph             |In Progress  |High       |
-|Effect for 2 Die                 |N/A                |Not Started  |High       |
+|Effect for 1 Die                 |Joseph             |Completed    |High       |
+|Effect for 2 Die                 |Joseph             |In Progress  |High       |
 |Effect for 3 Die                 |N/A                |Not Started  |High       |
 |Effect for 4 Die                 |N/A                |Not Started  |High       |
 |Effect for 6 Die                 |N/A                |Not Started  |High       |          
