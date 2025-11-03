@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqjww7gs1x7fr"]
+[gd_scene load_steps=2 format=3 uid="uid://db044gpccygtj"]
 
 [ext_resource type="Script" uid="uid://bwc1kym4fdmui" path="res://scenes/options_menu.gd" id="1_liyum"]
 

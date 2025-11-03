@@ -117,6 +117,7 @@ func roll_dice() -> void:
 	add_child(dice)
 	dice.set_score_value(current_roll)
 	dice.position = dice_spawn_position.position
+	dice.on_dice_1_destroyed.connect(dice_1_effect)
 	current_dice = dice
 	
 	if player_turn == 1:
@@ -252,38 +253,6 @@ func check_game_over() -> void:
 		game_over = true
 		GameManager.winner_text = "Player 1 Wins!"
 		SceneManager.change_scene("res://scenes/game_over.tscn")
-	
-	
-	# KEEPING THIS COMMENTED FOR REFERENCE FOR THE 'CLASSIC' MODE IF NEEDED
-	#var player1_full: bool = true
-	#for i in player1_rows:
-		#if 0 in i:
-			#player1_full = false
-	#
-	#var player2_full: bool = true
-	#for i in player2_rows:
-		#if 0 in i:
-			#player2_full = false
-	#
-	#if player1_full or player2_full:
-		#var player1_scores: int = (
-				#calculate_row_score(player1_rows[0]) 
-				#+ calculate_row_score(player1_rows[1]) 
-				#+ calculate_row_score(player1_rows[2])
-		#)
-		#
-		#var player2_scores: int = (
-				#calculate_row_score(player2_rows[0]) 
-				#+ calculate_row_score(player2_rows[1]) 
-				#+ calculate_row_score(player2_rows[2])
-		#)
-		#
-		#if player1_scores > player2_scores:
-			#GameManager.winner_text = "Player 1 Wins";
-		#elif player1_scores < player2_scores:
-			#GameManager.winner_text = "Player 2 Wins";
-		#else:
-			#GameManager.winner_text = "It's a draw!"
 
 
 func computer_choice() -> Vector2i:
@@ -426,11 +395,34 @@ func _on_player_2_cash_in_button_pressed() -> void:
 
 
 func health_damage_animation():
-	var health_bar = player1_healthbar if player_turn == 2 else player2_healthbar
+	var health_bar: ProgressBar = player1_healthbar if player_turn == 2 else player2_healthbar
 	
 	var tween := create_tween();
 	tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
 	tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
+
+
+func health_heal_animation():
+	var health_bar: ProgressBar = player1_healthbar if player_turn == 1 else player2_healthbar
+	
+	var tween := create_tween();
+	tween.tween_property(health_bar,"self_modulate",Color.GREEN, 0.2)
+	tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
+
+
+func dice_1_effect() -> void:
+	var current_player_health: int = player1_health if player_turn == 1 else player2_health
+	
+	if current_player_health >= 100:
+		return
+	
+	if player_turn == 1:
+		player1_health += 1
+	else:
+		player2_health += 1
+	
+	health_heal_animation()
+	update_health_bars()
 
 
 # Debug Functions
