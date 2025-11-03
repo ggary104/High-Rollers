@@ -1,6 +1,9 @@
 class_name Dice
 extends Node2D
 
+
+signal on_dice_1_destroyed
+
 @onready var sprite = $AnimatedSprite2D as AnimatedSprite2D
 
 var score_value: int = 0:
@@ -23,4 +26,10 @@ func get_score_value() -> int:
 
 
 func destroy() -> void:
+	destroyed_effect()
 	queue_free()
+
+
+func destroyed_effect() -> void:
+	if score_value == 1:
+		on_dice_1_destroyed.emit()
