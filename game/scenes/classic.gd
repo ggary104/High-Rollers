@@ -21,7 +21,8 @@ var dice_textures = []
 @onready var turn_indicator_label = $"UI-Elements/TurnIndicator"
 @onready var player1_roll = $"UI-Elements/Player1Roll"
 @onready var player2_roll = $"UI-Elements/Player2Roll"
-@onready var roll_animation = $"UI-Elements/RollAnimation"
+@onready var roll_animation = $"UI-Elements/DiceRoll/RollAnimation"
+@onready var dice_roll = $"UI-Elements/DiceRoll"
 func _ready():
 	#Load all of the die images
 	for i in range(1, 7):
@@ -70,10 +71,13 @@ func player_two_turn():
 		update_ui()
 
 func roll_dice() -> void:
-	# Start roll animation
-	roll_animation.visible = true
-	#roll_animation.play("roll")
-	await get_tree().create_timer(1.5).timeout
+	# Roll animation
+	dice_roll.visible = true
+	roll_animation.stop() # Initializes for the first roll. Otherwise the first roll has off timing
+	roll_animation.play("roll")
+	await roll_animation.animation_finished
+	dice_roll.visible = false
+	
 	# Get roll value
 	current_roll = randi() % 6 + 1
 
@@ -222,14 +226,12 @@ func update_ui():
 	# Player 1 dice roll
 	if current_roll > 0 and player_turn == 1:
 		player1_roll.set_die(dice_textures[current_roll - 1])
-		roll_animation.visible = false
 	else:
 		player1_roll.set_die(null)
 		
 	# Player 2 dice roll
 	if current_roll > 0 and player_turn == 2:
 		player2_roll.set_die(dice_textures[current_roll - 1])
-		roll_animation.visible = false
 	else:
 		player2_roll.set_die(null)
 
