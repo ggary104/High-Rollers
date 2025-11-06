@@ -1,14 +1,14 @@
 # CSCI 265 Requirements and specifications (Phase 2)
 
-## Team name: YOUR TEAM NAME HERE
+## Team name: The High Rollers
 
-## Project/product name: YOUR PRODUCT NAME HERE
+## Project/product name: High ROllers
 
-## Contact person and email
+## Contact person and email 
 
 The following person has been designated the main contact person for questions from the reader:
 
- - NameA, their@emailaddy
+ - Seth, seth.william.doyle@gmail.com
 
 ## Introduction and overview
 
