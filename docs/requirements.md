@@ -196,3 +196,7 @@ This document describes the requirements and specifications for *High Rollers*, 
 | GameManager | Godot node managing game state |
 
 ---
+
+## Appendix A – File and Folder Structure
+
+
