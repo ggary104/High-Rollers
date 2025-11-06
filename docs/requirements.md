@@ -10,54 +10,189 @@ The following person has been designated the main contact person for questions f
 
  - Seth, seth.william.doyle@gmail.com
 
+This document describes the requirements and specifications for *High Rollers*, a two-mode dice strategy game developed using Godot 4. It includes gameplay descriptions, user interface specifications, non-functional requirements, and prioritized features for Phase 2 of the project.
+
+## Table of Contents
+1. [Introduction and Overview](#1-introduction-and-overview)  
+2. [Product Features and Behaviour](#2-product-features-and-behaviour)  
+3. [User Interface and Navigation](#3-user-interface-and-navigation)  
+4. [Non-Functional Requirements](#4-non-functional-requirements)  
+5. [Use Cases](#5-use-cases)  
+6. [Prioritized Feature Set](#6-prioritized-feature-set)  
+7. [Glossary](#7-glossary)  
+8. [Appendix A – File and Folder Structure](#appendix-a-file-and-folder-structure)  
+
 ## Introduction and overview
 
-Provide the reader with an introduction to the product: its purpose, its core features, what audience it is aimed at and how they'll be using it, and what platform(s) it is targeting.
+**Project Summary**  
+*High Rollers* is a competitive two-player dice game with both *Classic* and *Hot Dice* modes. Players take turns rolling dice to strategically fill a 3×3 grid. The game emphasizes luck, spatial reasoning, and tactical decision-making.
 
-If the product has limitations that the user wouldn't expect then those should be mentioned as well.  (For example, if we were building a calculator but it couldn't handle real number calculations then we should probably warn the reader about that.)
+**Target Platform**  
+- Desktop (Windows/macOS/Linux) using Godot 4 engine  
+- Mouse or touch-based interaction  
 
-## Product features and behaviour
+**Assumptions**  
+- Players understand basic dice mechanics.  
+- Devices support standard 16:9 resolutions.  
+- Internet connection is not required.  
+- No save/load functionality is necessary for single-session play.  
 
-This might be much like our original proposal but in far greater detail: we want to thoroughly explain/describe all aspects of the product's functionality: all the features and every aspect of its behaviour.
+**Known Limitations**  
+- Multiplayer is local-only.  
+- Limited sound effects.  
+- Accessibility features (such as color-blind mode) are not included in this phase.  
 
-Here the reader should should be able to find the answer for any question along the lines of
-- How do I use feature X?
-- How do I enter data value Y?
-- What are the limits (if any) on what I enter for Z?
-- What does the product do if I enter an incorrect value?
-- What happens when I select W?"
+---
 
-This section should be intuitive to follow if the reader is simply reading through the document to learn about the product, but it should also make it easy for the reader to quickly look up the answer to any specific question.
+## 2. Product Features and Behaviour
 
-## User interface and navigation
+### 2.1 Main Menu
+- The player shall be presented with the following options:  
+  - **Play** (launches game mode selection screen)  
+  - **How to Play** (shows gameplay instructions)  
+  - **Quit** (closes the application)
 
-Provide visual depictions of every screen, menu, drop-down, pop-up, etc.  This isn't intended to be a to-the-pixel exact representation, but it is expected to show all the visible elements and options, and their approximate positions and appearance.
+### 2.2 Mode Selection
+- Upon selecting *Play*, the player shall choose between:  
+  - **Classic Mode** – basic 3×3 dice grid battle  
+  - **Hot Dice Mode** – dice combat with health points (HP)
 
-Accompany each visual depiction with a clear description of what it shows and what each visible option represents.
+### 2.3 Classic Mode Gameplay
+- Players shall take turns rolling a die.  
+- Each roll shall yield a value from 1–6.  
+- The player shall place the die value into one of the 9 grid cells.  
+- The opposing player’s corresponding column or row shall react (score modification based on matching rules).  
+- The game shall end when either player’s grid is filled.  
+- The winner shall be the player with the higher total score.
 
-Provide a navigation guide/map and description that show how all the screens/menus etc relate to one another: i.e. clearly showing/describing how the user navigates from screen-to-screen and which screens/choices lead to which others.
+### 2.4 Hot Dice Mode Gameplay
+- Each player shall begin with **100 HP**.  
+- Dice rolls shall be placed on a 3×3 grid, similar to Classic Mode.  
+- When a row or column is completed, a “Cash In” can be triggered, dealing damage based on accumulated values.  
+- The player shall lose if their HP reaches 0.  
 
-## Use cases/scenarios
+### 2.5 Scoring
+- Scores shall update dynamically after each placement.  
+- Combo multipliers shall be applied when rows or columns contain matching numbers.  
+- “Cash In” shall reduce the opponent’s HP by the calculated total.  
 
-Provide use cases detailing the different ways someone might actually want to use the product (e.g. a "sign in" use case, a "check balance" use case, a "make a deposit" use case, etc).
+### 2.6 End Conditions
+- **Classic Mode:** Game ends when all grid cells are filled.  
+- **Hot Dice Mode:** Game ends when one player’s HP reaches 0.  
+- A results screen shall display winner, final score, and play again/quit options.  
 
-Provide scenarios that illustrate the use cases in a practical example.  (E.g. Bob has $30 to deposit and wants to deposit it, check the balance, and if there is enough then transfer $100 to his savings account, ... then walk through the Bob's actions from sign-in to sign-out.)
+---
 
-## Non-functional requirements
+## 3. User Interface and Navigation
 
-Detail any requirements beyond the actual feature set previously required, e.g.
-- safety/security/privacy requirements
-- performance requirements (response times, throughput, memory footprint)
-- software quality requirements
+### 3.1 Main Menu Layout
+```
+-------------------------------------
+|           HIGH ROLLERS            |
+|-----------------------------------|
+|  [Play]     [How to Play]     [Quit] |
+-------------------------------------
+```
 
-## Feature prioritization
+### 3.2 Game Screen Layout (Classic Mode)
+```
+-------------------------------------
+|  Player 1 Grid   |   Player 2 Grid |
+|  3×3 cells each   |   mirrored view |
+|-----------------------------------|
+|   [Roll]   [Undo]   [End Turn]    |
+-------------------------------------
+```
 
-Much like the scaling section in the original proposal, here we must document which features are regarded as essential, which ones are secondary priorities, and which ones are 'nice to have' but low priority for this term.
+### 3.3 Game Screen Layout (Hot Dice Mode)
+```
+-------------------------------------
+| P1 HP: 100          P2 HP: 100     |
+|   3×3 Grids + HP bars display      |
+|-----------------------------------|
+|  [Roll]  [Cash In]  [End Turn]    |
+-------------------------------------
+```
 
-## Glossary
+### 3.4 Navigation Rules
+- ESC key shall return to the previous screen.  
+- Clicking the in-game menu icon shall pause gameplay and show: *Resume*, *Restart*, *Quit*.  
 
-Define any product-specific terms and any terms that are unlikely to be known to the 'average' reader (e.g. a random second-year CS student).
+---
 
-## Appendices
+## 4. Non-Functional Requirements
 
-If additional supported documents are needed then append them here
+| Requirement | Description |
+|--------------|-------------|
+| **Performance** | Each turn update shall process within 0.2 seconds. |
+| **Usability** | All menu options shall be accessible via mouse or keyboard. |
+| **Portability** | The game shall run on any OS supported by Godot 4. |
+| **Maintainability** | Code shall follow the GDScript style guide. |
+| **Reliability** | Game logic shall remain consistent regardless of frame rate. |
+| **Aesthetics** | Simple 2D UI with clean layout and dice animations. |
+
+---
+
+## 5. Use Cases
+
+### 5.1 Use Case: Play a Game in Classic Mode
+
+**Primary Actor:** Player  
+**Preconditions:** Game is launched and user is on the main menu.  
+**Main Flow:**  
+1. The player selects *Play → Classic Mode*.  
+2. The game board initializes with empty 3×3 grids.  
+3. Player 1 clicks *Roll*.  
+4. A die animation plays and shows a random number (1–6).  
+5. The player clicks a cell to place the die value.  
+6. Player 2 repeats the process.  
+7. When both grids are filled, the game computes scores.  
+8. Results screen displays winner and score.  
+
+**Postconditions:** Game state resets or player returns to main menu.  
+
+---
+
+### 5.2 Use Case: Hot Dice Combat Round
+
+**Primary Actor:** Player  
+**Preconditions:** Player selects *Play → Hot Dice Mode*.  
+**Main Flow:**  
+1. The game displays HP bars for both players.  
+2. Player 1 rolls and places a die.  
+3. Once a row or column is filled, *Cash In* becomes available.  
+4. Player activates *Cash In* to damage opponent.  
+5. If HP ≤ 0, results screen declares the winner.  
+
+**Postconditions:** Player can replay or quit to the main menu.  
+
+---
+
+## 6. Prioritized Feature Set
+
+| Priority | Feature | Description |
+|-----------|----------|-------------|
+| High | Classic Mode Gameplay | Core turn-based 3×3 dice battle |
+| High | Hot Dice Mode | Adds HP and combat system |
+| Medium | Dice Animations | Visual feedback for rolls |
+| Medium | Sound Effects | Rolling and damage sounds |
+| Medium | Scoring UI | Displays score dynamically |
+| Low | Menu Music | Background theme |
+| Low | Save System | Future enhancement |
+
+---
+
+## 7. Glossary
+
+| Term | Definition |
+|------|-------------|
+| Die (Dice) | Six-sided object producing values 1–6 |
+| Grid | 3×3 layout where dice are placed |
+| Hot Dice | Game mode with HP and combat mechanics |
+| Classic Mode | Game mode focused on score-based play |
+| Cash In | Action to convert accumulated dice into HP damage |
+| HP | Health Points |
+| AI | Computer-controlled opponent |
+| GameManager | Godot node managing game state |
+
+---
