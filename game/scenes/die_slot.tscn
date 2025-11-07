@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dbcls2wx4yer1"]
+[gd_scene load_steps=2 format=3 uid="uid://dbcls2wx4yer1"]
 
 [ext_resource type="Script" uid="uid://44r0bw5apeyq" path="res://scenes/die_slot.gd" id="1_wamh2"]
 [ext_resource type="Texture2D" uid="uid://b1ul630exllv8" path="res://assets/dice_2.svg" id="2_glybk"]
@@ -41,13 +41,3 @@ offset_bottom = 40.0
 expand_mode = 2
 stretch_mode = 5
 script = ExtResource("1_wamh2")
-
-[node name="RollAnimation" type="AnimatedSprite2D" parent="."]
-visible = false
-scale = Vector2(0.333, 0.333)
-sprite_frames = SubResource("SpriteFrames_jjggo")
-animation = &"roll"
-autoplay = "roll"
-frame = 5
-frame_progress = 1.0
-centered = false

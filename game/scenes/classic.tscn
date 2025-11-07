@@ -1,7 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://dolkwkcr0sh4i"]
+[gd_scene load_steps=12 format=3 uid="uid://dolkwkcr0sh4i"]
 
 [ext_resource type="Script" uid="uid://dii7wvfxp8xkl" path="res://scenes/classic.gd" id="1_lnrsd"]
 [ext_resource type="PackedScene" uid="uid://dbcls2wx4yer1" path="res://scenes/die_slot.tscn" id="2_2xh8w"]
+[ext_resource type="Texture2D" uid="uid://b1ul630exllv8" path="res://assets/dice_2.svg" id="3_fau2s"]
+[ext_resource type="Texture2D" uid="uid://3wdxu4xi2jht" path="res://assets/dice_5.svg" id="4_nkbur"]
+[ext_resource type="Texture2D" uid="uid://cumgvtdhnjics" path="res://assets/dice_3.svg" id="5_8djr4"]
+[ext_resource type="Texture2D" uid="uid://dquc46n013a3u" path="res://assets/dice_1.svg" id="6_dagab"]
+[ext_resource type="Texture2D" uid="uid://c8ekv2rh5jewx" path="res://assets/dice_4.svg" id="7_u0kjf"]
+[ext_resource type="Texture2D" uid="uid://dyshce1r17dye" path="res://assets/dice_6.svg" id="8_60m13"]
+
+[sub_resource type="Animation" id="Animation_fau2s"]
+resource_name = "roll"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("5_8djr4"), ExtResource("4_nkbur"), ExtResource("6_dagab"), ExtResource("8_60m13"), ExtResource("3_fau2s"), ExtResource("4_nkbur"), ExtResource("3_fau2s"), ExtResource("7_u0kjf"), ExtResource("4_nkbur"), ExtResource("3_fau2s"), ExtResource("5_8djr4"), ExtResource("8_60m13")]
+}
+
+[sub_resource type="Animation" id="Animation_nkbur"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_dagab")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8djr4"]
+_data = {
+&"RESET": SubResource("Animation_nkbur"),
+&"roll": SubResource("Animation_fau2s")
+}
 
 [node name="classic" type="Node2D"]
 script = ExtResource("1_lnrsd")
@@ -108,7 +151,21 @@ grow_vertical = 2
 scale = Vector2(1.7, 1.7)
 metadata/_edit_use_anchors_ = true
 
+[node name="DiceRoll" type="Sprite2D" parent="UI-Elements"]
+visible = false
+position = Vector2(714, 370)
+scale = Vector2(0.567, 0.567)
+texture = ExtResource("6_dagab")
+centered = false
+
+[node name="RollAnimation" type="AnimationPlayer" parent="UI-Elements/DiceRoll"]
+libraries = {
+&"": SubResource("AnimationLibrary_8djr4")
+}
+autoplay = "roll"
+
 [node name="Board" type="Node2D" parent="."]
+z_index = 100
 position = Vector2(461, -146)
 
 [node name="Player1Board" type="PanelContainer" parent="Board"]
@@ -258,6 +315,16 @@ text = "
 
 
                        "
+
+[node name="Background" type="ColorRect" parent="."]
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.6156863, 0.6509804, 0.7137255, 1)
 
 [connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
