@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="High Rollers"
-run/main_scene="uid://dqjww7gs1x7fr"
+run/main_scene="uid://m70qkunbxsx7"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,20 @@ config/icon="res://icon.svg"
 
 GameManager="*res://scripts/GameManager.gd"
 SceneManager="*res://scripts/SceneManager.gd"
+
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/stretch/mode="canvas_items"
+
+[input]
+
+click={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(146, 16),"global_position":Vector2(155, 64),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
 
 [rendering]
 

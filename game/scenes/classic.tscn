@@ -1,0 +1,336 @@
+[gd_scene load_steps=12 format=3 uid="uid://dolkwkcr0sh4i"]
+
+[ext_resource type="Script" uid="uid://dii7wvfxp8xkl" path="res://scenes/classic.gd" id="1_lnrsd"]
+[ext_resource type="PackedScene" uid="uid://dbcls2wx4yer1" path="res://scenes/die_slot.tscn" id="2_2xh8w"]
+[ext_resource type="Texture2D" uid="uid://b1ul630exllv8" path="res://assets/dice_2.svg" id="3_fau2s"]
+[ext_resource type="Texture2D" uid="uid://3wdxu4xi2jht" path="res://assets/dice_5.svg" id="4_nkbur"]
+[ext_resource type="Texture2D" uid="uid://cumgvtdhnjics" path="res://assets/dice_3.svg" id="5_8djr4"]
+[ext_resource type="Texture2D" uid="uid://dquc46n013a3u" path="res://assets/dice_1.svg" id="6_dagab"]
+[ext_resource type="Texture2D" uid="uid://c8ekv2rh5jewx" path="res://assets/dice_4.svg" id="7_u0kjf"]
+[ext_resource type="Texture2D" uid="uid://dyshce1r17dye" path="res://assets/dice_6.svg" id="8_60m13"]
+
+[sub_resource type="Animation" id="Animation_fau2s"]
+resource_name = "roll"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("5_8djr4"), ExtResource("4_nkbur"), ExtResource("6_dagab"), ExtResource("8_60m13"), ExtResource("3_fau2s"), ExtResource("4_nkbur"), ExtResource("3_fau2s"), ExtResource("7_u0kjf"), ExtResource("4_nkbur"), ExtResource("3_fau2s"), ExtResource("5_8djr4"), ExtResource("8_60m13")]
+}
+
+[sub_resource type="Animation" id="Animation_nkbur"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_dagab")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8djr4"]
+_data = {
+&"RESET": SubResource("Animation_nkbur"),
+&"roll": SubResource("Animation_fau2s")
+}
+
+[node name="classic" type="Node2D"]
+script = ExtResource("1_lnrsd")
+
+[node name="UI-Elements" type="CanvasLayer" parent="."]
+
+[node name="Player1Score" type="Label" parent="UI-Elements"]
+offset_left = 949.0
+offset_top = 140.0
+offset_right = 1104.0
+offset_bottom = 172.0
+theme_override_font_sizes/font_size = 23
+text = "Player 1 Score"
+metadata/_edit_use_anchors_ = true
+
+[node name="Player2Score" type="Label" parent="UI-Elements"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1073.0
+offset_top = 140.0
+offset_right = -918.0
+offset_bottom = 172.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 23
+text = "Player 2 Score"
+metadata/_edit_use_anchors_ = true
+
+[node name="TurnIndicator" type="Label" parent="UI-Elements"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = 21.0
+offset_right = 2.0
+offset_bottom = 53.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 23
+text = "Who's Turn Is It"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1RollButton" type="Button" parent="UI-Elements"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 148.5
+offset_top = -123.0
+offset_right = 207.5
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.4, 1.4)
+theme_override_font_sizes/font_size = 28
+text = "Roll"
+metadata/_edit_use_anchors_ = true
+
+[node name="Player2RollButton" type="Button" parent="UI-Elements"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -233.0
+offset_top = -123.0
+offset_right = -174.0
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.4, 1.4)
+theme_override_font_sizes/font_size = 28
+text = "Roll"
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1Roll" parent="UI-Elements" instance=ExtResource("2_2xh8w")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.99994
+offset_top = -79.99997
+offset_right = 14.000061
+offset_bottom = 20.00003
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.7, 1.7)
+metadata/_edit_use_anchors_ = true
+
+[node name="Player2Roll" parent="UI-Elements" instance=ExtResource("2_2xh8w")]
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.99994
+offset_top = -80.00009
+offset_right = 14.000061
+offset_bottom = 19.999908
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.7, 1.7)
+metadata/_edit_use_anchors_ = true
+
+[node name="DiceRoll" type="Sprite2D" parent="UI-Elements"]
+visible = false
+position = Vector2(714, 370)
+scale = Vector2(0.567, 0.567)
+texture = ExtResource("6_dagab")
+centered = false
+
+[node name="RollAnimation" type="AnimationPlayer" parent="UI-Elements/DiceRoll"]
+libraries = {
+&"": SubResource("AnimationLibrary_8djr4")
+}
+autoplay = "roll"
+
+[node name="Board" type="Node2D" parent="."]
+z_index = 100
+position = Vector2(461, -146)
+
+[node name="Player1Board" type="PanelContainer" parent="Board"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 488.0
+offset_top = 860.0
+offset_right = 796.0
+offset_bottom = 1168.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5707964
+scale = Vector2(1.7, 1.7)
+
+[node name="Player1Grid" type="GridContainer" parent="Board/Player1Board"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 5
+columns = 3
+
+[node name="Player1ColumnInputs" type="HBoxContainer" parent="Board/Player1Board"]
+z_index = -1
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Column1Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player1Board/Player1ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                       "
+
+[node name="Player2Board" type="PanelContainer" parent="Board"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -338.0
+offset_top = 860.0
+offset_right = -30.0
+offset_bottom = 1168.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5707964
+scale = Vector2(1.7, 1.7)
+
+[node name="Player2Grid" type="GridContainer" parent="Board/Player2Board"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 5
+columns = 3
+
+[node name="Player2ColumnInputs" type="HBoxContainer" parent="Board/Player2Board"]
+z_index = -1
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Column1Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                      "
+
+[node name="Column2Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+                     "
+
+[node name="Column3Button" type="Button" parent="Board/Player2Board/Player2ColumnInputs"]
+layout_mode = 2
+text = "
+ 
+
+
+
+
+
+
+
+
+
+
+                       "
+
+[node name="Background" type="ColorRect" parent="."]
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.6156863, 0.6509804, 0.7137255, 1)
+
+[connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
+[connection signal="pressed" from="Board/Player1Board/Player1ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column1Button" to="." method="_on_column_button_pressed" binds= [0]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column2Button" to="." method="_on_column_button_pressed" binds= [1]]
+[connection signal="pressed" from="Board/Player2Board/Player2ColumnInputs/Column3Button" to="." method="_on_column_button_pressed" binds= [2]]
