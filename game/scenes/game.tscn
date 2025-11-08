@@ -32,10 +32,10 @@ text = "Player 2 Score"
 [node name="TurnIndicator" type="Label" parent="UI-Elements"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = -5.0
-offset_top = 464.0
-offset_right = -5.0
-offset_bottom = 496.0
+offset_left = 691.0
+offset_top = 450.0
+offset_right = -738.0
+offset_bottom = 482.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 23
 text = "Who's Turn Is It"
@@ -62,10 +62,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -755.0
-offset_top = -735.0
-offset_right = -696.0
-offset_bottom = -688.0
+offset_left = -766.0
+offset_top = -737.0
+offset_right = -707.0
+offset_bottom = -690.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 28
@@ -129,13 +129,29 @@ offset_bottom = 177.0
 theme_override_font_sizes/font_size = 28
 text = "Cash In"
 
+[node name="Player1SkipTurnButton" type="Button" parent="UI-Elements"]
+offset_left = 831.0
+offset_top = 210.0
+offset_right = 938.0
+offset_bottom = 257.0
+theme_override_font_sizes/font_size = 28
+text = "Skip"
+
 [node name="Player2CashInButton" type="Button" parent="UI-Elements"]
-offset_left = 601.0
-offset_top = 139.0
-offset_right = 708.0002
-offset_bottom = 186.0
+offset_left = 589.0
+offset_top = 130.0
+offset_right = 696.0002
+offset_bottom = 177.0
 theme_override_font_sizes/font_size = 28
 text = "Cash In"
+
+[node name="Player2SkipTurnButton" type="Button" parent="UI-Elements"]
+offset_left = 589.0
+offset_top = 210.0
+offset_right = 696.0002
+offset_bottom = 257.0
+theme_override_font_sizes/font_size = 28
+text = "Skip"
 
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(3, 45)
@@ -147,9 +163,11 @@ position = Vector2(1065, 111)
 position = Vector2(184, 118)
 
 [node name="DiceSpawnPosition" type="Marker2D" parent="Board"]
-position = Vector2(776, 251)
+position = Vector2(771, 338)
 
 [connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player1CashInButton" to="." method="_on_player_1_cash_in_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player1SkipTurnButton" to="." method="_on_player_1_skip_turn_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player2CashInButton" to="." method="_on_player_2_cash_in_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2SkipTurnButton" to="." method="_on_player_2_skip_turn_button_pressed"]

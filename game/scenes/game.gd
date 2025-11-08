@@ -32,10 +32,13 @@ var player2_health: int = MAX_HEALTH
 @onready var player2_score_label = $"UI-Elements/Player2Score" as Label
 @onready var player1_roll_button = $"UI-Elements/Player1RollButton" as Button
 @onready var player2_roll_button = $"UI-Elements/Player2RollButton" as Button
+@onready var player1_skip_button = $"UI-Elements/Player1SkipTurnButton" as Button
+@onready var player2_skip_button = $"UI-Elements/Player2SkipTurnButton" as Button
 @onready var turn_indicator_label = $"UI-Elements/TurnIndicator" as Label
 @onready var player1_dice_grid = $Board/DiceGrid as DiceGrid
 @onready var player2_dice_grid = $Board/DiceGrid2 as DiceGrid
 @onready var dice_spawn_position = $Board/DiceSpawnPosition as Marker2D
+
 
 #Variable for player 1 and player 2 cash in button used for attacking the health
 @onready var player1_cash_in_button = $"UI-Elements/Player1CashInButton" as Button
@@ -52,6 +55,8 @@ func _ready() -> void:
 	player2_roll_button.visible = false
 	player1_cash_in_button.visible = false
 	player2_cash_in_button.visible = false
+	player1_skip_button.visible = false
+	player2_skip_button.visible = false
 	
 	if GameManager.playerNumber == 1:
 		is_player2_human = false
@@ -70,9 +75,14 @@ func player1_turn() -> void:
 	player1_roll_button.visible = true
 	player2_roll_button.visible = false
 	
+	
 	player1_cash_in_button.visible = true
 	player1_cash_in_button.disabled = false
 	player2_cash_in_button.visible = false
+	
+	player1_skip_button.visible = true
+	player1_skip_button.disabled=false
+	player2_skip_button.visible = false
 	
 	update_ui()
 
@@ -81,15 +91,17 @@ func player2_turn() -> void:
 	update_ui()
 	player1_roll_button.disabled = true
 	player1_roll_button.visible = false
+	player1_cash_in_button.visible = false
+	player1_skip_button.disabled = true
+	player1_skip_button.visible = false
+
 	
 	if is_player2_human:
 		player2_roll_button.disabled = false
 		player2_roll_button.visible = true
-		player1_roll_button.visible = false
 		
 		player2_cash_in_button.visible = true
 		player2_cash_in_button.disabled = false
-		player1_cash_in_button.visible = false
 	else:
 		computer_turn()
 
@@ -169,19 +181,29 @@ func computer_turn() -> void:
 		await computer_cash_in()
 	
 	var cash_in_chance: float = 0.3
+	var skip_chance: float = 0.2
+	
 	
 	if player2_score > 0 and randf() < cash_in_chance:
 		await computer_cash_in()
 	else:
 		await get_tree().create_timer(.8).timeout  # delay before roll
 		roll_dice()
-		await get_tree().create_timer(1.2).timeout  # delay before placing dice
-		var choice: Vector2i = computer_choice() #Then get the best choice
-		var tile: DiceTile = player2_dice_grid.get_tile(choice)
-		place_dice(tile)
+		if randf() < skip_chance:
+			await computer_skip_turn()
+		else:
+			await get_tree().create_timer(1.2).timeout  # delay before placing dice
+			var choice: Vector2i = computer_choice() #Then get the best choice
+			var tile: DiceTile = player2_dice_grid.get_tile(choice)
+			place_dice(tile)
 	
 	update_ui()
 
+func computer_skip_turn():
+	turn_indicator_label.text = "Computer Skipped!"
+	await get_tree().create_timer(1.2).timeout
+	skip_turn()
+	
 
 func computer_cash_in() -> void:
 	turn_indicator_label.text = "Computer Cashed In!"
@@ -439,3 +461,28 @@ func print_player_grids() -> void:
 	print(player2_rows[2])
 	
 	print("\n")
+
+
+#Skip Turn	
+
+func skip_turn():
+	if game_over:
+		return
+	
+	##Only give ability to skip if the player has alteast rolled something
+	if current_dice == null:
+		return
+	##Clear up the current rolled number and update turn and switch turns
+	current_dice.destroy()
+	current_dice = null
+	update_ui()
+	switch_turn()
+
+func _on_player_1_skip_turn_button_pressed() -> void:
+	skip_turn()
+
+
+
+
+func _on_player_2_skip_turn_button_pressed() -> void:
+	skip_turn()
