@@ -159,6 +159,8 @@ func computer_turn() -> void:
 	var is_current_grid_full: bool = player2_dice_grid.is_full()
 	if is_current_grid_full:
 		await computer_cash_in()
+		update_ui()
+		return
 	
 	var cash_in_chance: float = 0.3
 	var skip_chance: float = 0.2
@@ -394,14 +396,10 @@ func dice_1_effect() -> void:
 
 func print_player_grids() -> void:
 	print("\nP1 Grid:")
-	#print(player1_rows[0])
-	#print(player1_rows[1])
-	#print(player1_rows[2])
+	player1_dice_grid.print_tiles()
 	
 	print("\nP2Grid:")
-	#print(player2_rows[0])
-	#print(player2_rows[1])
-	#print(player2_rows[2])
+	player2_dice_grid.print_tiles()
 	
 	print("\n")
 

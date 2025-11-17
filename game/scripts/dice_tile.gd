@@ -43,3 +43,10 @@ func disable() -> void:
 func enable() -> void:
 	if not enabled:
 		enabled = true
+
+
+func get_dice_score() -> int:
+	if is_instance_valid(dice):
+		return dice.score_value
+	else:
+		return 0
