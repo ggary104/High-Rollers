@@ -104,7 +104,6 @@ func get_grid_score() -> int:
 			dice_score *= dice_in_row.count(dice_score)
 			if is_dice_2_in_column(dice_grid, column):
 				dice_score *= 2
-				dice_score -= 2
 			
 			score_total += dice_score
 		
