@@ -340,10 +340,6 @@ func perform_cash_in() -> void:
 	health_damage_animation()
 	update_health_bars();
 	
-	#for i in range(3):
-		#for j in range(3):
-			#current_player_rows[i][j] = 0
-	
 	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	current_grid.clear()
 	check_game_over()
@@ -412,23 +408,22 @@ func print_player_grids() -> void:
 
 #Skip Turn	
 
-func skip_turn():
+func skip_turn() -> void:
 	if game_over:
 		return
 	
-	##Only give ability to skip if the player has alteast rolled something
+	# Only give ability to skip if the player has alteast rolled something
 	if current_dice == null:
 		return
-	##Clear up the current rolled number and update turn and switch turns
+	# Clear up the current rolled number and update turn and switch turns
 	current_dice.destroy()
 	current_dice = null
 	update_ui()
 	switch_turn()
 
+
 func _on_player_1_skip_turn_button_pressed() -> void:
 	skip_turn()
-
-
 
 
 func _on_player_2_skip_turn_button_pressed() -> void:

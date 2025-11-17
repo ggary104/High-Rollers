@@ -135,6 +135,7 @@ func is_dice_2_in_column(dice_grid: Array, column: int) -> bool:
 	
 	return false
 
+
 func get_grid_dice() -> Array:
 	var grid_dice: Array = []
 	var row: int = 0
