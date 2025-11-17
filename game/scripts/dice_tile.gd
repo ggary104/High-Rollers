@@ -21,8 +21,14 @@ func _on_area_2d_mouse_exited() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("click") and is_touching_mouse:
+		print("Dice:")
+		print(dice)
+		print("Enabled:")
+		print(enabled)
 	if event.is_action_pressed("click") and is_touching_mouse and enabled:
 		select()
+		print("select")
 
 
 func select() -> void:
