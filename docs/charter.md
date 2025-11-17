@@ -83,7 +83,7 @@ Tuesday meetings serve as primary planning sessions, with additional check-ins s
 
 **Conflict Resolution:**
 
-Disagreements will be resolved through open discussion emphasizing our team philosophy of constructive collaboration. When consensus cannot be reached, decisions will be made by team vote. In case of ties, the relevant role lead casts the deciding vote. All members agree to abide by this process and support final decisions
+Disagreements will be resolved through open discussion emphasizing our team philosophy of constructive collaboration. When consensus cannot be reached, decisions will be made by team vote. In case of ties, the relevant role lead casts the deciding vote. All members agree to abide by this process and support final decisions. If the issue persists after two unresolved attempts at internal discussion, the concern will be escalated to the course instructor for mediation. This ensures accountability while allowing the team to maintain focus on progress.
 
 **AI Usage Policy:**
 
@@ -93,6 +93,8 @@ Disagreements will be resolved through open discussion emphasizing our team phil
 ·  	All uses of AI in this project must align with the VIU's Student Code of Conduct and the LLM-Use Policy in the course outline.
 
  
+ **Risk Management:**
+To address the possibility of a team member dropping out, tasks will be redistributed based on each member’s designated understudy role. The remaining members will reassign responsibilities through discussion and notify the instructor immediately to adjust workload expectations. Pair programming and shared documentation practices will help minimize disruption.
 
 **Team Strengths and Weaknesses:**
 

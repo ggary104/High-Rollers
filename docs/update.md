@@ -36,3 +36,36 @@ Our Team Charter and Proposal currently require only minor revisions based on th
 Our GitHub repository has been set up and is fully functional, allowing all team members to collaborate effectively. The Technical Implementation Lead has successfully ported our existing C++ prototype to Godot. In terms of design and art assets, our Design Lead has begun developing initial ideas for the visual and gameplay aspects of the project. These elements will become our primary focus in the next phase, where we plan to refine the game’s overall design and expand on its artistic direction.
 
 
+
+
+
+## Progress in Phase 3
+
+During Phase 3, our team focused on consolidating all project documentation and refining the core components of the game prototype. The main objectives for this phase were to finalize the Team Charter, Proposal, and Requirements and Specifications documents, as well as to polish and stabilize the Godot prototype in preparation for the next development phase.
+
+On the technical side, significant progress was made within the Godot project. The team completed the integration of dice assets, implemented an attacking and health system, developed a main menu, and introduced a classic mode for testing basic gameplay functionality. Additional rework was done to improve overall structure and gameplay flow, ensuring the prototype was ready for further expansion. All conflicts within the project files were resolved to maintain a clean and functional repository.
+
+In terms of documentation, Requirements and Specifications document and progress update document were completed as scheduled, and the repository remains well-organized under clearly defined directories for documentation, game code, prototypes, and presentations.
+
+Overall, Phase 3 went according to plan, with both documentation and technical milestones achieved on time, setting a solid foundation for the development and testing phases ahead.
+
+## Changes in Risk Assessment
+
+Our risk profile remains stable compared to previous phases. The addition of a member dropout contingency plan in the Team Charter continues to mitigate the main personnel risk. With the prototype’s structure solidified, upcoming risks are primarily technical — particularly regarding multiplayer implementation and timely integration of new game mechanics. These will be managed through shorter iteration cycles, frequent testing, and weekly review meetings to monitor progress and prevent major setbacks.
+
+## Changes in Product Features
+
+The core gameplay direction remains unchanged, but some refinements were made to focus on producing a polished and playable MVP. The team decided to prioritize single-player functionality to ensure all core mechanics, such as dice interactions, health systems, and game flow, are fully functional before expanding to multiplayer. Additional gameplay ideas like tournaments and power-ups have been reclassified as post-MVP features for later development.
+
+## Current State of Each Deliverable
+
+All deliverables are in strong standing at the end of Phase 3. The Team Charter, Proposal, and Requirements and Specifications have been completed. The Standards document remains complete and consistent with team practices. The Design Document and Art Assets are being actively developed but will be refined in phase 4, focusing on the visual direction and game layout. The Test Plan will be created during Phase 4 once the initial gameplay prototype is ready for functional testing.
+
+The Godot prototype is stable, featuring a functional main menu, classic mode, attack and health systems, and integrated dice mechanics. Early reworks have enhanced both structure and playability. The repository remains organized, with all conflicts resolved and the latest updates successfully pushed for team access.
+
+
+
+
+
+
+

@@ -21,13 +21,12 @@ var dice_textures = []
 @onready var turn_indicator_label = $"UI-Elements/TurnIndicator"
 @onready var player1_roll = $"UI-Elements/Player1Roll"
 @onready var player2_roll = $"UI-Elements/Player2Roll"
-@onready var player1_roll_animation = player1_roll.get_node("RollAnimation")
-@onready var player2_roll_animation = player2_roll.get_node("RollAnimation")
-
+@onready var roll_animation = $"UI-Elements/DiceRoll/RollAnimation"
+@onready var dice_roll = $"UI-Elements/DiceRoll"
 func _ready():
 	#Load all of the die images
 	for i in range(1, 7):
-		var texture = load("res://assests/dice_" + str(i) + ".svg")
+		var texture = load("res://assets/dice_" + str(i) + ".svg")
 		dice_textures.append(texture)
 	
 	#In the grid have Empty DiceSlotScene to have the grid remain constant size
@@ -71,8 +70,19 @@ func player_two_turn():
 		$"UI-Elements/Player1RollButton".visible = false
 		update_ui()
 
-func roll_dice():
-	current_roll = randi() % 6 + 1 # Get a random integer and get the remainder from dividing by 6 to get 0-5 remainder and add 1 to make it 1-6
+func roll_dice() -> void:
+	# Roll animation
+	dice_roll.visible = true
+	roll_animation.stop() # Initializes for the first roll. Otherwise the first roll has off timing
+	roll_animation.play("roll")
+	await roll_animation.animation_finished
+	dice_roll.visible = false
+	
+	# Get roll value
+	current_roll = randi() % 6 + 1
+
+
+
 
 func place_dice(column_index):
 	if current_roll == 0:
@@ -196,13 +206,14 @@ func computer_choice():
 
 func computer_turn():
 	if(game_over): return # catches possible await + gameover error
+
 	# disable player roll button
 	$"UI-Elements/Player1RollButton".disabled = true
 	$"UI-Elements/Player1RollButton".visible = false
-	roll_dice() #First generate random number
-	await get_tree().create_timer(.5).timeout  # delay before roll
+	await get_tree().create_timer(.8).timeout # delay before rolling
+	await roll_dice() #First generate random number
 	update_ui() 
-	await get_tree().create_timer(.5).timeout  # delay before placing dice
+	await get_tree().create_timer(.8).timeout  # delay before placing dice
 	var choice = computer_choice() #Then get the best choice
 	place_dice(choice)#place the dice
 
@@ -232,32 +243,65 @@ func update_ui():
 
 func update_board_visuals():
 	
-	for col_index  in range(p1_cols.size()):
-		#Change the texture of the column based on what its corresponding value is
+	# Count matches for player 1
+	for col_index in range(p1_cols.size()):
+		var counts = {}
+		for die_value in p1_cols[col_index]:
+			if die_value > 0:
+				if not counts.has(die_value):
+					counts[die_value] = 0
+				counts[die_value] += 1
+		
+		# Choose what to display. Triple, Double, Single, or Empty
 		for row_index in range(p1_cols[col_index].size()):
 			var die_value = p1_cols[col_index][row_index]
 			var slot_index = col_index + row_index * 3
 			var slot = p1_grid.get_child(slot_index)
 			if die_value > 0:
-				slot.set_die(dice_textures[die_value - 1])
-				slot.pivot_offset = slot.size * 0.5 # Centers for rotation
-				slot.rotation_degrees = 90  # rotates dice
+				if counts[die_value] == 3:
+					var triple_texture = load("res://assets/dice_" + str(die_value) + "_triple." + "svg") # Triple
+					slot.set_die(triple_texture)
+				elif counts[die_value] == 2:
+					var double_texture = load("res://assets/dice_" + str(die_value) + "_double" + ".svg") # Double
+					slot.set_die(double_texture)
+				else:
+					slot.set_die(dice_textures[die_value - 1]) # Single
+				## Turn dice since board is turned
+				slot.pivot_offset = slot.size * 0.5
+				slot.rotation_degrees = 90
 			else:
-				slot.set_die(null)		
+				slot.set_die(null) # Empty
+
+	# Count matches for player 2
+	for col_index in range(p2_cols.size()):
+		var counts = {}
+		for die_value in p2_cols[col_index]:
+			if die_value > 0:
+				if not counts.has(die_value):
+					counts[die_value] = 0
+				counts[die_value] += 1
 		
-	for col_index  in range(p2_cols.size()):
+		# Choose what to display. Triple, Double, Single, or Empty
 		for row_index in range(p2_cols[col_index].size()):
 			var flipped_row = p2_cols[col_index].size() - 1 - row_index
 			var die_value = p2_cols[col_index][flipped_row]
-
 			var slot_index = col_index + row_index * 3
 			var slot = p2_grid.get_child(slot_index)
 			if die_value > 0:
-				slot.set_die(dice_textures[die_value - 1])
-				slot.pivot_offset = slot.size * 0.5 # Centers for rotation
-				slot.rotation_degrees = 90  # rotates dice
+				if counts[die_value] == 3: 
+					var triple_texture = load("res://assets/dice_" + str(die_value) + "_triple" + ".svg") # Triple
+					slot.set_die(triple_texture)
+				elif counts[die_value] == 2: 
+					var double_texture = load("res://assets/dice_" + str(die_value) + "_double." + "svg") # Double
+					slot.set_die(double_texture)
+				else:
+					slot.set_die(dice_textures[die_value - 1]) # Single
+				## Turn dice since board is turned
+				slot.pivot_offset = slot.size * 0.5
+				slot.rotation_degrees = 90
 			else:
-				slot.set_die(null)		
+				slot.set_die(null) # Empty
+	
 
 func _on_column_button_pressed(extra_arg_0: int) -> void:
 	if game_over:
@@ -268,7 +312,7 @@ func _on_roll_button_pressed() -> void:
 	if game_over:
 		return
 	
-	roll_dice()
+	await roll_dice()
 	update_ui()
 	
 	if player_turn == 1:
