@@ -6,13 +6,10 @@ signal on_dice_1_destroyed
 
 @onready var sprite = $AnimatedSprite2D as AnimatedSprite2D
 
+
 var score_value: int = 0:
 	set = set_score_value,
 	get = get_score_value
-
-
-func _ready() -> void:
-	pass 
 
 
 func set_score_value(new_score_value: int) -> void:

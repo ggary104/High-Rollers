@@ -5,18 +5,6 @@ extends Node2D
 var DiceObject := preload("res://scenes/dice.tscn")
 var player_turn: int = randi() % 2  + 1 #Is it player1's turn or player 2s
 
-var player1_rows: Array = [
-	[0, 0, 0], 
-	[0, 0, 0], 
-	[0, 0, 0],
-	] 
-
-var player2_rows: Array = [
-	[0, 0, 0],
-	[0, 0, 0], 
-	[0, 0, 0], 
-	]
-
 var is_player2_human: bool = false
 var game_over: bool = false 
 var dice_textures: Array = []
@@ -141,20 +129,16 @@ func roll_dice() -> void:
 
 
 func place_dice(tile: DiceTile) -> void:
-	var current_player_rows: Array = player1_rows if player_turn == 1 else player2_rows
-	var tile_index: Vector2i = tile.index
-	
-	if current_player_rows[tile_index.y][tile_index.x] != 0:
+	if not tile.dice == null:
 		return
 	
 	var tile_position: Vector2 = tile.global_position
 	current_dice.position = tile_position
 	
-	var dice_value: int = current_dice.get_score_value()
-	current_player_rows[tile_index.y][tile_index.x] = dice_value
 	print_player_grids()
 	
-	remove_opponent_dice(tile_index.y, dice_value)
+	if current_dice.score_value == 4:
+		remove_opponent_dice(tile.index)
 	
 	var current_dice_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	if current_dice_grid.is_enabled:
@@ -170,11 +154,7 @@ func computer_turn() -> void:
 		return
 	# disable player roll button
 	
-	var player2_score: int = (
-			calculate_row_score(player2_rows[0]) 
-			+ calculate_row_score(player2_rows[1]) 
-			+ calculate_row_score(player2_rows[2])
-	)
+	var player2_score: int = player2_dice_grid.get_grid_score()
 	
 	var is_current_grid_full: bool = player2_dice_grid.is_full()
 	if is_current_grid_full:
@@ -211,49 +191,29 @@ func computer_cash_in() -> void:
 	perform_cash_in()
 
 
-func remove_opponent_dice(row_index: int, roll_value: int):
-	var opponent_rows: Array = player2_rows if player_turn == 1 else player1_rows
+func remove_opponent_dice(tile_index: Vector2i):
 	var current_board: DiceGrid = player2_dice_grid if player_turn == 1 else player1_dice_grid
-	var column: int = 0
 	
-	for value in opponent_rows[row_index]:
-		print(row_index)
-		print(column)
-		if value == roll_value:
-			print("destroy")
-			opponent_rows[row_index][column] = 0
-			print_player_grids()
-			var destroyed_dice_index := Vector2i(column, row_index)
-			var tile: DiceTile = current_board.get_tile(destroyed_dice_index)
-			print(tile.index)
-			var dice: Dice = tile.dice
-			print(dice)
-			# TODO: Make dice send a signal to tile that sets the tile's dice property to null
-			dice.destroy()
-			tile.dice = null
-		
-		column += 1
+	tile_index.x = flip_horizontally(tile_index.x)
+	var tile: DiceTile = current_board.get_tile(tile_index)
+	var tile_dice = tile.dice
+	
+	if is_instance_valid(tile_dice):
+		tile_dice.destroy()
+		tile.dice = null
+		# TODO: Make dice send a signal to tile that sets the tile's dice property to null
+		update_ui()
 	
 	update_ui()
 
 
-func calculate_row_score(row: Array) -> int:
-	var score: int = 0
-	var counts := {}
+func flip_horizontally(column: int) -> int:
+	if column == 0:
+		column = 2
+	elif column == 2:
+		column = 0
 	
-	for die_value in row:
-		#Get the number of times a digit ocurred
-		if die_value > 0:
-			if not counts.has(die_value):
-				counts[die_value] = 0
-			counts[die_value] += 1
-			
-	for die_value in counts:
-		#Calculate the score based on the frequency
-		var num_of_dice: int = counts[die_value]
-		score += num_of_dice * die_value * num_of_dice
-	
-	return score
+	return column
 
 
 func switch_turn() -> void:
@@ -320,28 +280,20 @@ func get_random_tile() -> Vector2i:
 	random_tile_index.x = randi() % 3
 	random_tile_index.y = randi() % 3
 	
-	if player2_rows[random_tile_index.y][random_tile_index.x] != 0:
+	var tile: DiceTile = player2_dice_grid.get_tile(random_tile_index)
+	if not tile.dice == null:
 		random_tile_index = get_random_tile()
 	
 	return random_tile_index
 
 
-# TODO: Put score calculation into its own function
 # TODO: Add UI management into its own node/script
 # I think there's a way to automatically call a function when certain values are changed, so
 # TODO: Call function automatically when certain values are changed
 func update_ui() -> void:
-	var player1_score: int = (
-			calculate_row_score(player1_rows[0]) 
-			+ calculate_row_score(player1_rows[1]) 
-			+ calculate_row_score(player1_rows[2])
-	)
+	var player1_score: int = player1_dice_grid.get_grid_score()
 	
-	var player2_score: int = (
-			calculate_row_score(player2_rows[0]) 
-			+ calculate_row_score(player2_rows[1]) 
-			+ calculate_row_score(player2_rows[2])
-	)
+	var player2_score: int = player2_dice_grid.get_grid_score()
 	
 	player1_score_label.text = "P1 Score: " + str(player1_score) 
 	player2_score_label.text = "P2 Score: " + str(player2_score)
@@ -372,12 +324,8 @@ func perform_cash_in() -> void:
 	if not current_dice == null:
 		return
 	
-	var current_player_rows: Array = player1_rows if player_turn == 1 else player2_rows
-	var score_to_cash_in: int = (
-			calculate_row_score(current_player_rows[0]) 
-			+ calculate_row_score(current_player_rows[1]) 
-			+ calculate_row_score(current_player_rows[2])
-	)
+	var current_player_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
+	var score_to_cash_in: int = current_player_grid.get_grid_score()
 	
 	if score_to_cash_in > 0:
 		if player_turn == 1:
@@ -391,10 +339,6 @@ func perform_cash_in() -> void:
 	player2_health = max(0,player2_health)
 	health_damage_animation()
 	update_health_bars();
-	
-	for i in range(3):
-		for j in range(3):
-			current_player_rows[i][j] = 0
 	
 	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	current_grid.clear()
@@ -446,42 +390,40 @@ func dice_1_effect() -> void:
 	health_heal_animation()
 	update_health_bars()
 
-
 # Debug Functions
 
 func print_player_grids() -> void:
 	print("\nP1 Grid:")
-	print(player1_rows[0])
-	print(player1_rows[1])
-	print(player1_rows[2])
+	#print(player1_rows[0])
+	#print(player1_rows[1])
+	#print(player1_rows[2])
 	
 	print("\nP2Grid:")
-	print(player2_rows[0])
-	print(player2_rows[1])
-	print(player2_rows[2])
+	#print(player2_rows[0])
+	#print(player2_rows[1])
+	#print(player2_rows[2])
 	
 	print("\n")
 
 
 #Skip Turn	
 
-func skip_turn():
+func skip_turn() -> void:
 	if game_over:
 		return
 	
-	##Only give ability to skip if the player has alteast rolled something
+	# Only give ability to skip if the player has alteast rolled something
 	if current_dice == null:
 		return
-	##Clear up the current rolled number and update turn and switch turns
+	# Clear up the current rolled number and update turn and switch turns
 	current_dice.destroy()
 	current_dice = null
 	update_ui()
 	switch_turn()
 
+
 func _on_player_1_skip_turn_button_pressed() -> void:
 	skip_turn()
-
-
 
 
 func _on_player_2_skip_turn_button_pressed() -> void:

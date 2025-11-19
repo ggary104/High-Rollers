@@ -85,11 +85,86 @@ func tile_selected(reference_to_tile: DiceTile) -> void:
 	on_tile_selected.emit(reference_to_tile)
 
 
+func get_grid_score() -> int:
+	var dice_grid: Array = get_grid_dice()
+	var row: int = 0
+	var column: int = 0
+	var score_total: int = 0
+	
+	var dice: Dice = null
+	
+	var dice_in_row: Array = []
+	while row < row_size:
+		print(Vector2(row, column))
+		
+		if is_instance_valid(dice_grid[row][column]):
+			dice = dice_grid[row][column]
+			var dice_score: int = dice.get_score_value()
+			dice_in_row.append(dice_score)
+			dice_score *= dice_in_row.count(dice_score)
+			if is_dice_2_in_column(dice_grid, column):
+				dice_score *= 2
+			
+			score_total += dice_score
+		
+		
+		column += 1
+		if column < row_size:
+			continue
+		
+		
+		row += 1
+		dice_in_row.clear()
+		column = 0 
+	
+	return score_total
+
+
+func is_dice_2_in_column(dice_grid: Array, column: int) -> bool:
+	for row: Array in dice_grid:
+		
+		if not is_instance_valid(row[column]):
+			continue
+		
+		var dice: Dice = row[column]
+		
+		var dice_score: int = dice.get_score_value()
+		
+		if dice_score == 2:
+			return true
+	
+	return false
+
+
+func get_grid_dice() -> Array:
+	var grid_dice: Array = []
+	var row: int = 0
+	var column: int = 0
+	
+	for tile: DiceTile in tiles:
+		if column == 0:
+			grid_dice.append([])
+		
+		var dice: Dice = tile.dice
+		print(dice)
+		
+		grid_dice[row].append(dice)
+		
+		column += 1
+		if column >= row_size:
+			column = 0
+			row += 1 
+	
+	return grid_dice
+
+
 func clear() -> void:
 	for tile: DiceTile in tiles:
 		var tile_dice: Dice = tile.dice
 		if not tile_dice == null:
 			tile_dice.destroy()
+			tile.dice = null
+		tile.enable()
 
 
 func is_full() -> bool:
