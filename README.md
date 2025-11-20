@@ -9,9 +9,9 @@
 |Dice Effects                     |Joseph             |In Progress  |High       |
 |Effect for 1 Die                 |Joseph             |Completed    |High       |
 |Effect for 2 Die                 |Joseph             |In Progress  |High       |
-|Effect for 3 Die                 |N/A                |Not Started  |High       |
+|Effect for 3 Die                 |Abhi               |Completed    |High       |
 |Effect for 4 Die                 |N/A                |Not Started  |High       |
-|Effect for 6 Die                 |N/A                |Not Started  |High       |          
+|Effect for 6 Die                 |Abhi               |In Progress  |High       |          
 |Game Assets                      |Joseph             |In Progress  |High       |
 |Ability to Skip Turn             |Abhi               |In Progress  |Medium     |
 |Playtesting                      |Any                |In Progress  |Medium     |
