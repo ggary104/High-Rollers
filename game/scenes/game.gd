@@ -14,6 +14,13 @@ const MAX_HEALTH: int = 100
 var player1_health: int = MAX_HEALTH
 var player2_health: int = MAX_HEALTH
 
+var player1_can_reroll: bool = false;
+var player2_can_reroll: bool = false;
+var player1_triggered_reroll:bool = false;
+var player2_triggered_reroll:bool = false;
+
+
+
 # Variables used in labels to display the scores and Which Players Turn Is It
 # On ready -> They need to load when the labels are loaded 
 @onready var player1_score_label = $"UI-Elements/Player1Score" as Label
@@ -34,6 +41,9 @@ var player2_health: int = MAX_HEALTH
 @onready var player1_healthbar = $"UI-Elements/Player1Health" as ProgressBar
 @onready var player2_healthbar = $"UI-Elements/Player2Health" as ProgressBar
 
+#Re-Roll Buttons for dice 3 effect
+@onready var player1_reroll_button = $"UI-Elements/Player1RerollButton"
+@onready var player2_reroll_button = $"UI-Elements/Player2RerollButton"
 
 func _ready() -> void:
 	player1_dice_grid.on_tile_selected.connect(place_dice)
@@ -45,6 +55,9 @@ func _ready() -> void:
 	player2_cash_in_button.visible = false
 	player1_skip_button.visible = false
 	player2_skip_button.visible = false
+	player1_reroll_button.disabled = true
+	player2_reroll_button.disabled = true
+
 	
 	if GameManager.playerNumber == 1:
 		is_player2_human = false
@@ -72,6 +85,10 @@ func player1_turn() -> void:
 	player1_skip_button.disabled=false
 	player2_skip_button.visible = false
 	
+	player1_reroll_button.visible = true
+	player1_reroll_button.disabled = not player1_can_reroll
+	player2_reroll_button.visible = false
+	
 	update_ui()
 
 
@@ -82,6 +99,7 @@ func player2_turn() -> void:
 	player1_cash_in_button.visible = false
 	player1_skip_button.disabled = true
 	player1_skip_button.visible = false
+	player1_reroll_button.visible = false
 
 	
 	if is_player2_human:
@@ -90,6 +108,8 @@ func player2_turn() -> void:
 		
 		player2_cash_in_button.visible = true
 		player2_cash_in_button.disabled = false
+		player2_reroll_button.visible = true
+		player2_reroll_button.disabled = not player2_can_reroll
 	else:
 		computer_turn()
 
@@ -119,7 +139,7 @@ func roll_dice() -> void:
 	dice.position = dice_spawn_position.position
 	dice.on_dice_1_destroyed.connect(dice_1_effect)
 	current_dice = dice
-	
+			
 	if player_turn == 1:
 		player1_dice_grid.enable_tiles()
 	elif player_turn == 2 and is_player2_human:
@@ -139,6 +159,15 @@ func place_dice(tile: DiceTile) -> void:
 	
 	if current_dice.score_value == 4:
 		remove_opponent_dice(tile.index)
+		
+	if current_dice.score_value == 3:
+		if player_turn == 1 && !player1_triggered_reroll:
+			player1_can_reroll = true
+			player1_triggered_reroll = true
+			
+		elif player_turn == 2 && !player2_triggered_reroll: 
+			player2_can_reroll = true
+			player2_triggered_reroll = true
 	
 	var current_dice_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	if current_dice_grid.is_enabled:
@@ -162,6 +191,7 @@ func computer_turn() -> void:
 	
 	var cash_in_chance: float = 0.3
 	var skip_chance: float = 0.2
+	var reroll_chance:float = 0.6
 	
 	
 	if player2_score > 0 and randf() < cash_in_chance:
@@ -169,9 +199,16 @@ func computer_turn() -> void:
 	else:
 		await get_tree().create_timer(.8).timeout  # delay before roll
 		roll_dice()
+		
 		if randf() < skip_chance:
 			await computer_skip_turn()
 		else:
+			var is_bad_roll: bool = current_dice.score_value <= 3
+			
+			if player2_can_reroll and is_bad_roll and randf() < reroll_chance:
+				await get_tree().create_timer(0.8).timeout
+				await perform_reroll() 
+			
 			await get_tree().create_timer(1.2).timeout  # delay before placing dice
 			var choice: Vector2i = computer_choice() #Then get the best choice
 			var tile: DiceTile = player2_dice_grid.get_tile(choice)
@@ -428,3 +465,32 @@ func _on_player_1_skip_turn_button_pressed() -> void:
 
 func _on_player_2_skip_turn_button_pressed() -> void:
 	skip_turn()
+
+
+func perform_reroll() -> void:
+	if game_over: return
+	if current_dice == null: return # Can't reroll if we haven't rolled yet
+	
+	current_dice.destroy()
+	current_dice = null
+	
+	turn_indicator_label.text = "Player Re-Rolled!"
+	await get_tree().create_timer(0.5).timeout
+	# Can't reroll more than once
+	if player_turn == 1:
+		player1_can_reroll = false
+		player1_reroll_button.disabled = true
+	else:
+		player2_can_reroll = false
+		player2_reroll_button.disabled = true
+		
+	# Roll a new dice
+	roll_dice()
+	
+
+# Connect these to your buttons in the Node tab!
+func _on_player_1_reroll_button_pressed() -> void:
+	perform_reroll()
+
+func _on_player_2_reroll_button_pressed() -> void:
+	perform_reroll()
