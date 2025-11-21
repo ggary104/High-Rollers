@@ -16,8 +16,8 @@ var player2_health: int = MAX_HEALTH
 
 var player1_can_reroll: bool = false;
 var player2_can_reroll: bool = false;
-var player1_triggered_reroll:bool = false;
-var player2_triggered_reroll:bool = false;
+var player1_triggered_reroll: bool = false;
+var player2_triggered_reroll: bool = false;
 
 
 
@@ -161,11 +161,11 @@ func place_dice(tile: DiceTile) -> void:
 		remove_opponent_dice(tile.index)
 		
 	if current_dice.score_value == 3:
-		if player_turn == 1 && !player1_triggered_reroll:
+		if player_turn == 1 and (not player1_triggered_reroll):
 			player1_can_reroll = true
 			player1_triggered_reroll = true
 			
-		elif player_turn == 2 && !player2_triggered_reroll: 
+		elif player_turn == 2 and (not player2_triggered_reroll): 
 			player2_can_reroll = true
 			player2_triggered_reroll = true
 	
@@ -468,8 +468,10 @@ func _on_player_2_skip_turn_button_pressed() -> void:
 
 
 func perform_reroll() -> void:
-	if game_over: return
-	if current_dice == null: return # Can't reroll if we haven't rolled yet
+	if game_over: 
+		return
+	if current_dice == null: 
+		return # Can't reroll if we haven't rolled yet
 	
 	current_dice.destroy()
 	current_dice = null
