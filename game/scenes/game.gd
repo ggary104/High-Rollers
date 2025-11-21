@@ -11,8 +11,23 @@ var dice_textures: Array = []
 var current_dice: Dice = null
 
 const MAX_HEALTH: int = 100
-var player1_health: int = MAX_HEALTH
-var player2_health: int = MAX_HEALTH
+var player1_health: int = MAX_HEALTH:
+	set(value):
+		player1_healthbar.value = value
+		health_change_animation(value, player1_health, 1)
+		check_game_over(value)
+		print(player1_health)
+		print(value)
+		print("ow")
+		player1_health = value
+var player2_health: int = MAX_HEALTH:
+	set(value):
+		player2_healthbar.value = value
+		health_change_animation(value, player2_health, 2)
+		check_game_over(value)
+		print(value)
+		print("oof")
+		player2_health = value
 
 # Variables used in labels to display the scores and Which Players Turn Is It
 # On ready -> They need to load when the labels are loaded 
@@ -46,6 +61,9 @@ func _ready() -> void:
 	player1_skip_button.visible = false
 	player2_skip_button.visible = false
 	
+	player1_health = MAX_HEALTH
+	player2_health = MAX_HEALTH
+	
 	if GameManager.playerNumber == 1:
 		is_player2_human = false
 	else:
@@ -55,7 +73,7 @@ func _ready() -> void:
 		player1_turn()
 	else:
 		player2_turn()
-	update_health_bars()
+	
 
 
 func player1_turn() -> void:
@@ -135,7 +153,7 @@ func place_dice(tile: DiceTile) -> void:
 	var tile_position: Vector2 = tile.global_position
 	current_dice.position = tile_position
 	
-	print_player_grids()
+	#print_player_grids()
 	
 	if current_dice.score_value == 4:
 		remove_opponent_dice(tile.index)
@@ -181,11 +199,12 @@ func computer_turn() -> void:
 	
 	update_ui()
 
+
 func computer_skip_turn():
 	turn_indicator_label.text = "Computer Skipped!"
 	await get_tree().create_timer(1.2).timeout
 	skip_turn()
-	
+
 
 func computer_cash_in() -> void:
 	turn_indicator_label.text = "Computer Cashed In!"
@@ -202,7 +221,7 @@ func remove_opponent_dice(tile_index: Vector2i):
 	
 	if is_instance_valid(tile_dice):
 		tile_dice.destroy()
-		tile.dice = null
+		#tile.dice = null
 		# TODO: Make dice send a signal to tile that sets the tile's dice property to null
 		update_ui()
 	
@@ -219,7 +238,6 @@ func flip_horizontally(column: int) -> int:
 
 
 func switch_turn() -> void:
-	check_game_over()
 	if player_turn == 1:
 		player_turn = 2
 		player2_turn()
@@ -228,14 +246,10 @@ func switch_turn() -> void:
 		player1_turn()
 
 
-func check_game_over() -> void:
-	if player1_health <= 0:
+func check_game_over(new_health: int) -> void:
+	if new_health <= 0:
 		game_over = true
 		GameManager.winner_text = "Player 2 Wins!"
-		SceneManager.change_scene("res://scenes/game_over.tscn")
-	elif player2_health <= 0:
-		game_over = true
-		GameManager.winner_text = "Player 1 Wins!"
 		SceneManager.change_scene("res://scenes/game_over.tscn")
 
 
@@ -314,9 +328,6 @@ func update_ui() -> void:
 
 
 #Health bar system code:
-func update_health_bars() -> void:
-	player1_healthbar.value = player1_health
-	player2_healthbar.value = player2_health
 
 
 func perform_cash_in() -> void:
@@ -337,17 +348,15 @@ func perform_cash_in() -> void:
 	else:
 		return
 	
-	player1_health = max(0,player1_health)
-	player2_health = max(0,player2_health)
-	health_damage_animation()
-	update_health_bars();
+	#player1_health = max(0,player1_health)
+	#player2_health = max(0,player2_health)
+	#health_damage_animation()
+	
 	
 	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	current_grid.clear()
-	check_game_over()
 	
-	if !game_over:
-		switch_turn()
+	switch_turn()
 	
 	update_ui()
 
@@ -362,19 +371,31 @@ func _on_player_2_cash_in_button_pressed() -> void:
 		perform_cash_in()
 
 
-func health_damage_animation():
-	var health_bar: ProgressBar = player1_healthbar if player_turn == 2 else player2_healthbar
-	
-	var tween := create_tween();
-	tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
-	tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
+#func health_damage_animation() -> void:
+	#var health_bar: ProgressBar = player1_healthbar if player_turn == 2 else player2_healthbar
+	#
+	#var tween := create_tween()
+	#tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
+	#tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
 
 
-func health_heal_animation():
-	var health_bar: ProgressBar = player1_healthbar if player_turn == 1 else player2_healthbar
+#func health_heal_animation():
+	#var health_bar: ProgressBar = player1_healthbar if player_turn == 1 else player2_healthbar
+	#
+	#var tween: Tween = create_tween();
+	#tween.tween_property(health_bar,"self_modulate",Color.GREEN, 0.2)
+	#tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
+
+
+func health_change_animation(new_health: int, old_health: int, player_number: int) -> void:
+	var health_bar: ProgressBar = player1_healthbar if player_number == 1 else player2_healthbar
+	var tween: Tween = create_tween()
 	
-	var tween := create_tween();
-	tween.tween_property(health_bar,"self_modulate",Color.GREEN, 0.2)
+	if new_health < old_health:
+		tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
+	else:
+		tween.tween_property(health_bar,"self_modulate",Color.GREEN, 0.2)
+	
 	tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
 
 
@@ -389,8 +410,8 @@ func dice_1_effect() -> void:
 	else:
 		player2_health += 1
 	
-	health_heal_animation()
-	update_health_bars()
+	#health_heal_animation()
+	
 
 # Debug Functions
 

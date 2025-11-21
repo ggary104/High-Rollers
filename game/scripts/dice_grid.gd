@@ -99,7 +99,6 @@ func get_grid_score() -> int:
 	
 	var dice_in_row: Array = []
 	while row < row_size:
-		print(Vector2(row, column))
 		
 		if is_instance_valid(dice_grid[row][column]):
 			dice = dice_grid[row][column]
@@ -150,7 +149,6 @@ func get_grid_dice() -> Array:
 			grid_dice.append([])
 		
 		var dice: Dice = tile.dice
-		print(dice)
 		
 		grid_dice[row].append(dice)
 		
