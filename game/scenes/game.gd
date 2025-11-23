@@ -33,6 +33,7 @@ var player2_triggered_reroll: bool = false;
 @onready var player1_dice_grid = $Board/DiceGrid as DiceGrid
 @onready var player2_dice_grid = $Board/DiceGrid2 as DiceGrid
 @onready var dice_spawn_position = $Board/DiceSpawnPosition as Marker2D
+@onready var value_label = $"UI-Elements/ValueLabel" as Label
 
 
 #Variable for player 1 and player 2 cash in button used for attacking the health
@@ -46,6 +47,8 @@ var player2_triggered_reroll: bool = false;
 @onready var player2_reroll_button = $"UI-Elements/Player2RerollButton"
 
 func _ready() -> void:
+	if value_label:
+		value_label.visible = false
 	player1_dice_grid.on_tile_selected.connect(place_dice)
 	player2_dice_grid.on_tile_selected.connect(place_dice)
 
@@ -135,7 +138,19 @@ func roll_dice() -> void:
 	var current_roll: int = randi() % 6 + 1;
 	var dice: Dice = DiceObject.instantiate()
 	add_child(dice)
-	dice.set_score_value(current_roll)
+	
+	if current_roll == 6:
+		var current_player_grid = player1_dice_grid if player_turn == 1 else player2_dice_grid
+		var board_average = current_player_grid.get_grid_average();
+		var dice_6_value = dice.get_special_adjusted_score_value(board_average)  #ONLY FOR DISPLAY ON THE LABEL
+		
+		dice.set_score_value_special(board_average,6)
+		value_label.visible = true
+		value_label.text = "Value: " + str(dice_6_value) 
+
+	else:
+		dice.set_score_value(current_roll)
+
 	dice.position = dice_spawn_position.position
 	dice.on_dice_1_destroyed.connect(dice_1_effect)
 	current_dice = dice
@@ -255,6 +270,7 @@ func flip_horizontally(column: int) -> int:
 
 func switch_turn() -> void:
 	check_game_over()
+	value_label.visible = false
 	if player_turn == 1:
 		player_turn = 2
 		player2_turn()
@@ -341,7 +357,7 @@ func update_ui() -> void:
 				else "Player 2's Turn: Roll the dice!"
 		)
 	else:
-		var current_roll: int = current_dice.get_score_value()
+		var current_roll: int = current_dice.get_face_value()
 		turn_indicator_label.text = (
 				"Player 1 Rolled: " + str(current_roll) if player_turn == 1 
 				else "Player 2 Rolled: " + str(current_roll)

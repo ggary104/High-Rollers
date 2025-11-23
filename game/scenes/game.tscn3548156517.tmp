@@ -184,12 +184,11 @@ theme_override_font_sizes/font_size = 28
 text = "Skip"
 
 [node name="ValueLabel" type="Label" parent="UI-Elements"]
-offset_left = 728.0
-offset_top = 234.0
-offset_right = 794.0
-offset_bottom = 261.0
-theme_override_font_sizes/font_size = 19
-text = "Value: "
+offset_left = 738.0
+offset_top = 277.0
+offset_right = 841.0
+offset_bottom = 300.0
+text = "Dice 6 Value: "
 
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(3, 45)
