@@ -158,9 +158,13 @@ func roll_dice() -> void:
 	add_child(dice)
 	
 	if current_roll == 6:
-		var current_player_grid = player1_dice_grid if player_turn == 1 else player2_dice_grid
-		var board_average = current_player_grid.get_grid_average();
-		var dice_6_value = dice.get_special_adjusted_score_value(board_average)  #ONLY FOR DISPLAY ON THE LABEL
+		var current_player_grid: DiceGrid = (
+				player1_dice_grid if player_turn == 1 
+				else player2_dice_grid
+		)
+		
+		var board_average: float = current_player_grid.get_grid_average()
+		var dice_6_value: int = dice.get_special_adjusted_score_value(board_average)
 		
 		dice.set_score_value_special(board_average,6)
 		value_label.visible = true
@@ -361,7 +365,6 @@ func get_random_tile() -> Vector2i:
 # TODO: Call function automatically when certain values are changed
 func update_ui() -> void:
 	var player1_score: int = player1_dice_grid.get_grid_score()
-	
 	var player2_score: int = player2_dice_grid.get_grid_score()
 	
 	player1_score_label.text = "P1 Score: " + str(player1_score) 
@@ -372,6 +375,7 @@ func update_ui() -> void:
 				"Player 1's Turn: Roll the dice!" if player_turn == 1 
 				else "Player 2's Turn: Roll the dice!"
 		)
+	
 	else:
 		var current_roll: int = current_dice.get_face_value()
 		turn_indicator_label.text = (
@@ -478,7 +482,7 @@ func print_player_grids() -> void:
 	print("\n")
 
 
-#Skip Turn	
+# Skip Turn	
 
 func skip_turn() -> void:
 	if game_over:
@@ -505,6 +509,7 @@ func _on_player_2_skip_turn_button_pressed() -> void:
 func perform_reroll() -> void:
 	if game_over: 
 		return
+	
 	if current_dice == null: 
 		return # Can't reroll if we haven't rolled yet
 	
@@ -513,21 +518,24 @@ func perform_reroll() -> void:
 	
 	turn_indicator_label.text = "Player Re-Rolled!"
 	await get_tree().create_timer(0.5).timeout
+	
 	# Can't reroll more than once
 	if player_turn == 1:
 		player1_can_reroll = false
 		player1_reroll_button.disabled = true
+	
 	else:
 		player2_can_reroll = false
 		player2_reroll_button.disabled = true
-		
+	
 	# Roll a new dice
 	roll_dice()
-	
+
 
 # Connect these to your buttons in the Node tab!
 func _on_player_1_reroll_button_pressed() -> void:
 	perform_reroll()
+
 
 func _on_player_2_reroll_button_pressed() -> void:
 	perform_reroll()

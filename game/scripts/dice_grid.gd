@@ -159,18 +159,22 @@ func get_grid_dice() -> Array:
 	
 	return grid_dice
 
-#Helper funciton to calculate the average dice value of grid
+
+# Helper funciton to calculate the average dice value of grid
 func get_grid_average() -> float:
 	var total_sum: int = 0
-	var count:int = 0
-	for tile:DiceTile in tiles:
+	var count: int = 0
+	for tile: DiceTile in unarranged_tiles:
 		if is_instance_valid(tile.dice):
-			total_sum += tile.dice.get_face_value() #Use the face val to calculate average -> To use Dice 6 as 6
+			# Use the face val to calculate average -> To use Dice 6 as 6
+			total_sum += tile.dice.get_face_value() 
 			count += 1
 	
 	if count == 0:
 		return 0.0
-	return float(total_sum)/float(count)
+	
+	return float(total_sum) / float(count)
+
 
 func clear() -> void:
 	var list_of_tiles: Array = self.get_children()
