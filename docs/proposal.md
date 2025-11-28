@@ -43,6 +43,113 @@ The original version of High Rollers focuses on strategic placement and scoring.
 
 #### Hot Dice Mode:
 An expanded, combat-oriented variant where each player starts with a health bar (100 HP). Instead of just scoring, players can “cash in” their accumulated dice values to deal damage to the opponent. Destroying an opponent’s dice can trigger healing effects for certain rolls (e.g., when a die showing 1 is destroyed). The first player to reduce their opponent to 0 HP wins. This mode adds real-time tension and resource management to the game, offering more depth for competitive players.
+# Key Features and Discussion
+
+## Core Gameplay Mechanics (Shared Across Modes)
+
+- Turn-based dice rolling  
+- A 3×3 board with three columns  
+- Strategic placement of dice  
+- Destruction mechanic when placing a second die in a column  
+- Multiplier system for matching dice  
+- Multiple viable strategies (defensive, multiplier-based, denial-based, etc.)
+
+---
+
+# Game Modes
+
+## Classic Mode – Complete Rules
+
+Classic Mode is the base version of **High Rollers**, focused entirely on strategic scoring and board control.
+
+### Board Layout
+- Each player has a **3×3 grid**, structured as three columns.  
+- Dice stack from **top to bottom**.
+
+### Turn Phase
+On your turn:
+1. Roll a die (1–6).  
+2. Choose any empty space in your grid.  
+3. Place the die.
+
+### Destruction Mechanic
+When you place the **second die in a column**:
+- You may **destroy 1 opponent die** in the same column position.  
+- If the opponent’s space is empty, nothing is destroyed.
+
+This mechanic allows:
+- Denying the opponent’s multiplier  
+- Preventing high-value scoring  
+- Counter-attacking to maintain pressure  
+
+### Column Scoring & Multipliers
+
+Each column’s score is calculated as:
+
+**(Sum of dice in column) × (number of matching dice if matches exist)**
+
+#### Examples:
+- Column: **5, 5** → (10) × 2 = **20 points**  
+- Column: **3, 3, 3** → (9) × 3 = **27 points**  
+- Column: **2, 4** → no matches = **6 points**
+
+### End of Game
+- The game ends when **any board becomes full**.
+
+### Winner
+- The winner is the player with the **highest total score** across all columns.
+
+---
+
+## Hot Dice Mode – Complete Rules
+
+Hot Dice Mode transforms the game into a **combat strategy game** with health, special dice powers, and resource management.
+
+### Starting Conditions
+- Both players begin with **100 HP**.  
+- Each player’s **score meter starts at 0**.
+
+### Turn Options
+After rolling a die (1–6), the player chooses:
+
+#### 1. **PLACE**
+- Place the die on the board.  
+- Adds the die’s value **(or special effect)** to the score meter.  
+- Some dice have unique abilities.
+
+#### 2. **BREAK (Cash In)**
+- Convert the **current score meter** directly into **damage** dealt to the opponent.  
+- After cashing in:
+  - Your board **clears completely**  
+  - Your score meter **resets to 0**
+
+#### 3. **SKIP**
+- Skip your turn to attempt to get a better die next turn.  
+- No penalty, but gives your opponent **tempo advantage**.
+
+---
+
+## Special Dice Effects (Hot Dice Only)
+
+| Die Value | Effect |
+|----------|--------|
+| **1** | When cashed in, heal **+1 HP** |
+| **2** | **Doubles** the value of the entire column it is placed in |
+| **3** | Grants **1 reroll token** (max 1 stored) |
+| **4** | Can destroy the corresponding opponent tile, or destroy both if stacked |
+| **5** | Adds **+5 flat score** to your meter |
+| **6** | Adds: `6 × max(0, floor(averageBoardValue - 3))` |
+
+### Example for a 6:
+If your board’s average die value = **5**:  
+`floor(5 - 3) = 2 → 6 × 2 = 12 bonus points`
+
+---
+
+## Winning Hot Dice
+- Reduce the opponent’s **HP to 0** to win.
+
+
 
 ### Multiplayer Experience
 
