@@ -6,35 +6,41 @@ signal on_tile_selected(reference_to_tile: DiceTile)
 
 var Tile := preload("res://scenes/dice_tile.tscn")
 var row_size: int = 3
-var tiles := []
+var arranged_tiles := []
+var unarranged_tiles := []
 var is_enabled: bool = false
 
 
 func _ready() -> void:
-	spawn_tiles(row_size ** 2)
+	spawn_tiles(row_size)
 	arrange_tiles()
+	print_tiles()
 
 
 func spawn_tiles(number_of_tiles: int) -> void:
 	var i: int = 0
 	
-	while i in range(number_of_tiles):
+	while i in range(number_of_tiles ** 2):
 		var tile: DiceTile = Tile.instantiate()
 		add_child(tile)
 		tile.selected.connect(tile_selected)
 		i += 1
 	
-	tiles = self.get_children() 
+	unarranged_tiles = self.get_children()
 
 
 func arrange_tiles() -> void:
 	var row_number: int = 0
 	var column_number: int = 0
 	
-	for tile: DiceTile in tiles:
+	for tile: DiceTile in unarranged_tiles:
 		var tile_size: float = tile.size
 		tile.position.x = column_number * tile_size 
 		tile.position.y = row_number * tile_size
+		if column_number == 0:
+			arranged_tiles.append([])
+		
+		arranged_tiles[row_number].append(tile)
 		tile.index = Vector2i(column_number, row_number)
 		column_number += 1
 		
@@ -47,7 +53,7 @@ func enable_tiles() -> void:
 	if is_enabled:
 		return
 	
-	for tile: DiceTile in tiles:
+	for tile: DiceTile in unarranged_tiles:
 		tile.enable()
 		is_enabled = true
 
@@ -56,29 +62,27 @@ func disable_tiles() -> void:
 	if not is_enabled:
 		return
 	
-	for tile: DiceTile in tiles:
+	for tile: DiceTile in unarranged_tiles:
 		tile.disable()
 		is_enabled = false
 
 
 func select_tile(tile_index: Vector2i) -> void:
-	var tile_number = get_tile_number_from_index(tile_index)
-	var tile = tiles[tile_number]
+	var tile: DiceTile = arranged_tiles[tile_index.y][tile_index.x]
 	tile.select()
 
 
 func get_tile(tile_index: Vector2i) -> DiceTile:
-	var tile_number: int = get_tile_number_from_index(tile_index)
-	var tile = tiles[tile_number]
+	var tile: DiceTile = arranged_tiles[tile_index.y][tile_index.x]
 	return tile
 
 
-func get_tile_number_from_index(tile_index: Vector2i) -> int:
-	var row_number: int = tile_index.y
-	var column_number: int = tile_index.x
-	var tile_number: int = column_number + (row_number * row_size)
-	
-	return tile_number
+#func get_tile_number_from_index(tile_index: Vector2i) -> int:
+	#var row_number: int = tile_index.y
+	#var column_number: int = tile_index.x
+	#var tile_number: int = column_number + (row_number * row_size)
+	#
+	#return tile_number
 
 
 func tile_selected(reference_to_tile: DiceTile) -> void:
@@ -95,7 +99,6 @@ func get_grid_score() -> int:
 	
 	var dice_in_row: Array = []
 	while row < row_size:
-		print(Vector2(row, column))
 		
 		if is_instance_valid(dice_grid[row][column]):
 			dice = dice_grid[row][column]
@@ -141,12 +144,11 @@ func get_grid_dice() -> Array:
 	var row: int = 0
 	var column: int = 0
 	
-	for tile: DiceTile in tiles:
+	for tile: DiceTile in unarranged_tiles:
 		if column == 0:
 			grid_dice.append([])
 		
 		var dice: Dice = tile.dice
-		print(dice)
 		
 		grid_dice[row].append(dice)
 		
@@ -157,21 +159,26 @@ func get_grid_dice() -> Array:
 	
 	return grid_dice
 
-#Helper funciton to calculate the average dice value of grid
+
+# Helper funciton to calculate the average dice value of grid
 func get_grid_average() -> float:
 	var total_sum: int = 0
-	var count:int = 0
-	for tile:DiceTile in tiles:
+	var count: int = 0
+	for tile: DiceTile in unarranged_tiles:
 		if is_instance_valid(tile.dice):
-			total_sum += tile.dice.get_face_value() #Use the face val to calculate average -> To use Dice 6 as 6
+			# Use the face val to calculate average -> To use Dice 6 as 6
+			total_sum += tile.dice.get_face_value() 
 			count += 1
 	
 	if count == 0:
 		return 0.0
-	return float(total_sum)/float(count)
+	
+	return float(total_sum) / float(count)
+
 
 func clear() -> void:
-	for tile: DiceTile in tiles:
+	var list_of_tiles: Array = self.get_children()
+	for tile: DiceTile in list_of_tiles:
 		var tile_dice: Dice = tile.dice
 		if not tile_dice == null:
 			tile_dice.destroy()
@@ -180,8 +187,22 @@ func clear() -> void:
 
 
 func is_full() -> bool:
-	for tile: DiceTile in tiles:
+	for tile: DiceTile in unarranged_tiles:
 		if tile.dice == null:
 			return false
 	
 	return true
+
+
+func print_tiles() -> void:
+	for row: Array in arranged_tiles:
+		print_row(row)
+
+
+func print_row(row: Array) -> void:
+	var row_scores := []
+	for tile: DiceTile in row:
+		var score: int = tile.get_dice_score()
+		row_scores.append(score)
+	
+	print(row_scores)

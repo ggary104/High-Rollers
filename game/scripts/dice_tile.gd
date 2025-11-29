@@ -6,7 +6,13 @@ signal selected(reference_to_self: DiceTile)
 var is_touching_mouse: bool = false
 var index := Vector2i.ZERO
 var enabled: bool = false
-var dice: Dice = null
+var dice: Dice = null:
+	set(value):
+		dice = value
+		if not is_instance_valid(dice):
+			return
+		dice.on_dice_destroyed.connect(remove_dice)
+		dice.is_placed = true
 
 @onready var Sprite = $Sprite2D as Sprite2D
 @onready var size: float = Sprite.get_rect().size.x * Sprite.scale.x
@@ -43,3 +49,14 @@ func disable() -> void:
 func enable() -> void:
 	if not enabled:
 		enabled = true
+
+
+func get_dice_score() -> int:
+	if is_instance_valid(dice):
+		return dice.score_value
+	else:
+		return 0
+
+
+func remove_dice() -> void:
+	dice = null
