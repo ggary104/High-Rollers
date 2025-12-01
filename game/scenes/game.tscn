@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://ri14qd14hhu6"]
+[gd_scene load_steps=7 format=3 uid="uid://ri14qd14hhu6"]
 
 [ext_resource type="Script" uid="uid://j3876cwmcpvt" path="res://scenes/game.gd" id="1_lnu2h"]
-[ext_resource type="PackedScene" uid="uid://dbcls2wx4yer1" path="res://scenes/die_slot.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://bcprnyvh0ko23" path="res://scenes/roll_button.tscn" id="2_p57ef"]
+[ext_resource type="PackedScene" uid="uid://b1743ni5bnb5s" path="res://scenes/skip_turn_button.tscn" id="2_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://ccq55rkccr7yq" path="res://scenes/dice_grid.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://bvhg77f3khnei" path="res://scenes/healthbar.tscn" id="4_iywne"]
+[ext_resource type="PackedScene" uid="uid://wyr30or2j33x" path="res://scenes/cash_in_button.tscn" id="4_p57ef"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
@@ -10,10 +13,10 @@ script = ExtResource("1_lnu2h")
 [node name="UI-Elements" type="CanvasLayer" parent="."]
 
 [node name="Player1Score" type="Label" parent="UI-Elements"]
-offset_left = 1147.0
-offset_top = 40.0
-offset_right = 1302.0
-offset_bottom = 72.0
+offset_left = 694.0
+offset_top = 718.0
+offset_right = 849.0
+offset_bottom = 750.0
 theme_override_font_sizes/font_size = 23
 text = "Player 1 Score"
 
@@ -21,193 +24,142 @@ text = "Player 1 Score"
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -1335.0
-offset_top = 37.0
-offset_right = -1180.0
-offset_bottom = 69.0
+offset_left = -922.0
+offset_top = 577.0
+offset_right = -767.0
+offset_bottom = 609.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 23
 text = "Player 2 Score"
+horizontal_alignment = 1
 
 [node name="TurnIndicator" type="Label" parent="UI-Elements"]
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 691.0
-offset_top = 450.0
-offset_right = -738.0
-offset_bottom = 482.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -85.5
+offset_top = 500.0
+offset_right = 85.5
+offset_bottom = 532.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 23
 text = "Who's Turn Is It"
 horizontal_alignment = 1
 
-[node name="Player1RollButton" type="Button" parent="UI-Elements"]
-anchors_preset = 7
+[node name="ValueLabel" type="Label" parent="UI-Elements"]
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 712.0
-offset_top = -737.0
-offset_right = 771.0
-offset_bottom = -690.0
+offset_left = -33.0
+offset_top = 400.0
+offset_right = 33.0
+offset_bottom = 427.0
 grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 28
-text = "Roll"
+theme_override_font_sizes/font_size = 19
+text = "Value:"
+horizontal_alignment = 1
 
-[node name="Player1RerollButton" type="Button" parent="UI-Elements"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 691.0
-offset_top = -643.0
-offset_right = 793.0
-offset_bottom = -596.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 28
-text = "Re-Roll"
-
-[node name="Player2RollButton" type="Button" parent="UI-Elements"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -766.0
-offset_top = -737.0
-offset_right = -707.0
-offset_bottom = -690.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 28
-text = "Roll"
-
-[node name="Player2RerollButton" type="Button" parent="UI-Elements"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -791.0
-offset_top = -643.0
-offset_right = -689.0
-offset_bottom = -596.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 28
-text = "Re-Roll"
-
-[node name="Player1Roll" parent="UI-Elements" instance=ExtResource("2_yqjtg")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 430.0
-offset_top = 137.0
-offset_right = 530.0
-offset_bottom = 237.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Player2Roll" parent="UI-Elements" instance=ExtResource("2_yqjtg")]
-z_index = 10
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 1297.0
-offset_top = 679.0
-offset_right = 1363.0
-offset_bottom = 702.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Player2HealthLabel" type="Label" parent="UI-Elements"]
-offset_left = 98.0
-offset_top = 655.0
-offset_right = 164.0
-offset_bottom = 678.0
-text = "Player 2:"
-
-[node name="Player1Health" type="ProgressBar" parent="UI-Elements"]
-offset_left = 1297.0
-offset_top = 710.55
-offset_right = 1447.0
-offset_bottom = 737.55
-
-[node name="Player2Health" type="ProgressBar" parent="UI-Elements"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI-Elements"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -1516.0
-offset_top = 696.0
-offset_right = -1366.0
-offset_bottom = 723.0
+offset_left = -100.0
+offset_bottom = 700.0
 grow_horizontal = 0
+size_flags_vertical = 3
+alignment = 2
 
-[node name="Player1CashInButton" type="Button" parent="UI-Elements"]
-offset_left = 831.0
-offset_top = 130.0
-offset_right = 938.0
-offset_bottom = 177.0
-theme_override_font_sizes/font_size = 28
-text = "Cash In"
+[node name="Player1Health" parent="UI-Elements/VBoxContainer" instance=ExtResource("4_iywne")]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Player1SkipTurnButton" type="Button" parent="UI-Elements"]
-offset_left = 831.0
-offset_top = 210.0
-offset_right = 938.0
-offset_bottom = 257.0
-theme_override_font_sizes/font_size = 28
-text = "Skip"
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI-Elements"]
+offset_right = 100.0
+offset_bottom = 700.0
+alignment = 1
 
-[node name="Player2CashInButton" type="Button" parent="UI-Elements"]
-offset_left = 589.0
-offset_top = 130.0
-offset_right = 696.0002
-offset_bottom = 177.0
-theme_override_font_sizes/font_size = 28
-text = "Cash In"
+[node name="Player2Health" parent="UI-Elements/VBoxContainer2" instance=ExtResource("4_iywne")]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Player2SkipTurnButton" type="Button" parent="UI-Elements"]
-offset_left = 589.0
-offset_top = 210.0
-offset_right = 696.0002
-offset_bottom = 257.0
-theme_override_font_sizes/font_size = 28
-text = "Skip"
+[node name="Player1_UI" type="HBoxContainer" parent="UI-Elements"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -663.0
+offset_top = -150.0
+offset_right = -78.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 25
+alignment = 2
 
-[node name="ValueLabel" type="Label" parent="UI-Elements"]
-offset_left = 728.0
-offset_top = 234.0
-offset_right = 794.0
-offset_bottom = 261.0
-theme_override_font_sizes/font_size = 19
-text = "Value: "
+[node name="Player1RollButton" parent="UI-Elements/Player1_UI" instance=ExtResource("2_p57ef")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player1ReRollButton" parent="UI-Elements/Player1_UI" instance=ExtResource("2_p57ef")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Re-
+Roll"
+
+[node name="Player1CashInButton" parent="UI-Elements/Player1_UI" instance=ExtResource("4_p57ef")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player1SkipTurnButton" parent="UI-Elements/Player1_UI" instance=ExtResource("2_u5sy4")]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+
+[node name="Player2_UI" type="HBoxContainer" parent="UI-Elements"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 78.0
+offset_top = -150.0
+offset_right = 663.0
+grow_vertical = 0
+theme_override_constants/separation = 25
+
+[node name="Player2SkipTurnButton" parent="UI-Elements/Player2_UI" instance=ExtResource("2_u5sy4")]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+
+[node name="Player2CashInButton" parent="UI-Elements/Player2_UI" instance=ExtResource("4_p57ef")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player2ReRollButton" parent="UI-Elements/Player2_UI" instance=ExtResource("2_p57ef")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Re-
+Roll"
+
+[node name="Player2RollButton" parent="UI-Elements/Player2_UI" instance=ExtResource("2_p57ef")]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Board" type="Node2D" parent="."]
-position = Vector2(3, 45)
 
 [node name="DiceGrid" parent="Board" instance=ExtResource("3_lnu2h")]
-position = Vector2(1065, 111)
+position = Vector2(1077.5, 250)
 
 [node name="DiceGrid2" parent="Board" instance=ExtResource("3_lnu2h")]
-position = Vector2(184, 118)
+position = Vector2(192.5, 250)
 
 [node name="DiceSpawnPosition" type="Marker2D" parent="Board"]
-position = Vector2(771, 338)
+position = Vector2(800, 338)
 
-[connection signal="pressed" from="UI-Elements/Player1RollButton" to="." method="_on_roll_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player1RerollButton" to="." method="_on_player_1_reroll_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player2RollButton" to="." method="_on_roll_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player2RerollButton" to="." method="_on_player_2_reroll_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player1CashInButton" to="." method="_on_player_1_cash_in_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player1SkipTurnButton" to="." method="_on_player_1_skip_turn_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player2CashInButton" to="." method="_on_player_2_cash_in_button_pressed"]
-[connection signal="pressed" from="UI-Elements/Player2SkipTurnButton" to="." method="_on_player_2_skip_turn_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player1_UI/Player1RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player1_UI/Player1ReRollButton" to="." method="_on_player_1_re_roll_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player1_UI/Player1CashInButton" to="." method="_on_player_1_cash_in_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player1_UI/Player1SkipTurnButton" to="." method="_on_player_1_skip_turn_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2_UI/Player2SkipTurnButton" to="." method="_on_player_2_skip_turn_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2_UI/Player2CashInButton" to="." method="_on_player_2_cash_in_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2_UI/Player2ReRollButton" to="." method="_on_player_2_re_roll_button_pressed"]
+[connection signal="pressed" from="UI-Elements/Player2_UI/Player2RollButton" to="." method="_on_roll_button_pressed"]

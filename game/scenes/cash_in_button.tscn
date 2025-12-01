@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://wyr30or2j33x"]
+
+[ext_resource type="FontFile" uid="uid://cqah1eb0bf2j" path="res://assets/Square.ttf" id="1_p074a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ginia"]
+bg_color = Color(0, 0.6117647, 0.99215686, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_color = Color(0, 0.5058824, 0.827451, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p074a"]
+bg_color = Color(0.5137255, 0.9137255, 0.972549, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_color = Color(0.34901962, 0.67058825, 0.8627451, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5fhi"]
+bg_color = Color(0.3882353, 0.3019608, 0.5176471, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_color = Color(0.30588236, 0.2, 0.5058824, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+
+[node name="Player1CashInButton" type="Button"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1600.0
+offset_top = -900.0
+offset_right = -1468.0
+offset_bottom = -778.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.99215686, 0.99215686, 0.99215686, 1)
+theme_override_colors/font_disabled_color = Color(0.74509805, 0.78039217, 0.8352941, 1)
+theme_override_fonts/font = ExtResource("1_p074a")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_ginia")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_p074a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_p074a")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_j5fhi")
+text = "Cash
+In"
+icon_alignment = 1
