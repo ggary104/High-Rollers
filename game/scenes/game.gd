@@ -29,10 +29,8 @@ var player2_health: int = MAX_HEALTH:
 		print("oof")
 		player2_health = value
 
-var player1_can_reroll: bool = false;
-var player2_can_reroll: bool = false;
-var player1_triggered_reroll: bool = false;
-var player2_triggered_reroll: bool = false;
+var player1_can_reroll: bool = false
+var player2_can_reroll: bool = false
 
 
 
@@ -40,10 +38,10 @@ var player2_triggered_reroll: bool = false;
 # On ready -> They need to load when the labels are loaded 
 @onready var player1_score_label = $"UI-Elements/Player1Score" as Label
 @onready var player2_score_label = $"UI-Elements/Player2Score" as Label
-@onready var player1_roll_button = $"UI-Elements/Player1RollButton" as Button
-@onready var player2_roll_button = $"UI-Elements/Player2RollButton" as Button
-@onready var player1_skip_button = $"UI-Elements/Player1SkipTurnButton" as Button
-@onready var player2_skip_button = $"UI-Elements/Player2SkipTurnButton" as Button
+@onready var player1_roll_button = $"UI-Elements/Player1_UI/Player1RollButton" as Button
+@onready var player2_roll_button = $"UI-Elements/Player2_UI/Player2RollButton" as Button
+@onready var player1_skip_button = $"UI-Elements/Player1_UI/Player1SkipTurnButton" as Button
+@onready var player2_skip_button = $"UI-Elements/Player2_UI/Player2SkipTurnButton" as Button
 @onready var turn_indicator_label = $"UI-Elements/TurnIndicator" as Label
 @onready var player1_dice_grid = $Board/DiceGrid as DiceGrid
 @onready var player2_dice_grid = $Board/DiceGrid2 as DiceGrid
@@ -52,30 +50,31 @@ var player2_triggered_reroll: bool = false;
 
 
 #Variable for player 1 and player 2 cash in button used for attacking the health
-@onready var player1_cash_in_button = $"UI-Elements/Player1CashInButton" as Button
-@onready var player2_cash_in_button = $"UI-Elements/Player2CashInButton" as Button
-@onready var player1_healthbar = $"UI-Elements/Player1Health" as ProgressBar
-@onready var player2_healthbar = $"UI-Elements/Player2Health" as ProgressBar
+@onready var player1_cash_in_button = $"UI-Elements/Player1_UI/Player1CashInButton" as Button
+@onready var player2_cash_in_button = $"UI-Elements/Player2_UI/Player2CashInButton" as Button
+@onready var player1_healthbar = $"UI-Elements/VBoxContainer/Player1Health" as ProgressBar
+@onready var player2_healthbar = $"UI-Elements/VBoxContainer2/Player2Health" as ProgressBar
 
 #Re-Roll Buttons for dice 3 effect
-@onready var player1_reroll_button = $"UI-Elements/Player1RerollButton"
-@onready var player2_reroll_button = $"UI-Elements/Player2RerollButton"
+@onready var player1_reroll_button = $"UI-Elements/Player1_UI/Player1ReRollButton" as Button
+@onready var player2_reroll_button = $"UI-Elements/Player2_UI/Player2ReRollButton" as Button
+
 
 func _ready() -> void:
 	if value_label:
 		value_label.visible = false
+	
 	player1_dice_grid.on_tile_selected.connect(place_dice)
 	player2_dice_grid.on_tile_selected.connect(place_dice)
-
-	player1_roll_button.visible = false
-	player2_roll_button.visible = false
-	player1_cash_in_button.visible = false
-	player2_cash_in_button.visible = false
-	player1_skip_button.visible = false
-	player2_skip_button.visible = false
-	player1_reroll_button.disabled = true
-	player2_reroll_button.disabled = true
-
+	
+	player1_roll_button.disabled = true
+	player2_roll_button.disabled = true
+	player1_cash_in_button.disabled = true
+	player2_cash_in_button.disabled = true
+	player1_skip_button.disabled = true
+	player2_skip_button.disabled = true
+	player1_reroll_button.visible = false
+	player2_reroll_button.visible = false
 	
 	player1_health = MAX_HEALTH
 	player2_health = MAX_HEALTH
@@ -93,44 +92,35 @@ func _ready() -> void:
 
 
 func player1_turn() -> void:
-	player1_roll_button.disabled = false
-	player1_roll_button.visible = true
-	player2_roll_button.visible = false
 	
-	
-	player1_cash_in_button.visible = true
-	player1_cash_in_button.disabled = false
-	player2_cash_in_button.visible = false
-	
-	player1_skip_button.visible = true
-	player1_skip_button.disabled=false
-	player2_skip_button.visible = false
-	
-	player1_reroll_button.visible = true
-	player1_reroll_button.disabled = not player1_can_reroll
+	player2_roll_button.disabled = true
+	player2_roll_button.visible = true
+	player2_cash_in_button.disabled = true
+	player2_skip_button.disabled = true
 	player2_reroll_button.visible = false
+	
+	player1_roll_button.disabled = false if not player1_dice_grid.is_full() else true
+	
+	player1_cash_in_button.disabled = false if not player1_dice_grid.get_grid_score() == 0 else true
+	
+	player2_skip_button.disabled = true
 	
 	update_ui()
 
 
 func player2_turn() -> void:
 	update_ui()
+	
 	player1_roll_button.disabled = true
-	player1_roll_button.visible = false
-	player1_cash_in_button.visible = false
+	player1_roll_button.visible = true
+	player1_cash_in_button.disabled = true
 	player1_skip_button.disabled = true
-	player1_skip_button.visible = false
 	player1_reroll_button.visible = false
-
 	
 	if is_player2_human:
 		player2_roll_button.disabled = false
-		player2_roll_button.visible = true
 		
-		player2_cash_in_button.visible = true
-		player2_cash_in_button.disabled = false
-		player2_reroll_button.visible = true
-		player2_reroll_button.disabled = not player2_can_reroll
+		player2_cash_in_button.disabled = false if not player1_dice_grid.get_grid_score() == 0 else true
 	else:
 		computer_turn()
 
@@ -148,8 +138,16 @@ func _on_roll_button_pressed() -> void:
 	
 	if player_turn == 1:
 		player1_roll_button.disabled = true
+		player1_cash_in_button.disabled = true
+		player1_skip_button.disabled = false
+		player1_reroll_button.visible = player1_can_reroll
+		player1_roll_button.visible = not player1_can_reroll
 	else:
 		player2_roll_button.disabled = true
+		player2_cash_in_button.disabled = true
+		player2_skip_button.disabled = false
+		player2_reroll_button.visible = player2_can_reroll
+		player2_roll_button.visible = not player2_can_reroll
 
 
 func roll_dice() -> void:
@@ -194,17 +192,15 @@ func place_dice(tile: DiceTile) -> void:
 	
 	#print_player_grids()
 	
-	if current_dice.score_value == 4:
+	if current_dice.face_value == 4:
 		remove_opponent_dice(tile.index)
-		
+	
 	if current_dice.score_value == 3:
-		if player_turn == 1 and (not player1_triggered_reroll):
+		if player_turn == 1:
 			player1_can_reroll = true
-			player1_triggered_reroll = true
-			
-		elif player_turn == 2 and (not player2_triggered_reroll): 
+		
+		elif player_turn == 2:
 			player2_can_reroll = true
-			player2_triggered_reroll = true
 	
 	var current_dice_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	if current_dice_grid.is_enabled:
@@ -500,10 +496,12 @@ func skip_turn() -> void:
 
 func _on_player_1_skip_turn_button_pressed() -> void:
 	skip_turn()
+	player1_skip_button.disabled = true
 
 
 func _on_player_2_skip_turn_button_pressed() -> void:
 	skip_turn()
+	player2_skip_button.disabled = true
 
 
 func perform_reroll() -> void:
@@ -522,20 +520,23 @@ func perform_reroll() -> void:
 	# Can't reroll more than once
 	if player_turn == 1:
 		player1_can_reroll = false
-		player1_reroll_button.disabled = true
 	
 	else:
 		player2_can_reroll = false
-		player2_reroll_button.disabled = true
 	
 	# Roll a new dice
 	roll_dice()
 
 
 # Connect these to your buttons in the Node tab!
-func _on_player_1_reroll_button_pressed() -> void:
+
+func _on_player_1_re_roll_button_pressed() -> void:
 	perform_reroll()
+	player1_reroll_button.visible = false
+	player1_roll_button.visible = true
 
 
-func _on_player_2_reroll_button_pressed() -> void:
+func _on_player_2_re_roll_button_pressed() -> void:
 	perform_reroll()
+	player2_reroll_button.visible = false
+	player2_roll_button.visible = true
