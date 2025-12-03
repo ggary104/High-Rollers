@@ -6,18 +6,18 @@
 
 |Task                             |Assigned To        |Status       |Priority   |
 |---------------------------------|-------------------|-------------|-----------|
-|Dice Effects                     |Joseph             |In Progress  |High       |
+|Dice Effects                     |Joseph             |Completed    |High       |
 |Effect for 1 Die                 |Joseph             |Completed    |High       |
 |Effect for 2 Die                 |Joseph             |Completed    |High       |
 |Effect for 3 Die                 |Abhi               |Completed    |High       |
 |Effect for 4 Die                 |N/A                |Completed    |High       |
 |Effect for 6 Die                 |Abhi               |Completed    |High       |          
-|Game Assets                      |Joseph             |In Progress  |High       |
+|Game Assets                      |Joseph             |Completed    |High       |
 |Ability to Skip Turn             |Abhi               |Completed    |Medium     |
 |Playtesting                      |Any                |In Progress  |Medium     |
 |AI Behavior                      |Abhi               |In Progress  |Medium     |
 |Pause Menu with restart/exit functionality|Unassigned|Not Started  |Low        |
-|Main Menu Redesign               |Joseph             |In Progress  |Low        |
+|Main Menu Redesign               |Joseph             |Completed    |Low        |
 
 Message the discord/put your name in "Assigned To" if you want to start working on a task
 
