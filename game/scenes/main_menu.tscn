@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqjww7gs1x7fr"]
+[gd_scene load_steps=11 format=3 uid="uid://dqjww7gs1x7fr"]
 
 [ext_resource type="Script" uid="uid://m3t0b31d2viu" path="res://scenes/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="FontFile" uid="uid://cqah1eb0bf2j" path="res://assets/Square.ttf" id="2_ekxnf"]
+[ext_resource type="AudioStream" uid="uid://dgvgplva56w5a" path="res://assets/click_sfx.mp3" id="4_wu84c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekxnf"]
 bg_color = Color(0.30980393, 0.3882353, 0.40392157, 1)
@@ -84,6 +85,11 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wu84c"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("4_wu84c")
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -224,6 +230,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rtw2f")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_oa1go")
 theme_override_styles/hover = SubResource("StyleBoxFlat_oa1go")
 text = "START"
+
+[node name="Click_SFX" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_wu84c")
+volume_db = 5.0
+pitch_scale = 0.8
+bus = &"Sounds"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HotDiceButton" to="." method="_on_base_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/classicButton" to="." method="_on_classic_button_pressed"]

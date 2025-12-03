@@ -58,6 +58,7 @@ var player2_can_reroll: bool = false
 #Re-Roll Buttons for dice 3 effect
 @onready var player1_reroll_button = $"UI-Elements/Player1_UI/Player1ReRollButton" as Button
 @onready var player2_reroll_button = $"UI-Elements/Player2_UI/Player2ReRollButton" as Button
+@onready var audio_manager = $AudioManager as AudioManager
 
 
 func _ready() -> void:
@@ -153,6 +154,8 @@ func roll_dice() -> void:
 	var dice: Dice = DiceObject.instantiate()
 	add_child(dice)
 	
+	audio_manager.roll_sfx.play()
+	
 	if current_roll == 6:
 		var current_player_grid: DiceGrid = (
 				player1_dice_grid if player_turn == 1 
@@ -206,9 +209,7 @@ func place_dice(tile: DiceTile) -> void:
 	if current_dice_grid.is_enabled:
 		current_dice_grid.disable_tiles()
 	
-	
-	
-	
+	audio_manager.place_sfx.play()
 	tile.dice = current_dice
 	current_dice_grid.set_dice_6_score()
 	print(current_dice_grid.get_grid_average())
@@ -247,7 +248,7 @@ func computer_turn() -> void:
 			
 			if player2_can_reroll and is_bad_roll and randf() < reroll_chance:
 				await get_tree().create_timer(0.8).timeout
-				await perform_reroll() 
+				perform_reroll() 
 			
 			await get_tree().create_timer(1.2).timeout  # delay before placing dice
 			var choice: Vector2i = computer_choice() #Then get the best choice
@@ -277,6 +278,7 @@ func remove_opponent_dice(tile_index: Vector2i):
 	var tile_dice = tile.dice
 	
 	if is_instance_valid(tile_dice):
+		audio_manager.destroy_sfx.play()
 		tile_dice.destroy()
 		#tile.dice = null
 		# TODO: Make dice send a signal to tile that sets the tile's dice property to null
@@ -389,8 +391,6 @@ func update_ui() -> void:
 
 
 func perform_cash_in() -> void:
-	if game_over:
-		return
 	
 	if not current_dice == null:
 		return
@@ -405,6 +405,11 @@ func perform_cash_in() -> void:
 			player1_health -= score_to_cash_in
 	else:
 		return
+	
+	if game_over:
+		return
+	
+	audio_manager.attack_sfx.play()
 	
 	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	current_grid.clear()
@@ -435,6 +440,7 @@ func health_change_animation(new_health: int, old_health: int, player_number: in
 		tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
 	else:
 		tween.tween_property(health_bar,"self_modulate",Color.GREEN, 0.2)
+		audio_manager.heal_sfx.play()
 	
 	tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
 
@@ -473,6 +479,7 @@ func skip_turn() -> void:
 	if current_dice == null:
 		return
 	# Clear up the current rolled number and update turn and switch turns
+	audio_manager.skip_sfx.play()
 	current_dice.destroy()
 	current_dice = null
 	update_ui()
@@ -500,7 +507,7 @@ func perform_reroll() -> void:
 	current_dice = null
 	
 	turn_indicator_label.text = "Player Re-Rolled!"
-	await get_tree().create_timer(0.5).timeout
+	#await get_tree().create_timer(0.5).timeout
 	
 	# Can't reroll more than once
 	if player_turn == 1:

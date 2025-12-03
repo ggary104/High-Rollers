@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ri14qd14hhu6"]
+[gd_scene load_steps=23 format=3 uid="uid://ri14qd14hhu6"]
 
 [ext_resource type="Script" uid="uid://j3876cwmcpvt" path="res://scenes/game.gd" id="1_lnu2h"]
 [ext_resource type="FontFile" uid="uid://cqah1eb0bf2j" path="res://assets/Square.ttf" id="2_gee14"]
@@ -8,6 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://bvhg77f3khnei" path="res://scenes/healthbar.tscn" id="4_iywne"]
 [ext_resource type="PackedScene" uid="uid://wyr30or2j33x" path="res://scenes/cash_in_button.tscn" id="4_p57ef"]
 [ext_resource type="PackedScene" uid="uid://cwwxd0ia2ef1x" path="res://scenes/dice_background.tscn" id="8_gee14"]
+[ext_resource type="AudioStream" uid="uid://c68qeuvsngojd" path="res://assets/dice_sfx.mp3" id="9_0tnpc"]
+[ext_resource type="Script" uid="uid://yqidep4hgwlp" path="res://scripts/audio_manager.gd" id="9_vtaks"]
+[ext_resource type="AudioStream" uid="uid://dbm67gd0ukbfi" path="res://assets/clack_sfx.mp3" id="11_kvpfn"]
+[ext_resource type="AudioStream" uid="uid://c4nkgc54xwnla" path="res://assets/whoosh_sfx.mp3" id="12_dinhu"]
+[ext_resource type="AudioStream" uid="uid://c4x1qnw2rh3i7" path="res://assets/smack_sfx.mp3" id="13_kvuet"]
+[ext_resource type="AudioStream" uid="uid://v00n75wvp017" path="res://assets/heal_sfx.mp3" id="14_trtic"]
+[ext_resource type="AudioStream" uid="uid://c0llc56gtx85j" path="res://assets/destroy_sfx.mp3" id="15_ir15t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gee14"]
 bg_color = Color(0.19759999, 0.26751998, 0.38, 0.78431374)
@@ -15,6 +22,36 @@ expand_margin_left = 10.0
 expand_margin_top = 10.0
 expand_margin_right = 20.0
 expand_margin_bottom = 10.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vtaks"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("9_0tnpc")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dinhu"]
+random_pitch = 1.4
+streams_count = 1
+stream_0/stream = ExtResource("11_kvpfn")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kvuet"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("12_dinhu")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_trtic"]
+random_pitch = 1.3
+streams_count = 1
+stream_0/stream = ExtResource("13_kvuet")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ir15t"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("14_trtic")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ca42v"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("15_ir15t")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
@@ -154,6 +191,35 @@ position = Vector2(192.5, 250)
 position = Vector2(800, 400)
 
 [node name="DiceBackground" parent="." instance=ExtResource("8_gee14")]
+
+[node name="AudioManager" type="Node" parent="."]
+script = ExtResource("9_vtaks")
+
+[node name="Roll_SFX" type="AudioStreamPlayer" parent="AudioManager"]
+stream = SubResource("AudioStreamRandomizer_vtaks")
+bus = &"Sounds"
+
+[node name="Place_SFX" type="AudioStreamPlayer" parent="AudioManager"]
+stream = SubResource("AudioStreamRandomizer_dinhu")
+bus = &"Sounds"
+
+[node name="Skip_SFX" type="AudioStreamPlayer" parent="AudioManager"]
+stream = SubResource("AudioStreamRandomizer_kvuet")
+bus = &"Sounds"
+
+[node name="Attack_SFX" type="AudioStreamPlayer" parent="AudioManager"]
+stream = SubResource("AudioStreamRandomizer_trtic")
+volume_db = 10.0
+bus = &"Sounds"
+
+[node name="Heal_SFX" type="AudioStreamPlayer" parent="AudioManager"]
+stream = SubResource("AudioStreamRandomizer_ir15t")
+bus = &"Sounds"
+
+[node name="Destroy_SFX" type="AudioStreamPlayer" parent="AudioManager"]
+stream = SubResource("AudioStreamRandomizer_ca42v")
+volume_db = 5.0
+bus = &"Sounds"
 
 [connection signal="pressed" from="UI-Elements/Player1_UI/Player1RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="UI-Elements/Player1_UI/Player1ReRollButton" to="." method="_on_player_1_re_roll_button_pressed"]

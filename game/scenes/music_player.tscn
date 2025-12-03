@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckwi0i6jsfgb5"]
+
+[ext_resource type="AudioStream" uid="uid://jm6d7uknl8ln" path="res://assets/jazz_bgm.mp3" id="1_jxdhu"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_jxdhu")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
