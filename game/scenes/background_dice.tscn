@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://wudw34omdnh"]
+
+[ext_resource type="Texture2D" uid="uid://dtj8ctclnvbty" path="res://assets/dice_particle_6.svg" id="1_ahiht"]
+[ext_resource type="Texture2D" uid="uid://swch2t6x1t38" path="res://assets/dice_particle_1.svg" id="1_etvkn"]
+[ext_resource type="Texture2D" uid="uid://j6tt27hdbmd" path="res://assets/dice_particle_2.svg" id="2_kdsam"]
+[ext_resource type="Script" uid="uid://dbrgpmjubwr7m" path="res://scripts/background_dice.gd" id="2_m64dv"]
+[ext_resource type="Texture2D" uid="uid://kxdpyy3f1dni" path="res://assets/dice_particle_3.svg" id="3_63t4g"]
+[ext_resource type="Texture2D" uid="uid://de3nhey5xx1pv" path="res://assets/dice_particle_4.svg" id="4_jokw3"]
+[ext_resource type="Texture2D" uid="uid://q5lchboavdg7" path="res://assets/dice_particle_5.svg" id="5_ej43n"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m64dv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_etvkn")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kdsam")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_63t4g")
+}],
+"loop": true,
+"name": &"3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_jokw3")
+}],
+"loop": true,
+"name": &"4",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ej43n")
+}],
+"loop": true,
+"name": &"5",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ahiht")
+}],
+"loop": true,
+"name": &"6",
+"speed": 5.0
+}]
+
+[node name="BackgroundDice" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_m64dv")
+animation = &"5"
+script = ExtResource("2_m64dv")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-40, -40, 80, 80)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

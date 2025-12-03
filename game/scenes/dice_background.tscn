@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwwxd0ia2ef1x"]
+
+[ext_resource type="Script" uid="uid://bfut6qdaqudif" path="res://scripts/dice_background.gd" id="1_7lamv"]
+
+[node name="DiceBackground" type="Node2D"]
+modulate = Color(1, 1, 1, 0.39215687)
+z_index = -100
+script = ExtResource("1_7lamv")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

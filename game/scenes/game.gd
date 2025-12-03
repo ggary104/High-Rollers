@@ -1,7 +1,7 @@
 # scripts/Game.gd
 extends Node2D
 
-#Variables - To store the main game logic data
+
 var DiceObject := preload("res://scenes/dice.tscn")
 var player_turn: int = randi() % 2  + 1 #Is it player1's turn or player 2s
 
@@ -15,16 +15,17 @@ var player1_health: int = MAX_HEALTH:
 	set(value):
 		player1_healthbar.value = value
 		health_change_animation(value, player1_health, 1)
-		check_game_over(value)
+		check_game_over(value, 2)
 		print(player1_health)
 		print(value)
 		print("ow")
 		player1_health = value
+
 var player2_health: int = MAX_HEALTH:
 	set(value):
 		player2_healthbar.value = value
 		health_change_animation(value, player2_health, 2)
-		check_game_over(value)
+		check_game_over(value, 2)
 		print(value)
 		print("oof")
 		player2_health = value
@@ -46,7 +47,6 @@ var player2_can_reroll: bool = false
 @onready var player1_dice_grid = $Board/DiceGrid as DiceGrid
 @onready var player2_dice_grid = $Board/DiceGrid2 as DiceGrid
 @onready var dice_spawn_position = $Board/DiceSpawnPosition as Marker2D
-@onready var value_label = $"UI-Elements/ValueLabel" as Label
 
 
 #Variable for player 1 and player 2 cash in button used for attacking the health
@@ -61,8 +61,6 @@ var player2_can_reroll: bool = false
 
 
 func _ready() -> void:
-	if value_label:
-		value_label.visible = false
 	
 	player1_dice_grid.on_tile_selected.connect(place_dice)
 	player2_dice_grid.on_tile_selected.connect(place_dice)
@@ -120,7 +118,7 @@ func player2_turn() -> void:
 	if is_player2_human:
 		player2_roll_button.disabled = false
 		
-		player2_cash_in_button.disabled = false if not player1_dice_grid.get_grid_score() == 0 else true
+		player2_cash_in_button.disabled = false if not player2_dice_grid.get_grid_score() == 0 else true
 	else:
 		computer_turn()
 
@@ -161,16 +159,18 @@ func roll_dice() -> void:
 				else player2_dice_grid
 		)
 		
-		var board_average: float = current_player_grid.get_grid_average()
-		var dice_6_value: int = dice.get_special_adjusted_score_value(board_average)
+		dice.set_score_value(6)
 		
-		dice.set_score_value_special(board_average,6)
-		value_label.visible = true
-		value_label.text = "Value: " + str(dice_6_value) 
+		var dice_6_value: int = current_player_grid.get_adjusted_6_value()
+		print("d6")
+		print(current_player_grid.get_grid_average())
+		print(dice_6_value)
+		
+		dice.score_value = dice_6_value
 
 	else:
 		dice.set_score_value(current_roll)
-
+	
 	dice.position = dice_spawn_position.position
 	dice.on_dice_1_destroyed.connect(dice_1_effect)
 	current_dice = dice
@@ -206,7 +206,12 @@ func place_dice(tile: DiceTile) -> void:
 	if current_dice_grid.is_enabled:
 		current_dice_grid.disable_tiles()
 	
+	
+	
+	
 	tile.dice = current_dice
+	current_dice_grid.set_dice_6_score()
+	print(current_dice_grid.get_grid_average())
 	current_dice = null
 	switch_turn()
 
@@ -290,7 +295,6 @@ func flip_horizontally(column: int) -> int:
 
 
 func switch_turn() -> void:
-	value_label.visible = false
 	if player_turn == 1:
 		player_turn = 2
 		player2_turn()
@@ -299,10 +303,11 @@ func switch_turn() -> void:
 		player1_turn()
 
 
-func check_game_over(new_health: int) -> void:
+func check_game_over(new_health: int, player_number: int) -> void:
 	if new_health <= 0:
 		game_over = true
-		GameManager.winner_text = "Player 2 Wins!"
+		var winning_player: String = "1" if player_number == 2 else "2"
+		GameManager.winner_text = "Player {0} Wins!".format([winning_player])
 		SceneManager.change_scene("res://scenes/game_over.tscn")
 
 
@@ -401,11 +406,6 @@ func perform_cash_in() -> void:
 	else:
 		return
 	
-	#player1_health = max(0,player1_health)
-	#player2_health = max(0,player2_health)
-	#health_damage_animation()
-	
-	
 	var current_grid: DiceGrid = player1_dice_grid if player_turn == 1 else player2_dice_grid
 	current_grid.clear()
 	
@@ -424,23 +424,10 @@ func _on_player_2_cash_in_button_pressed() -> void:
 		perform_cash_in()
 
 
-#func health_damage_animation() -> void:
-	#var health_bar: ProgressBar = player1_healthbar if player_turn == 2 else player2_healthbar
-	#
-	#var tween := create_tween()
-	#tween.tween_property(health_bar,"self_modulate",Color.RED, 0.2)
-	#tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
-
-
-#func health_heal_animation():
-	#var health_bar: ProgressBar = player1_healthbar if player_turn == 1 else player2_healthbar
-	#
-	#var tween: Tween = create_tween();
-	#tween.tween_property(health_bar,"self_modulate",Color.GREEN, 0.2)
-	#tween.tween_property(health_bar,"self_modulate",Color.WHITE, 0.2)
-
-
 func health_change_animation(new_health: int, old_health: int, player_number: int) -> void:
+	if new_health == old_health:
+		return
+	
 	var health_bar: ProgressBar = player1_healthbar if player_number == 1 else player2_healthbar
 	var tween: Tween = create_tween()
 	
@@ -462,9 +449,7 @@ func dice_1_effect() -> void:
 		player1_health += 1
 	else:
 		player2_health += 1
-	
-	#health_heal_animation()
-	
+
 
 # Debug Functions
 
@@ -520,7 +505,6 @@ func perform_reroll() -> void:
 	# Can't reroll more than once
 	if player_turn == 1:
 		player1_can_reroll = false
-	
 	else:
 		player2_can_reroll = false
 	

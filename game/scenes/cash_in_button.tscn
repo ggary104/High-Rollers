@@ -23,11 +23,11 @@ corner_radius_top_left = 30
 corner_radius_top_right = 30
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5fhi"]
-bg_color = Color(0.3882353, 0.3019608, 0.5176471, 1)
+bg_color = Color(0.38896, 0.3016, 0.52, 1)
 border_width_left = 8
 border_width_top = 8
 border_width_right = 8
-border_color = Color(0.30588236, 0.2, 0.5058824, 1)
+border_color = Color(0.31110013, 0.20399998, 0.51, 1)
 border_blend = true
 corner_radius_top_left = 30
 corner_radius_top_right = 30
