@@ -165,9 +165,6 @@ func roll_dice() -> void:
 		dice.set_score_value(6)
 		
 		var dice_6_value: int = current_player_grid.get_adjusted_6_value()
-		print("d6")
-		print(current_player_grid.get_grid_average())
-		print(dice_6_value)
 		
 		dice.score_value = dice_6_value
 
@@ -212,7 +209,6 @@ func place_dice(tile: DiceTile) -> void:
 	audio_manager.place_sfx.play()
 	tile.dice = current_dice
 	current_dice_grid.set_dice_6_score()
-	print(current_dice_grid.get_grid_average())
 	current_dice = null
 	switch_turn()
 
@@ -280,8 +276,6 @@ func remove_opponent_dice(tile_index: Vector2i):
 	if is_instance_valid(tile_dice):
 		audio_manager.destroy_sfx.play()
 		tile_dice.destroy()
-		#tile.dice = null
-		# TODO: Make dice send a signal to tile that sets the tile's dice property to null
 		update_ui()
 	
 	update_ui()
