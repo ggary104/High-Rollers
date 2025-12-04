@@ -22,12 +22,12 @@ border_blend = true
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p747q"]
-bg_color = Color(0.3882353, 0.3019608, 0.5176471, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ys4iy"]
+bg_color = Color(0.38896, 0.3016, 0.52, 1)
 border_width_left = 8
 border_width_top = 8
 border_width_right = 8
-border_color = Color(0.30588236, 0.2, 0.5058824, 1)
+border_color = Color(0.31110013, 0.20399998, 0.51, 1)
 border_blend = true
 corner_radius_top_left = 30
 corner_radius_top_right = 30
@@ -52,6 +52,6 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_187te")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ulujs")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ulujs")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_p747q")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ys4iy")
 text = "Roll"
 icon_alignment = 1

@@ -167,13 +167,38 @@ func get_grid_average() -> float:
 	for tile: DiceTile in unarranged_tiles:
 		if is_instance_valid(tile.dice):
 			# Use the face val to calculate average -> To use Dice 6 as 6
-			total_sum += tile.dice.get_face_value() 
+			total_sum += tile.dice.face_value
 			count += 1
 	
 	if count == 0:
 		return 0.0
 	
 	return float(total_sum) / float(count)
+
+
+func set_dice_6_score() -> void:
+	var adjusted_6_value: int = get_adjusted_6_value()
+	
+	for tile: DiceTile in unarranged_tiles:
+		if not is_instance_valid(tile.dice):
+			continue
+		
+		var tile_dice: Dice = tile.dice
+		if tile_dice.face_value == 6:
+			tile_dice.score_value = adjusted_6_value
+
+
+func get_adjusted_6_value() -> int:
+	var average: float = get_grid_average()
+	var diff: float = average - 3.5 
+	# For every 0.5 -> Value changes by one wether -ve or +ve
+	var adjusted_value: int = round(diff / 0.5) 
+	var temp_score_value: int = 6 + adjusted_value #new value of 6
+	
+	if temp_score_value < 1: 
+		temp_score_value = 1
+		
+	return temp_score_value
 
 
 func clear() -> void:
