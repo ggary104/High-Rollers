@@ -235,7 +235,6 @@ text = "START"
 stream = SubResource("AudioStreamRandomizer_wu84c")
 volume_db = 5.0
 pitch_scale = 0.8
-bus = &"Sounds"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HotDiceButton" to="." method="_on_base_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/classicButton" to="." method="_on_classic_button_pressed"]
