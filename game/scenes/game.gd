@@ -238,7 +238,7 @@ func computer_turn() -> void:
 	if should_computer_reroll():
 		await get_tree().create_timer(1).timeout
 		computer_thoughts.text = "Computer is rerolling..."
-		await perform_reroll() 
+		perform_reroll() 
 		await get_tree().create_timer(1.0).timeout 
 	
 	computer_thoughts.text = "Should I skip...?"
