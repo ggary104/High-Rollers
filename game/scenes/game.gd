@@ -229,7 +229,6 @@ func computer_turn() -> void:
 		await computer_cash_in()
 		return # Turn ends after cash i
 	
-	var skip_chance:float = 0.1
 	await get_tree().create_timer(.8).timeout  # delay before roll
 	roll_dice()
 	
