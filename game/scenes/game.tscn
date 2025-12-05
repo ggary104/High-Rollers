@@ -79,14 +79,15 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_gee14")
 text = "P2 Score: "
 
 [node name="ComputerThoughts" type="Label" parent="UI-Elements"]
-offset_left = 718.0
+offset_left = 716.0
 offset_top = 270.0
-offset_right = 886.0
+offset_right = 884.0
 offset_bottom = 290.0
 theme_override_fonts/font = ExtResource("2_gee14")
 theme_override_font_sizes/font_size = 19
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="TurnIndicator" type="Label" parent="UI-Elements"]
 visible = false

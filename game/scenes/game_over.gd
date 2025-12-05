@@ -7,7 +7,7 @@ func _ready() -> void:
 
 
 func _on_play_again_button_pressed() -> void:
-	if GameManager.gameMode == "game":
+	if GameManager.gameMode == "hotdice":
 		SceneManager.change_scene("res://scenes/game.tscn")
 	elif GameManager.gameMode == "classic":
 		SceneManager.change_scene("res://scenes/classic.tscn")

@@ -52,6 +52,8 @@ func _on_start_button_pressed() -> void:
 	click_sfx.play()
 	GameManager.playerNumber = player_count
 	if selected_game_mode == GAME_MODE.HOT_DICE:
+		GameManager.gameMode = "hotdice"
 		SceneManager.change_scene(PATH_TO_HOT_DICE_MODE)
 	elif selected_game_mode == GAME_MODE.CLASSIC:
+		GameManager.gameMode = "classic"
 		SceneManager.change_scene(PATH_TO_CLASSIC_MODE)
