@@ -15,7 +15,7 @@ var player1_health: int = MAX_HEALTH:
 	set(value):
 		player1_healthbar.value = value
 		health_change_animation(value, player1_health, 1)
-		check_game_over(value, 2)
+		check_game_over(value, 1)
 		print(player1_health)
 		print(value)
 		print("ow")
@@ -117,7 +117,7 @@ func player2_turn() -> void:
 	player1_reroll_button.visible = false
 	
 	if is_player2_human:
-		player2_roll_button.disabled = false
+		player2_roll_button.disabled = false if not player2_dice_grid.is_full() else true
 		
 		player2_cash_in_button.disabled = false if not player2_dice_grid.get_grid_score() == 0 else true
 	else:
@@ -165,9 +165,6 @@ func roll_dice() -> void:
 		dice.set_score_value(6)
 		
 		var dice_6_value: int = current_player_grid.get_adjusted_6_value()
-		print("d6")
-		print(current_player_grid.get_grid_average())
-		print(dice_6_value)
 		
 		dice.score_value = dice_6_value
 
@@ -212,7 +209,6 @@ func place_dice(tile: DiceTile) -> void:
 	audio_manager.place_sfx.play()
 	tile.dice = current_dice
 	current_dice_grid.set_dice_6_score()
-	print(current_dice_grid.get_grid_average())
 	current_dice = null
 	switch_turn()
 
@@ -222,7 +218,7 @@ func computer_turn() -> void:
 	# disable player roll button
 		
 	var is_current_grid_full: bool = player2_dice_grid.is_full()
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(0.5).timeout
 	computer_thoughts.text = "Should I cash in...?"
 
 	if is_current_grid_full || await should_computer_cash_in():
@@ -233,16 +229,16 @@ func computer_turn() -> void:
 	roll_dice()
 	
 	computer_thoughts.text = "Can I re-roll...?"
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.25).timeout
 
 	if should_computer_reroll():
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 		computer_thoughts.text = "Computer is rerolling..."
 		perform_reroll() 
-		await get_tree().create_timer(1.0).timeout 
+		await get_tree().create_timer(0.5).timeout 
 	
 	computer_thoughts.text = "Should I skip...?"
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.25).timeout
 	if should_computer_skip_turn():
 		await computer_skip_turn()
 		computer_thoughts.text = ""
@@ -316,19 +312,19 @@ func should_computer_cash_in() -> bool:
 	if computer_score >= player1_health:
 		# Cash in to win the game.
 		computer_thoughts.text = "Computer sees a win..."
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.5).timeout
 		return true
 		
 	if player2_health < 30 and computer_score > 15:
 		# If own health is less, try to get even with other player.
 		computer_thoughts.text = "Computer is playing defensively."
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.5).timeout
 		return true
 		
 	if computer_score > 40 and randf() < 0.75:
 		# A 75% chance to secure points
 		computer_thoughts.text = "Computer is securing points."
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.5).timeout
 		return true
 
 	return false
@@ -383,13 +379,13 @@ func should_computer_skip_turn() -> bool:
 
 func computer_skip_turn():
 	computer_thoughts.text = "Computer Skipped!"
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(0.6).timeout
 	skip_turn()
 	
 
 func computer_cash_in() -> void:
 	computer_thoughts.text = "Computer Cashed In!"
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(0.6).timeout
 	perform_cash_in()
 
 # AI Helper Functions
@@ -480,8 +476,6 @@ func remove_opponent_dice(tile_index: Vector2i):
 	if is_instance_valid(tile_dice):
 		audio_manager.destroy_sfx.play()
 		tile_dice.destroy()
-		#tile.dice = null
-		# TODO: Make dice send a signal to tile that sets the tile's dice property to null
 		update_ui()
 	
 	update_ui()

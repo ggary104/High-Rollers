@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://j3876cwmcpvt" path="res://scenes/game.gd" id="1_lnu2h"]
 [ext_resource type="FontFile" uid="uid://cqah1eb0bf2j" path="res://assets/Square.ttf" id="2_gee14"]
-[ext_resource type="PackedScene" path="res://scenes/roll_button.tscn" id="2_p57ef"]
-[ext_resource type="PackedScene" path="res://scenes/skip_turn_button.tscn" id="2_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://bcprnyvh0ko23" path="res://scenes/roll_button.tscn" id="2_p57ef"]
+[ext_resource type="PackedScene" uid="uid://b1743ni5bnb5s" path="res://scenes/skip_turn_button.tscn" id="2_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://ccq55rkccr7yq" path="res://scenes/dice_grid.tscn" id="3_lnu2h"]
-[ext_resource type="PackedScene" path="res://scenes/healthbar.tscn" id="4_iywne"]
-[ext_resource type="PackedScene" path="res://scenes/cash_in_button.tscn" id="4_p57ef"]
-[ext_resource type="PackedScene" path="res://scenes/dice_background.tscn" id="8_gee14"]
+[ext_resource type="PackedScene" uid="uid://bvhg77f3khnei" path="res://scenes/healthbar.tscn" id="4_iywne"]
+[ext_resource type="PackedScene" uid="uid://wyr30or2j33x" path="res://scenes/cash_in_button.tscn" id="4_p57ef"]
+[ext_resource type="PackedScene" uid="uid://cwwxd0ia2ef1x" path="res://scenes/dice_background.tscn" id="8_gee14"]
 [ext_resource type="AudioStream" uid="uid://c68qeuvsngojd" path="res://assets/dice_sfx.mp3" id="9_0tnpc"]
-[ext_resource type="Script" path="res://scripts/audio_manager.gd" id="9_vtaks"]
+[ext_resource type="Script" uid="uid://yqidep4hgwlp" path="res://scripts/audio_manager.gd" id="9_vtaks"]
 [ext_resource type="AudioStream" uid="uid://dbm67gd0ukbfi" path="res://assets/clack_sfx.mp3" id="11_kvpfn"]
 [ext_resource type="AudioStream" uid="uid://c4nkgc54xwnla" path="res://assets/whoosh_sfx.mp3" id="12_dinhu"]
 [ext_resource type="AudioStream" uid="uid://c4x1qnw2rh3i7" path="res://assets/smack_sfx.mp3" id="13_kvuet"]
@@ -79,14 +79,15 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_gee14")
 text = "P2 Score: "
 
 [node name="ComputerThoughts" type="Label" parent="UI-Elements"]
-offset_left = 718.0
+offset_left = 716.0
 offset_top = 270.0
-offset_right = 886.0
+offset_right = 884.0
 offset_bottom = 290.0
 theme_override_fonts/font = ExtResource("2_gee14")
 theme_override_font_sizes/font_size = 19
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="TurnIndicator" type="Label" parent="UI-Elements"]
 visible = false

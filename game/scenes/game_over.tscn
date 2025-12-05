@@ -1,6 +1,59 @@
-[gd_scene load_steps=2 format=3 uid="uid://bysnvwvwi7sbc"]
+[gd_scene load_steps=7 format=3 uid="uid://bysnvwvwi7sbc"]
 
 [ext_resource type="Script" uid="uid://cfwau3fgmcqol" path="res://scenes/game_over.gd" id="1_xeevv"]
+[ext_resource type="FontFile" uid="uid://cqah1eb0bf2j" path="res://assets/Square.ttf" id="2_wqhvx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqhvx"]
+bg_color = Color(0.99215686, 0.37254903, 0.33333334, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.75686276, 0.2509804, 0.22352941, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m3ot"]
+bg_color = Color(1, 0.5882353, 0.5647059, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.99215686, 0.99215686, 0.99215686, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbwuq"]
+bg_color = Color(0.003921569, 0.6117647, 0.99215686, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.011764706, 0.54509807, 0.8901961, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_racf3"]
+bg_color = Color(0.23529412, 0.7058824, 1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.99215686, 0.99215686, 0.99215686, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="GameOver" type="Control"]
 layout_mode = 3
@@ -27,26 +80,37 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -106.5
+offset_top = -96.0
+offset_right = 106.5
+offset_bottom = 184.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 13
+theme_override_constants/separation = 20
 
 [node name="Result" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_wqhvx")
+theme_override_font_sizes/font_size = 60
+text = "Result"
 
 [node name="PlayAgainButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_wqhvx")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_wqhvx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7m3ot")
 text = "Play Again"
 
 [node name="MainMenuButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
-text = "Return to Main Menu"
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_wqhvx")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tbwuq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_racf3")
+text = "Main Menu"
 
 [connection signal="pressed" from="VBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
