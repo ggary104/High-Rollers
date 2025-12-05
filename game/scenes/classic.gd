@@ -85,11 +85,15 @@ func player_two_turn():
 # --- Dice rolling ---
 func roll_dice() -> void:
 	dice_roll.visible = true
-	roll_animation.stop() # Reset animation
+	roll_animation.stop()
 	roll_animation.play("roll")
 	await roll_animation.animation_finished
-	dice_roll.visible = false
+	
+	# Generate the final roll
 	current_roll = randi() % 6 + 1
+	
+	# Update the UI so the final dice is visible
+	update_ui()
 
 
 
@@ -105,6 +109,7 @@ func place_dice(column_index):
 			current_player_cols[column_index][i] = current_roll
 			remove_opponent_dice(column_index, current_roll)
 			update_board_visuals()
+			dice_roll.visible = false
 			switch_turn()
 			return
 
@@ -219,6 +224,9 @@ func update_ui():
 	
 	p1_score_label.text = "P1 Score: " + str(p1_score)
 	p2_score_label.text = "P2 Score: " + str(p2_score)
+	
+	if current_roll > 0:
+		dice_roll.texture = dice_textures[current_roll - 1]
 	
 
 # --- Update board visuals ---
