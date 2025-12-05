@@ -17,7 +17,6 @@ var dice_textures = []
 @onready var p2_grid = $Board/Player2Board/Player2Grid
 @onready var p1_score_label = $"UI-Elements/Player1Score"
 @onready var p2_score_label = $"UI-Elements/Player2Score"
-@onready var turn_indicator_label = $"UI-Elements/TurnIndicator"
 @onready var player1_roll = $"UI-Elements/Player1_UI/Player1RollButton" as Button
 @onready var player2_roll = $"UI-Elements/Player2_UI/Player2RollButton" as Button
 
@@ -54,20 +53,34 @@ func player_one_turn():
 		button.disabled = false
 	for button in player2_column_inputs.get_children():
 		button.disabled = true
+	player1_roll.disabled = false
+	player2_roll.disabled = true
+	update_ui()
 		
 
 	update_ui()
 
 func player_two_turn():
-	for button in player1_column_inputs.get_children():
-		button.disabled = true
-	for button in player2_column_inputs.get_children():
-		button.disabled = false
-	
-	player2_roll.disabled = false
+	if GameManager.playerNumber == 1:
+		# AI turn
+		for button in player1_column_inputs.get_children():
+			button.disabled = true
+		for button in player2_column_inputs.get_children():
+			button.disabled = true
+		player1_roll.disabled = true
+		player2_roll.disabled = true
 
-	
-	update_ui()
+		computer_turn()
+	else:
+		# Human player 2 turn
+		for button in player1_column_inputs.get_children():
+			button.disabled = true
+		for button in player2_column_inputs.get_children():
+			button.disabled = false
+		player1_roll.disabled = true
+		player2_roll.disabled = false
+		update_ui()
+
 
 # --- Dice rolling ---
 func roll_dice() -> void:
@@ -76,8 +89,9 @@ func roll_dice() -> void:
 	roll_animation.play("roll")
 	await roll_animation.animation_finished
 	dice_roll.visible = false
-	
 	current_roll = randi() % 6 + 1
+
+
 
 # --- Place dice in column ---
 func place_dice(column_index):
@@ -93,6 +107,7 @@ func place_dice(column_index):
 			update_board_visuals()
 			switch_turn()
 			return
+
 
 func remove_opponent_dice(column_index, roll_value):
 	var opponent_cols = p2_cols if player_turn == 1 else p1_cols
@@ -179,14 +194,23 @@ func computer_choice():
 
 func computer_turn():
 	if game_over: return
+	
+	# Disable buttons
+	for button in player1_column_inputs.get_children():
+		button.disabled = true
+	for button in player2_column_inputs.get_children():
+		button.disabled = true
 	player1_roll.disabled = true
-	player1_roll.visible = false
+	player2_roll.disabled = true
+
 	await get_tree().create_timer(0.8).timeout
 	await roll_dice()
 	update_ui()
 	await get_tree().create_timer(0.8).timeout
+
 	var choice = computer_choice()
-	place_dice(choice)
+	place_dice(choice) 
+
 
 # --- UI updates ---
 func update_ui():
