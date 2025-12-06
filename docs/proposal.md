@@ -13,7 +13,6 @@ Seth, seth.william.doyle@gmail.com
 The High Rollers is a strategic dice game that combines tactical decision-making with competitive gameplay. Building upon an existing working prototype developed in C++, the project will translate and enhance the core game mechanics using the Godot engine to create a polished, mobile–friendly experience. Players take turns rolling dice and strategically placing them in columns on their individual game boards, with the unique ability to destroy opponents’ dice when they successfully place two dice in the same column.
 Each player takes turns rolling a die and placing it into one of several columns on their 3×3 board. If a player places a second die in the same column, they may destroy one opponent die in that column. The round continues until all spaces are filled, and the winner is determined by total score. Matching dice in a column multiply their value, creating strategic choices between high-value placements and riskier multiplier opportunities.
 
----
 The game ends when all board spaces are filled, but victory is determined by the highest total score rather than completion speed. The scoring system adds significant depth through a multiplier mechanic where matching dice in the same column have their values multiplied by the number of matching dice, creating strategic decisions about whether to pursue high individual dice values or attempt to build matching combinations for bonus points.
 
 The current prototype demonstrates complete functionality with console-based gameplay, including AI opponents with strategic decision-making capabilities, turn-based mechanics, and proper scoring calculations. The Godot implementation will enhance this foundation with 2D graphics.
@@ -26,23 +25,104 @@ The dice rolling element provides enough randomness to keep games exciting and p
 
 Our team is motivated by a shared interest in game design and the opportunity to create something genuinely entertaining. We are all avid board game players who have discussed game mechanics and design principles extensively, and this project provides our first hands-on opportunity to translate those discussions into a working digital game. The multiplayer aspect adds technical challenge while the strategic gameplay elements allow us explore game balance, difficulty and user experience design.
 
-**Key features and discussion**
+# Key Features and Discussion
 
-### Core Gameplay mechanics
+## Core Gameplay Mechanics (Shared Across Modes)
 
-·  	Turn based dice rolling with strategic placement decisions  
-·  	Individual player boards with multiple columns for dice placement  
-·  	Destruction mechanic: placing two dice in a column allows destroying one opponent die in that same column  
-·  	Game ends when all board spaces are filled, winner determined by the highest score  
-·  	Scoring system combines raw dice values with multipliers for matching dice in columns
+- Turn-based dice rolling  
+- A 3×3 board with three columns  
+- Strategic placement of dice  
+- Destruction mechanic when placing a second die in a column  
+- Multiplier system for matching dice  
+- Multiple viable strategies (defensive, multiplier-based, denial-based, etc.)
 
-### Game Modes
+# Game Modes
 
-#### CLassic Mode:
-The original version of High Rollers focuses on strategic placement and scoring. Players roll dice and place them in one of three columns, aiming to build matching sets while destroying opponents’ dice in the same column. The match ends when any player’s grid is full, and the winner is determined by the total score using the multiplier system.
+## Classic Mode – Complete Rules
 
-#### Hot Dice Mode:
-An expanded, combat-oriented variant where each player starts with a health bar (100 HP). Instead of just scoring, players can “cash in” their accumulated dice values to deal damage to the opponent. Destroying an opponent’s dice can trigger healing effects for certain rolls (e.g., when a die showing 1 is destroyed). The first player to reduce their opponent to 0 HP wins. This mode adds real-time tension and resource management to the game, offering more depth for competitive players.
+Classic Mode is the base version of **High Rollers**, focused entirely on strategic scoring and board control.
+
+### Board Layout
+- Each player has a **3×3 grid**, structured as three columns.  
+- Dice stack from **top to bottom**.
+
+### Turn Phase
+On your turn:
+1. Roll a die (1–6).  
+2. Choose any empty space in your grid.  
+3. Place the die.
+
+### Destruction Mechanic
+When you place the **second die in a column**:
+- You may **destroy 1 opponent die** in the same column position.  
+- If the opponent’s space is empty, nothing is destroyed.
+
+This mechanic allows:
+- Denying the opponent’s multiplier  
+- Preventing high-value scoring  
+- Counter-attacking to maintain pressure  
+
+### Column Scoring & Multipliers
+
+Each column’s score is calculated as:
+
+**(Sum of dice in column) × (number of matching dice if matches exist)**
+
+#### Examples:
+- Column: **5, 5** → (10) × 2 = **20 points**  
+- Column: **3, 3, 3** → (9) × 3 = **27 points**  
+- Column: **2, 4** → no matches = **6 points**
+
+### End of Game
+- The game ends when **any board becomes full**.
+
+### Winner
+- The winner is the player with the **highest total score** across all columns.
+
+## Hot Dice Mode – Complete Rules
+
+Hot Dice Mode transforms the game into a **combat strategy game** with health, special dice powers, and resource management.
+
+### Starting Conditions
+- Both players begin with **100 HP**.  
+- Each player’s **score meter starts at 0**.
+
+### Turn Options
+After rolling a die (1–6), the player chooses:
+
+#### 1. **PLACE**
+- Place the die on the board.  
+- Adds the die’s value **(or special effect)** to the score meter.  
+- Some dice have unique abilities.
+
+#### 2. **BREAK (Cash In)**
+- Convert the **current score meter** directly into **damage** dealt to the opponent.  
+- After cashing in:
+  - Your board **clears completely**  
+  - Your score meter **resets to 0**
+
+#### 3. **SKIP**
+- Skip your turn to attempt to get a better die next turn.  
+- No penalty, but gives your opponent **tempo advantage**.
+
+## Special Dice Effects (Hot Dice Only)
+
+| Die Value | Effect |
+|----------|--------|
+| **1** | When cashed in, heal **+1 HP** |
+| **2** | **Doubles** the value of the entire column it is placed in |
+| **3** | Grants **1 reroll token** (max 1 stored) |
+| **4** | Can destroy the corresponding opponent tile, or destroy both if stacked |
+| **5** | Adds **+5 flat score** to your meter |
+| **6** | Adds **+6 points for every point the average board value is above 3** |
+
+### SIX Example
+- If average die value = **1–3.9** → **0 points**  
+- If average die value = **5** → (5 − 3 = 2) → **2 × 6 = 12 points** 
+
+## Winning Hot Dice
+- Reduce the opponent’s **HP to 0** to win.
+
 
 ### Multiplayer Experience
 
