@@ -57,7 +57,7 @@ List of game elements (across both game modes):
 
 Below is a really simple DFD of the program as a whole.
 
-![A very bare dfd](/images/dfd.png)
+![](images/dfd.png)
 
 ## Logical Design
 
@@ -238,7 +238,7 @@ The team has chosen to build the project in the Godot game engine, as it’s fre
 
 ### Main Menu
 
-![](/images/mainmenunodetree.png)
+![](images/mainmenunodetree.png)
 
 The **Main Menu** node (of type Control) serves as the root node of the scene. It is the only node with an attached script (mainmenu.gd), so it also controls all menu logic.
 
@@ -262,7 +262,7 @@ The **AudioStreamPlayer** (Click\_SFX) plays a clicking sound whenever a non-dis
 
 ### Hot Dice
 
-![](/images/hotdicenodetree.png)
+![](images/hotdicenodetree.png)
 
 The **Game** node (of type Node2D) is the root node of the scene. Its attached script (game.gd) oversees all game logic.
 
@@ -310,7 +310,7 @@ The **AudioManager** node (of type node) is mainly used to organize and access i
 
 ### Classic Mode:
 
-![](/images/classicnodetree.png)
+![](images/classicnodetree.png)
 
 The **Classic** node (of type Node2D) is the root node of the scene. Its attached script, game.gd, handles most of the game logic.
 
