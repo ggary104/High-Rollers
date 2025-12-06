@@ -57,7 +57,7 @@ List of game elements (across both game modes):
 
 Below is a really simple DFD of the program as a whole.
 
-![A very bare dfd](images/dfd.png)
+![](images/dfd.png)
 
 ## Logical Design
 
