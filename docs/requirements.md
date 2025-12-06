@@ -1,6 +1,6 @@
 # CSCI 265 Requirements and Specifications
 
-## Team name: Dice Destroyers
+## Team name: The High Rollers
 
 ## Project/product name: High Rollers
 
