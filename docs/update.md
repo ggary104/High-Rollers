@@ -64,6 +64,64 @@ All deliverables are in strong standing at the end of Phase 3. The Team Charter,
 The Godot prototype is stable, featuring a functional main menu, classic mode, attack and health systems, and integrated dice mechanics. Early reworks have enhanced both structure and playability. The repository remains organized, with all conflicts resolved and the latest updates successfully pushed for team access.
 
 
+# Progress Phase 4
+
+Phase 4 marked the final development stage of *High Rollers*, during which the team focused on completing all remaining gameplay features, polishing the user interface, and preparing the final version of the game for submission. This phase emphasized feature completeness, stability, extensive testing, and full documentation.
+
+From a technical standpoint, the team successfully implemented and refined all core gameplay mechanics across both Classic and Hot Dice modes. This included finalizing full dice effect logic (such as rerolls, destructive placements, healing effects, and average-value-based scoring), completing the health and attack systems, and ensuring smooth and consistent game flow from the main menu to end-of-game states. All placeholders from earlier prototypes were replaced with finalized assets, and the game now features polished dice animations, updated UI elements, and improved layout readability across devices.
+
+Testing played a major role in Phase 4. The Testing Lead organized multiple manual playthrough test cycles, covering gameplay bugs, UI interaction issues, balancing concerns, and device compatibility. Based on test results, the team made several refinements. This iterative feedback loop significantly improved the playability and clarity of the final game.
+
+The Documentation Lead completed all required documents during this phase. The Proposal, standards, Requirements & Specifications, Design, test plan document and Progress Updates were fully revised and finalized to reflect the completed project. The Test Plan document was completed in parallel with the final testing cycle. Final presentation materials, including gameplay demonstrations and technical diagrams, were also prepared.  
+
+Overall, Phase 4 achieved all project objectives and resulted in a fully playable, stable, and polished final version of *High Rollers*.
+
+# Changes in Risk Assessment
+
+By Phase 4, the original risks identified in earlier phases had either been resolved or significantly reduced. Most technical risks were eliminated due to the completion of core systems and successful porting of gameplay mechanics into Godot earlier in development.
+
+The primary remaining risk—schedule compression—was mitigated through increased collaboration, additional work sessions, and redistribution of tasks as necessary. Multiplayer implementation, originally one of the higher-risk components, was formally scoped down to prioritize stability and ensure a complete and functional single-player and local multiplayer experience by the deadline.
+
+No major new risks emerged in Phase 4. The game performed consistently during testing, reducing the likelihood of unexpected issues during final submission.
+
+# Changes in Product Features
+
+During Phase 4, the team made deliberate adjustments to prioritize a polished, fully functional MVP. Optional features such as tournaments, power-ups, or extended progression systems were formally set aside for post-MVP consideration, ensuring that development focus remained on gameplay quality rather than feature quantity.
+
+Instead, the team committed to deepening the mechanics that were already part of the core experience. Dice effects were fully implemented and refined, including:
+
+- **1:** Heals the player when cashed in  
+- **2:** Doubles the value of dice in a column  
+- **3:** Grants a reroll (limited to 1 at a time)  
+- **4:** Destroys corresponding opponent dice  
+- **5:** Provides consistent point gain  
+- **6:** Rewards high average-value boards  
+
+Visual clarity and usability were also improved considerably. Finalized art assets replaced prototype placeholders, UI layouts were streamlined, and new animations and transitions were added to create a cohesive visual experience. This resulted in a finished product that is easy to understand, visually appealing, and mechanically deep.
+
+# Current State of Each Deliverable
+
+All deliverables required for the project have been completed and finalized during Phase 4.
+
+## Documentation  
+- **Team Charter** – Complete and updated to reflect the final development workflow.  
+- **Project Proposal** – Finalized with earlier feedback incorporated.  
+- **Requirements & Specifications Document** – Fully aligned with the completed game.  
+- **Design Document** – Finalized with diagrams, UI layouts, and explanations of gameplay systems.  
+- **Standards Document** – Complete and consistent with actual project practices.  
+- **Progress Update Documents (Phases 1–4)** – Completed and compiled.  
+- **Test Plan** – Fully completed, covering system testing, gameplay testing, and bug verification.  
+
+## Technical Deliverables  
+- **Final Godot Game Implementation** – Fully functional, polished, and stable.  
+- **Classic Mode** – Completed with scoring, placement mechanics, and full dice interactions.  
+- **Hot Dice Mode** – Fully implemented with health, attack, break actions, dice effects, and win/loss conditions.  
+- **UI & Art Assets** – Integrated into the final version with improved readability and responsiveness.  
+- **Game Flow** – Complete, including menus, pause/resume functionality, transitions, and game over screens.  
+- **Repository Organization** – Maintained with clear structure, documentation folders, and conflict-free code.  
+
+The game is complete, stable, and ready for final demonstration and submission.
+
 
 
 
